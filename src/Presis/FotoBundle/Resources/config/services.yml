@@ -1,0 +1,4 @@
+services:
+#    foto.example:
+#        class: Presis\FotoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

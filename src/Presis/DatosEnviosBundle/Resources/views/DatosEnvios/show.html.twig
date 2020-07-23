@@ -1,0 +1,649 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title pull-left">
+                Busqueda de guias
+            </h3>
+            <button class="btn btn-default pull-right btn-sm" data-toggle="collapse" data-target="#demo" id="boton"></button>
+            <div class="clearfix"></div>
+        </div>
+        <input type="hidden" name="url" id="url" value="{{ url }}" />
+        <input type="hidden" name="tracker" id="tracker" value="{{ tracker }}" />
+        <div class="panel-body collapse in" id="demo">
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="form-group">
+                                {% if not sucursal %}
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.sucursal, {'label_col':1,'widget_col': 12, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                {% else %}
+                                    <div class="col-lg-3">
+                                        {{ form_row(form.sucursal, {value: "" ~ sucursal.id, 'label_col':1,'widget_col': 12, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)',  'disabled': 'true'} }) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.fecha, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.hasta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.planillaDesde, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.planillaHasta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaUdesde, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaUhasta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaUplanillaDesde, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaUplanillaHasta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaFacturaDesde, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.fechaFacturaHasta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.id, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.idHasta, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-1">
+                                    {{ form_row(form.datosenvios.cordonOrigen, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-1">
+                                    {{ form_row(form.datosenvios.cordonDestino, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.zona, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.remito, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.guiaAgente, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.cliente, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.nroCta, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.facturado, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.datosenvios.contrareembolso, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                <div class="col-lg-2">
+                                    {{ form_row(form.nroPlanilla, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                </div>
+                                {% if not distribuidor %}
+                                    <div class="col-lg-2">
+                                        {{ form_row(form.distribuidor, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                {% else %}
+                                    <div class="col-lg-2">
+                                        {{ form_row(form.distribuidor, {value: "" ~ distribuidor.id, 'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <div class="col-lg-2">
+                                    <div class="checkbox">
+                                        <label>
+                                            {{ form_row(form.sinEstado, {'label_col':2,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                        </label>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                {% if is_granted('ROLE_CLIENTE')== true %}
+                                    <div class="col-lg-2">
+                                        {{ form_row(form.user, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                {% endif %}
+                                {% if is_granted('ROLE_CLIENTE')==true %}
+                                    <div class="col-lg-2">
+                                        {{ form_row(form.datosenvios.remitente, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {{ form_row(form.datosenvios.destinatario, {'label_col':1,'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div><!-- content-row -->
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                {{ form_row(form.estado, {'label_col':1,'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-7 col-lg-offset-2">
+                            <button type="button" class="btn btn-success btn-sm" id="find">BUSCAR GUIAS</button>
+                            <!--<button type="button" class="btn btn-success btn-sm" id="exportar">EXPORTAR</button>-->
+                            <button type="button" class="btn btn-danger btn-sm" id="prints">IMPRIMIR SELECCIONADOS</button>
+                            <button type="button" class="btn btn-warning btn-sm" id="etiquetas">IMPRIMIR ETIQUETAS</button>
+                            {% if is_granted('ROLE_CLIENTE')==false %}
+                                <button type="button" class="btn btn-warning btn-sm" id="archivo">GENERAR ARCHIVO</button>
+                            {% endif %}
+                            {% if is_granted('ROLE_CLIENTE') %}
+                                <button type="button" class="btn btn-warning btn-sm" id="archivo2">GENERAR ARCHIVO</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+            <br>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="toolbar">
+            <div class="col-lg-2">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <!--<div class="col-lg-2">
+                <input class="form-control" id="fixedNumber" type="number" value="1" min="1" max="5">
+            </div>-->
+        </div>
+        <table id="retiros" class="ret"
+               data-toggle="table"
+               data-show-export="true"
+               data-click-to-select="true"
+               data-toolbar="#toolbar"
+               data-height="400"
+               data-side-pagination="server"
+               data-pagination="true"
+               data-page-list="[5, 10, 20, 50, 100, 200]"
+               data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-field="id" data-formatter="formatLink">Nro. Guia</th><!--1-->
+                <th data-field="clientenombre">Cliente</th><!--11-->
+                <th data-field="datos_envios.servicio_nombre">Servicio</th>
+                <th data-field="remito">Guia Manual</th><!--2-->
+                <th data-field="datos_envios.guia_agente">Guia Agente</th><!--3-->
+                <th data-field="datos_envios.fecha">Fecha</th><!--4-->
+                <th data-field="estado_codigo">Estado</th>
+                {% if empresa=='elepants' %}
+                    <th data-field="datos_envios.flete">Importe</th><!--4-->
+                {% endif %}
+                <th data-field="detalle_entrega">Obs entrega</th>
+                <th data-field="fu">F. U. Estado</th><!--5 NO LO TRAEEEEEEE-->
+                <th data-field="distribuidor">Distribuidor</th>
+                <th data-field="datos_envios.bultos">Bultos</th><!--5-->
+                <th data-field="datos_envios.peso">Peso</th><!--5 NO LO TRAEEEEEEE-->
+                <th data-field="datos_envios.peso_volumetrico">Volumetrico</th><!--6-->
+                <th data-field="datos_envios.volumen">Peso Final</th><!--6-->
+
+                <th data-field="datos_envios.alto">Alto</th><!--5-->
+                <th data-field="datos_envios.largo">Largo</th><!--5-->
+                <th data-field="datos_envios.ancho">Ancho</th><!--5-->
+                <th data-field="datos_envios.valor_declarado">Valor declarado</th><!--5-->
+                <th data-field="datos_envios.contrareembolso">Contrareembolso</th><!--6-->
+                <th data-field="datos_envios.co">C. Origen</th><!--6-->
+                <th data-field="datos_envios.cd">C. Destino</th><!--6-->
+                <th data-field="zona">Zona</th><!--6-->
+                <th data-field="numeroplani">Nro. Planilla</th><!--6-->
+                <th data-field="fechaUPlanilla">F. Planilla</th><!--6-->
+                <th data-field="datos_envios.observaciones">Observaciones</th><!--6-->
+                {% if is_granted('ROLE_CLIENTE')== false %}
+                    <th data-field="datos_envios.flete">Flete</th><!--12-->
+                    <th data-field="datos_envios.costo_por_contrareembolso">C P C</th><!--13-->
+                    <th data-field="datos_envios.seguro">Seguro</th><!--13-->
+                    <th data-field="datos_envios.costo_por_remito_conforme">Costo SRC</th><!--13-->
+                    <th data-field="datos_envios.costo_despacho_a_expreso">Costo D Expreso</th><!--13-->
+                    <th data-field="datos_envios.custodia">Custodia</th><!--13-->
+                    <th data-field="datos_envios.monto_guia_web">$ Guia WEB</th><!--13-->
+                    <th data-field="datos_envios.costo_por_monitoreo_activo">C M Activo</th><!--13-->
+                    <th data-field="datos_envios.costo_adicional1">Costo A 1</th><!--13-->
+                    <th data-field="datos_envios.costo_adicional2">Costo A 2</th><!--13-->
+                    <th data-field="datos_envios.costo_adicional3">Costo A 3</th><!--13-->
+                    <th data-field="datos_envios.tf">Total Flete</th>
+                {% endif %}
+                <th data-field="datos_envios.fecha_pactada">Fecha Pactada</th>
+                <th data-field="remitente_empresa">Rem. Empresa</th>
+                <th data-field="remitente_remitente">Rem. Nombre</th>
+                <th data-field="direccion_remitente">Rem. Dirección</th>
+                <th data-field="localidad_remitente">Rem. Localidad</th>
+                <th data-field="provincia_remitente">Rem. Provincia</th>
+                <th data-field="cp_remitente">Rem. CP</th>
+                <th data-field="celular_remitente">Rem. Celular</th>
+                <th data-field="otherInfo_remitente">Rem. Other Info</th>
+                <th data-field="comprador_empresa_guia">Com. Empresa</th>
+                <th data-field="comprador">Com. Nombre</th>
+                <th data-field="comprador_direccion">Com. Dirección</th>
+                <th data-field="comprador_localidad_guia">Com. Localidad</th>
+                <th data-field="comprador_provincia_guia">Com. Provincia</th>
+                <th data-field="comprador_cp_guia">Com. CP</th>
+                <th data-field="comprador_email">Com. Email</th>
+                <th data-field="comprador_celular">Com. Celular</th>
+                <th data-field="comprador_otherinfo">Com. Other Info</th>
+                <th data-field="fecha_hora_entrega">Fecha Hora</th>
+                <th data-field="receptor_apellido">Receptor apellido</th>
+                <th data-field="receptor_nombre">Receptor nombre</th>
+                <th data-field="dni">Documento</th>
+                <th data-field="estado_nombre">Detalle Estado</th>
+                <th data-field="createguia">Usuario</th>
+                <th data-formatter="acciones">Acciones</th><!--14-->
+                <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th><!--15-->
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <!--########################## MODAL DE PENDIENTES ############################-->
+    <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Tracker</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="trackeo"
+                           data-toggle="table"
+                           data-height="250">
+                        <thead>
+                        <tr>
+                            <th data-field="tracker">TRACKER</th>
+                            <th data-field="estado">ESTADO</th>
+                            <th data-field="detalles">DETALLES</th>
+                            <th data-field="timestamp_modificacion">FECHA</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--########################## MODAL DE PENDIENTES ############################-->
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+    <script src="{{ asset('bundles/presisgeneral/js/jquery.fileDownload.js') }}"></script>
+
+    <script type="text/javascript">
+
+        var $table = $("#retiros");
+
+        var $pagina = 0;
+        var $limite = 10;
+
+        $(function () {
+            buildTable($table, 20, 20);
+            $('#fixedNumber').change(function () {
+                buildTable($table, 20, 20);
+            });
+        });
+
+        function buildTable($el, cells, rows) {
+            $el.bootstrapTable('destroy').bootstrapTable({
+                toolbar: '.toolbar'
+            });
+        }
+
+        function acciones(value, row){
+            var botones = "<a href="+Routing.generate('retiro_showguia', {id: row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i></a>" +
+            "<a href="+Routing.generate('retiro_showetiqueta',{id: row.id} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>";
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUCURSAL') %}
+             botones = "<a href="+Routing.generate('datosenvios_edit',{id: row.id} )+" target='_blank'><i class='fa fa-search fa-2x'></i></a>" +
+             "<a href="+Routing.generate('retiro_showetiqueta',{id: row.id} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>" +
+             botones;
+            {% endif %}
+             return botones;
+        }
+
+        function formatLink(val,row){
+            val = "<a href="+$("#tracker").val()+"?tracking="+val+" target='_blank' class='link'>"+val+"</a>";
+            return val;
+        }
+
+
+
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('destroy').bootstrapTable({
+                    exportDataType: $(this).val()
+                });
+            });
+        })
+
+        $(document).ready(function () {
+
+            if ($("select[id*='retiro_distribuidor'] option:selected").val()) {
+                readonly("select[id*='retiro_distribuidor']", true);
+            }
+
+            //var $table = $('#retiros');
+            $table.bootstrapTable()
+                    .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+
+                        buscarGuias();
+                    });
+
+           /* $('.ret').on('click','.link', function(event){
+                event.preventDefault();
+                alert(getIdSelection());
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    dataType: "json",
+                    url: Routing.generate("datosenvios_find_tracker"),
+                    type: 'GET',
+                    data: {
+                        "id": function (d) {
+                            return getIdSelection();
+                        }
+                    },
+                    success: function (data) {
+                        var $tableTracker = $('#trackeo');
+                        $tableTracker.bootstrapTable()
+                        $tableTracker.bootstrapTable('load', data);
+                        $("#modalTable").modal('show');
+                    },
+                    error: function (error) {
+                        BootstrapDialog.show({
+                            title: 'Error',
+                            message: error.responseText
+                        });
+                    }
+                });
+                $.unblockUI();
+            });*/
+
+            function getIdSelection() {
+                return $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
+                });
+            }
+
+            $('#presis_retirobundle_retiro_sinEstado').change(function() {
+                var deshabilitarEstados = $(this).is(":checked");
+                var $estado = $('#presis_retirobundle_retiro_estado');
+                if(deshabilitarEstados)
+                        $estado.val([]);
+                $estado.prop('disabled', deshabilitarEstados);
+            });
+
+
+            $("#find").click(function(){
+                $("#demo").collapse('hide');
+                $("#boton").text(function(i,old){
+                    return old=='ABRIR' ?  'CERRAR' : 'ABRIR';
+                });
+            });
+
+
+            $("#exportar").click(function(){
+                $limite = 0;
+
+                exportarGuias();
+
+                $limite = 10;
+            });
+
+            var obtenerParametrosBusqueda = function() {
+                var $idDesde = $("#presis_retirobundle_retiro_id").val();
+                var $idHasta = $("#presis_retirobundle_retiro_idHasta").val();
+
+                var $remito = $("#presis_retirobundle_retiro_remito").val();
+                var $fechaDesde = $("#presis_retirobundle_retiro_datosenvios_fecha").val();
+                var $fechaHasta = $("#presis_retirobundle_retiro_datosenvios_hasta").val();
+                var $cliente = $("#presis_retirobundle_retiro_datosenvios_cliente").val();
+                var $nroCta = $("#presis_retirobundle_retiro_datosenvios_nroCta").val();
+                var $remitente = $("#presis_retirobundle_retiro_datosenvios_remitente").val();
+                var $destinatario = $("#presis_retirobundle_retiro_datosenvios_destinatario").val();
+                var $planillaDesde = $("#presis_retirobundle_retiro_planillaDesde").val();
+                var $planillaHasta = $("#presis_retirobundle_retiro_planillaHasta").val();
+                var $sucursal = $("#presis_retirobundle_retiro_sucursal").val();
+                var $ultimoEstadoDesde = $("#presis_retirobundle_retiro_ultimoEstadoDesde").val();
+                var $ultimoEstadoHasta = $("#presis_retirobundle_retiro_ultimoEstadoHasta").val();
+                var $nroPlanilla = $("#presis_retirobundle_retiro_nroPlanilla").val();
+                var $distribuidor = $("#presis_retirobundle_retiro_distribuidor option:selected").text();
+                var $estado = $("#presis_retirobundle_retiro_estado").val();
+                var $guiaAgente = $("#presis_retirobundle_retiro_datosenvios_guiaAgente").val();
+                var $zona = $("#presis_retirobundle_retiro_zona option:selected" ).text();
+                var $facturado = $("#presis_retirobundle_retiro_datosenvios_facturado").val();
+                var $fechaUdesde = $("#presis_retirobundle_retiro_fechaUdesde").val();
+                var $fechaUhasta = $("#presis_retirobundle_retiro_fechaUhasta").val();
+                var $conContrareembolso = $("#presis_retirobundle_retiro_datosenvios_contrareembolso").val();
+
+                var $cordonOrigen = $("#presis_retirobundle_retiro_datosenvios_cordonOrigen option:selected" ).text();
+                var $cordonDestino = $("#presis_retirobundle_retiro_datosenvios_cordonDestino option:selected" ).text();
+
+                var $fechaUplanillaDesde = $("#presis_retirobundle_retiro_fechaUplanillaDesde").val();
+                var $fechaUplanillaHasta = $("#presis_retirobundle_retiro_fechaUplanillaHasta").val();
+
+                var $fechaFacturaDesde = $("#presis_retirobundle_retiro_fechaFacturaDesde").val();
+                var $fechaFacturaHasta = $("#presis_retirobundle_retiro_fechaFacturaHasta").val();
+
+                var $sinEstado = $("#presis_retirobundle_retiro_sinEstado").is(":checked");
+
+                var $sinFactura = $("#presis_retirobundle_retiro_sinFactura").is(":checked");
+
+                if($.trim($idDesde)!='' && $.trim($idHasta)==''){
+                    $("#presis_retirobundle_retiro_idHasta").val($idDesde);
+                    $idHasta = $idDesde;
+                }
+
+                return {cordonOrigen: $cordonOrigen, cordonDestino: $cordonDestino, conContrareembolso: $conContrareembolso,
+                    fechaUdesde: $fechaUdesde, fechaUhasta: $fechaUhasta, facturado: $facturado, zona: $zona, idDesde: $idDesde,
+                    idHasta: $idHasta, remito: $remito, fechaDesde: $fechaDesde, fechaHasta: $fechaHasta, cliente: $cliente, nroCta: $nroCta,
+                    remitente: $remitente, destinatario: $destinatario, planillaDesde: $planillaDesde, planillaHasta: $planillaHasta,
+                    sucursal: $sucursal, ultimoEstadoDesde: $ultimoEstadoDesde, ultimoEstadoHasta: $ultimoEstadoHasta,
+                    nroPlanilla: $nroPlanilla, distribuidor: $distribuidor, estado: $estado,  guiaAgente: $guiaAgente,
+                    fechaUplanillaDesde:$fechaUplanillaDesde, fechaUplanillaHasta:$fechaUplanillaHasta,
+                    fechaFacturaDesde: $fechaFacturaDesde, fechaFacturaHasta: $fechaFacturaHasta,
+                    sinEstado: $sinEstado, sinFactura: $sinFactura,
+                    pagina: $pagina, limite: $limite};
+            };
+
+
+            var exportarGuias = function(){
+                $.fileDownload(Routing.generate('datosenvios_findGuia'), {
+                    httpMethod: "POST",
+                    data: obtenerParametrosBusqueda()
+                });
+            };
+
+            var buscarGuias = function(){
+
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_findGuia'),
+                    data: obtenerParametrosBusqueda(),
+                    success: function(data, dataType)
+                    {
+                        var data = JSON.parse(data);
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            };
+            $("#find").click(buscarGuias);
+
+            var crearArchivo = function(){
+                var $fechaDesde = $("#presis_retirobundle_retiro_datosenvios_fecha").val();//ok
+                var $fechaHasta = $("#presis_retirobundle_retiro_datosenvios_hasta").val();//ok
+                var $fechaUdesde = $("#presis_retirobundle_retiro_fechaUdesde").val();//ok
+                var $fechaUhasta = $("#presis_retirobundle_retiro_fechaUhasta").val();//ok
+                var $fechaUplanillaDesde = $("#presis_retirobundle_retiro_fechaUplanillaDesde").val();//ok
+                var $fechaUplanillaHasta = $("#presis_retirobundle_retiro_fechaUplanillaHasta").val();//ok
+                var $planillaDesde = $("#presis_retirobundle_retiro_planillaDesde").val();//ok
+                var $planillaHasta = $("#presis_retirobundle_retiro_planillaHasta").val();//ok
+                var $fechaFacturaDesde = $("#presis_retirobundle_retiro_fechaFacturaDesde").val();//ok
+                var $fechaFacturaHasta = $("#presis_retirobundle_retiro_fechaFacturaHasta").val();//ok
+                var $idDesde = $("#presis_retirobundle_retiro_id").val();//ok
+                var $idHasta = $("#presis_retirobundle_retiro_idHasta").val();//ok
+                var $cordonOrigen = $("#presis_retirobundle_retiro_datosenvios_cordonOrigen option:selected" ).text();//ok
+                var $cordonDestino = $("#presis_retirobundle_retiro_datosenvios_cordonDestino option:selected" ).text();//ok
+                var $zona = $("#presis_retirobundle_retiro_zona option:selected" ).text();//ok
+                var $remito = $("#presis_retirobundle_retiro_remito").val();//ok
+                var $guiaAgente = $("#presis_retirobundle_retiro_datosenvios_guiaAgente").val();//ok
+                var $cliente = $("#presis_retirobundle_retiro_datosenvios_cliente").val();//ok
+                var $nroCta = $("#presis_retirobundle_retiro_datosenvios_nroCta").val();//ok
+                var $sucursal = $("#presis_retirobundle_retiro_sucursal").val();//ok
+                var $distribuidor = $("#presis_retirobundle_retiro_distribuidor option:selected").text();//ok
+                var $facturado = $("#presis_retirobundle_retiro_datosenvios_facturado").val();//ok
+                var $conContrareembolso = $("#presis_retirobundle_retiro_datosenvios_contrareembolso").val();//ok
+                var $sinEstado = $("#presis_retirobundle_retiro_sinEstado").is(":checked");//ok
+                var $sinFactura = $("#presis_retirobundle_retiro_sinFactura").is(":checked");//ok
+                var $estado = $("#presis_retirobundle_retiro_estado").val();//ok
+
+                var $ultimoEstadoDesde = $("#presis_retirobundle_retiro_ultimoEstadoDesde").val();//??
+                var $ultimoEstadoHasta = $("#presis_retirobundle_retiro_ultimoEstadoHasta").val();//??
+                var $remitente = $("#presis_retirobundle_retiro_datosenvios_remitente").val();
+                var $destinatario = $("#presis_retirobundle_retiro_datosenvios_destinatario").val();
+                //var $nroPlanilla = $("#presis_retirobundle_retiro_nroPlanilla").val();
+
+                window.open($("#url").val()+'actualiza.php?fechaD='+$fechaDesde+'&fechaH='+$fechaHasta
+                        +'&planillaD='+$planillaDesde+'&planillaH='+$planillaHasta+'&fUltimoEstadoD='+$fechaUdesde+'&fUltimoEstadoH='+$fechaUhasta
+                        +'&fUltimaPlaD='+$fechaUplanillaDesde+'&fUltimaPlaH='+$fechaUplanillaHasta+'&fechaFactD='+$fechaFacturaDesde+'&fechaFactH='+$fechaFacturaHasta
+                        +'&nroGuiaD='+$idDesde+'&nroGuiaH='+$idHasta+'&cordonO='+$cordonOrigen+'&cordonD='+$cordonDestino+'&zona='+$zona+'&guiaManual='+$remito
+                        +'&guiaAgente='+$guiaAgente+'&cliente='+$cliente+'&nroCta='+$nroCta+'&sucursal='+$sucursal+'&distribuidor='+$distribuidor
+                        +'&facturado='+$facturado+'&conContrareembolso='+$conContrareembolso+'&sinEstado='+$sinEstado+'&sinFactura='+$sinFactura
+                        +'&estado='+$estado,'_blank')
+            };
+
+            var crearArchivo2 = function(){
+                var $fechaDesde = $("#presis_retirobundle_retiro_datosenvios_fecha").val();//ok
+                var $fechaHasta = $("#presis_retirobundle_retiro_datosenvios_hasta").val();//ok
+                var $fechaUdesde = $("#presis_retirobundle_retiro_fechaUdesde").val();//ok
+                var $fechaUhasta = $("#presis_retirobundle_retiro_fechaUhasta").val();//ok
+                var $fechaUplanillaDesde = $("#presis_retirobundle_retiro_fechaUplanillaDesde").val();//ok
+                var $fechaUplanillaHasta = $("#presis_retirobundle_retiro_fechaUplanillaHasta").val();//ok
+                var $planillaDesde = $("#presis_retirobundle_retiro_planillaDesde").val();//ok
+                var $planillaHasta = $("#presis_retirobundle_retiro_planillaHasta").val();//ok
+                var $fechaFacturaDesde = $("#presis_retirobundle_retiro_fechaFacturaDesde").val();//ok
+                var $fechaFacturaHasta = $("#presis_retirobundle_retiro_fechaFacturaHasta").val();//ok
+                var $idDesde = $("#presis_retirobundle_retiro_id").val();//ok
+                var $idHasta = $("#presis_retirobundle_retiro_idHasta").val();//ok
+                var $cordonOrigen = $("#presis_retirobundle_retiro_datosenvios_cordonOrigen option:selected" ).text();//ok
+                var $cordonDestino = $("#presis_retirobundle_retiro_datosenvios_cordonDestino option:selected" ).text();//ok
+                var $zona = $("#presis_retirobundle_retiro_zona option:selected" ).text();//ok
+                var $remito = $("#presis_retirobundle_retiro_remito").val();//ok
+                var $guiaAgente = $("#presis_retirobundle_retiro_datosenvios_guiaAgente").val();//ok
+                var $cliente = $("#presis_retirobundle_retiro_datosenvios_cliente").val();//ok
+                var $nroCta = $("#presis_retirobundle_retiro_datosenvios_nroCta").val();//ok
+                var $sucursal = $("#presis_retirobundle_retiro_sucursal").val();//ok
+                var $distribuidor = $("#presis_retirobundle_retiro_distribuidor option:selected").text();//ok
+                var $facturado = $("#presis_retirobundle_retiro_datosenvios_facturado").val();//ok
+                var $conContrareembolso = $("#presis_retirobundle_retiro_datosenvios_contrareembolso").val();//ok
+                var $sinEstado = $("#presis_retirobundle_retiro_sinEstado").is(":checked");//ok
+                var $sinFactura = $("#presis_retirobundle_retiro_sinFactura").is(":checked");//ok
+                var $estado = $("#presis_retirobundle_retiro_estado").val();//ok
+
+                var $ultimoEstadoDesde = $("#presis_retirobundle_retiro_ultimoEstadoDesde").val();//??
+                var $ultimoEstadoHasta = $("#presis_retirobundle_retiro_ultimoEstadoHasta").val();//??
+                var $remitente = $("#presis_retirobundle_retiro_datosenvios_remitente").val();
+                var $destinatario = $("#presis_retirobundle_retiro_datosenvios_destinatario").val();
+
+                var $nombreUsuario = $("#presis_retirobundle_retiro_user option:selected").html();
+
+                window.open($("#url").val()+'excel-cliente.php?fechaD='+$fechaDesde+'&fechaH='+$fechaHasta
+                        +'&planillaD='+$planillaDesde+'&planillaH='+$planillaHasta+'&fUltimoEstadoD='+$fechaUdesde+'&fUltimoEstadoH='+$fechaUhasta
+                        +'&fUltimaPlaD='+$fechaUplanillaDesde+'&fUltimaPlaH='+$fechaUplanillaHasta+'&fechaFactD='+$fechaFacturaDesde+'&fechaFactH='+$fechaFacturaHasta
+                        +'&nroGuiaD='+$idDesde+'&nroGuiaH='+$idHasta+'&cordonO='+$cordonOrigen+'&cordonD='+$cordonDestino+'&zona='+$zona+'&guiaManual='+$remito
+                        +'&guiaAgente='+$guiaAgente+'&cliente='+$cliente+'&nroCta='+$nroCta+'&sucursal='+$sucursal+'&distribuidor='+$distribuidor
+                        +'&facturado='+$facturado+'&conContrareembolso='+$conContrareembolso+'&sinEstado='+$sinEstado+'&sinFactura='+$sinFactura
+                        +'&estado='+$estado+'&nombreUsuario='+$nombreUsuario,'_blank')
+
+            };
+            $("#archivo").click(crearArchivo);
+            $("#archivo2").click(crearArchivo2);
+
+            $('#prints').click( function () {
+                var ids=[];
+                var data = $table.bootstrapTable('getSelections');
+                var id = $.map(data, function (item) {
+                   // return alert(item.id);
+                    ids.push(item.id);
+                });
+                window.open( Routing.generate('retiro_showguias', {ids: ids} ))
+                /* var ids=[];
+                 var cant=table.rows('.success').data().length;
+                 table.rows('.success').indexes().each( function (idx) {
+                     var d = table.row( idx ).data();
+                     ids.push(d.id);
+
+                 } );
+                 window.open( Routing.generate("retiro_showvoucher",{'ids':ids}))*/
+            } );
+
+            $('#etiquetas').click( function () {
+                var ids=[];
+                var data = $table.bootstrapTable('getSelections');
+                var id = $.map(data, function (item) {
+                    // return alert(item.id);
+                    ids.push(item.id);
+                });
+                window.open( Routing.generate('retiro_showetiquetas', {ids: ids} ))
+                /* var ids=[];
+                 var cant=table.rows('.success').data().length;
+                 table.rows('.success').indexes().each( function (idx) {
+                 var d = table.row( idx ).data();
+                 ids.push(d.id);
+
+                 } );
+                 window.open( Routing.generate("retiro_showvoucher",{'ids':ids}))*/
+            } );
+
+        });
+    </script>
+{% endblock %}

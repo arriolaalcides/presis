@@ -1,0 +1,38 @@
+guia:
+    path:     /
+    defaults: { _controller: "PresisGuiaBundle:Guia:index" }
+
+guia_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGuiaBundle:Guia:show",_format: "pdf" }
+    options:
+        expose: true
+
+guia_new:
+    path:     /new
+    defaults: { _controller: "PresisGuiaBundle:Guia:new" }
+
+guia_create:
+    path:     /create
+    defaults: { _controller: "PresisGuiaBundle:Guia:create" }
+    requirements: { _method: post }
+
+guia_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGuiaBundle:Guia:edit" }
+
+guia_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGuiaBundle:Guia:update" }
+    requirements: { _method: post|put }
+
+guia_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGuiaBundle:Guia:delete" }
+    requirements: { _method: post|delete }
+
+guia_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisGuiaBundle:Guia:ajax" }
+    options:
+        expose: true

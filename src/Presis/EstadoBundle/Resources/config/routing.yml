@@ -1,0 +1,11 @@
+estado_estado:
+    resource: "@EstadoBundle/Resources/config/routing/estado.yml"
+    prefix:   /estado
+
+estado_estadotracking:
+    resource: "@EstadoBundle/Resources/config/routing/estadotracking.yml"
+    prefix:   /estadotracking
+
+estado_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: EstadoBundle:Default:index }

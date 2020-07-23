@@ -1,0 +1,45 @@
+lista:
+    path:     /
+    defaults: { _controller: "PresisServicioBundle:Lista:index" }
+
+lista_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisServicioBundle:Lista:show" }
+    options:
+      expose: true
+
+lista_upload:
+    path:     /upload
+    defaults: { _controller: "PresisServicioBundle:ListaFile:upload" }
+
+lista_new:
+    path:     /new
+    defaults: { _controller: "PresisServicioBundle:Lista:new" }
+lista_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisServicioBundle:Lista:ajax" }
+    options:
+      expose: true
+lista_aumento:
+    path:     /aumento
+    defaults: { _controller: "PresisServicioBundle:Lista:aumento" }
+
+lista_create:
+    path:     /create
+    defaults: { _controller: "PresisServicioBundle:Lista:create" }
+    requirements: { _method: post }
+
+lista_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisServicioBundle:Lista:edit" }
+    options:
+      expose: true
+lista_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisServicioBundle:Lista:update" }
+    requirements: { _method: post|put }
+
+lista_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisServicioBundle:Lista:delete" }
+    requirements: { _method: post|delete }

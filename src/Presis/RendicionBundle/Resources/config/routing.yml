@@ -1,0 +1,7 @@
+recorrido_recorrido:
+    resource: "@RendicionBundle/Resources/config/routing/rendicion.yml"
+    prefix:   /rendicion
+
+recorrido_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RendicionBundle:Default:index }

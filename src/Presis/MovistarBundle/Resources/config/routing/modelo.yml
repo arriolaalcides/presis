@@ -1,0 +1,50 @@
+modelo:
+    path:     /index
+    defaults: { _controller: "MovistarBundle:Modelo:index" }
+
+modelo_show:
+    path:     /{id}/show
+    defaults: { _controller: "MovistarBundle:Modelo:show" }
+    options:
+      expose: true
+
+modelo_new:
+    path:     /new
+    defaults: { _controller: "MovistarBundle:Modelo:new" }
+    
+modelo_ajax:
+    path:     /ajax
+    defaults: { _controller: "MovistarBundle:Modelo:ajax" }
+    options:
+      expose: true
+      
+modelo_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "MovistarBundle:Modelo:ajax4select" }
+    options:
+      expose: true
+      
+modelo_create:
+    path:     /create
+    defaults: { _controller: "MovistarBundle:Modelo:create" }
+    requirements: { _method: post }
+
+modelo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MovistarBundle:Modelo:edit" }
+    options:
+      expose: true
+      
+modelo_update:
+    path:     /{id}/update
+    defaults: { _controller: "MovistarBundle:Modelo:update" }
+    requirements: { _method: post|put }
+
+modelo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MovistarBundle:Modelo:delete" }
+    requirements: { _method: post|delete }
+
+modelo_search:
+    path:     /search
+    defaults: { _controller: "MovistarBundle:Modelo:search" }

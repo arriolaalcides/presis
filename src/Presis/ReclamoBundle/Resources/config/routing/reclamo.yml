@@ -1,0 +1,39 @@
+reclamo:
+    path:     /
+    defaults: { _controller: "ReclamoBundle:Reclamo:index" }
+
+reclamo_show:
+    path:     /{id}/show
+    defaults: { _controller: "ReclamoBundle:Reclamo:show" }
+
+reclamo_new:
+    path:     /new/{retiro_id}
+    defaults: { _controller: "ReclamoBundle:Reclamo:new" }
+    options:
+        expose: true
+
+reclamo_create:
+    path:     /create
+    defaults: { _controller: "ReclamoBundle:Reclamo:create" }
+    methods:  POST
+
+reclamo_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ReclamoBundle:Reclamo:edit" }
+
+reclamo_update:
+    path:     /{id}/update
+    defaults: { _controller: "ReclamoBundle:Reclamo:update" }
+    methods:  [POST, PUT]
+
+reclamo_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ReclamoBundle:Reclamo:delete" }
+    options:
+        expose: true
+
+reclamo_asajax:
+    path:     /{id_retiro}/asajax
+    defaults: { _controller: "ReclamoBundle:Reclamo:asajax" }
+    options:
+        expose: true

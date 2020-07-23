@@ -1,0 +1,107 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+
+    <div class="row" align="center">
+        <div class="col-lg-6">
+            <b>Peso / Bultos Excedentes</b>
+        </div>
+        <div class="col-lg-6">
+            <a class="btn btn-primary" href="{{ path('bultoexcedente_new') }}">Agregar un nuevo Precio de bulto excedente</a>
+        </div>
+    </div>
+    <br>
+    <div class="row" style="margin-left: 1%; margin-right: 1%">
+        <!--<table class="records_list table table-bordered" width="90%">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Bulto excedente</th>
+                <th>Costo bulto excedente</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Cordón de retiro</th>
+                <th>Cordón de entrega</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('bultoexcedente_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.bultoExcedente }}</td>
+                    <td>{{ entity.costoBultoExcedente }}</td>
+                    <td>{{ entity.cliente }}</td>
+                    <td>{{ entity.servicio }}</td>
+                    <td>{{ entity.cordonRetiro }}</td>
+                    <td>{{ entity.cordonEntrega }}</td>
+                    <td width="10%">
+                        <a href="{{ path('bultoexcedente_show', { 'id': entity.id }) }}"><i class='fa fa-search-plus fa-2x' title='Ver tipo'></i></a>
+                        <a href="{{ path('bultoexcedente_edit', { 'id': entity.id }) }}"><i class='fa fa-pencil-square fa-2x' title='Editar tipo'></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>-->
+        <table id="bultosE"
+               data-toggle="table"
+               data-show-export="true"
+               data-filter-control="true"
+               data-filter-show-clear="true"
+               data-click-to-select="true"
+               data-height="450"
+               data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th data-field="id" data-sortable="true">Id</th>
+                <th data-field="bultoExcedente" data-sortable="true" data-filter-control="input">Bulto excedente</th>
+                <th data-field="costoBultoExcedente" data-sortable="true" data-filter-control="input">Costo bulto excedente</th>
+                <th data-field="empresa" data-sortable="true" data-filter-control="input">Cliente</th>
+                <th data-field="descripcion" data-sortable="true" data-filter-control="input">Servicio</th>
+                <th data-field="cordonEntrega" data-sortable="true" data-filter-control="input">Cordón de retiro</th>
+                <th data-field="cordonRetiro" data-sortable="true" data-filter-control="input">Cordón de entrega</th>
+                <th data-formatter="acciones">Acciones</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var $table = $('#bultosE');
+            //$table.bootstrapTable();
+            $.blockUI({message: "<h3>Buscando datos...</h3>"});
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('bultoexcedente_get'),
+                success: function(data)
+                {
+                    //alert(data);
+
+                    var data = JSON.parse(data);
+
+                    $table.bootstrapTable('load', data);
+
+                    $.unblockUI();
+                },
+
+                error: function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+        function acciones(value, row){
+            var botones = "<a href="+Routing.generate('bultoexcedente_show', {id: row.id} )+" target='_blank' title='Ver tipo'><i class='fa fa-file-pdf-o fa-2x'></i></a>";
+                    botones +=  "   <a href="+Routing.generate('bultoexcedente_edit', {id: row.id} )+" target='_blank' title='Editar tipo'><i class='fa fa-pencil-square fa-2x'></i></a>";
+            return botones;
+        }
+
+    </script>
+{% endblock %}

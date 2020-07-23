@@ -1,0 +1,191 @@
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+    <dynamic-page encoding="UTF-8" font-type="Arial">
+        <page page-size="a4 landscape">
+
+            {% set contador = 0 %}
+
+                <!-- contenedor -->
+                <div width="100%" height="100%" border.color="black">
+                    <div width="100%" border.color="black" text-align="center" font-size="24px">
+                        FASTTRACK
+                    </div>
+                    <div width="100%" border.color="black" margin-top="15px" text-align="center" font-size="16px">
+                        CONSOLIDADO DE GUIAS
+                    </div>
+                    <!-- remitente -->
+                    <div width="15%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                        Remitente
+                    </div>
+                    <div width="35%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                        {{ entity.retiros[0].sender.empresa }}
+                    </div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                        Fecha
+                    </div>
+                    <div width="40%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                        {{ entity.fechaHora | date('d/m/y H:i') }}
+                    </div>
+                    <!-- remitente -->
+                    <!-- direccion -->
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        Calle
+                    </div>
+                    <div width="30%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        {{ entity.retiros[0].sender.calle }}
+                    </div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        Altura
+                    </div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        {{ entity.retiros[0].sender.altura }}
+                    </div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        C.P.
+                    </div>
+                    <div width="30%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                        {{ entity.retiros[0].sender.cp }}
+                    </div>
+                    <!-- direccion -->
+                    <!-- tabla cabecera -->
+
+                    <div width="100%" margin-top="25px">
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Tracking</div>
+                        <div width="20%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Calle</div>
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Altura</div>
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Piso</div>
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Dpto.</div>
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">CP</div>
+                        <div width="20%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Destinatario</div>
+                        <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Control</div>
+                    </div>
+                    <!-- tabla cabecera -->
+                    <!-- tabla contenido -->
+                    {% for retiro in entity.retiros %}
+
+                    <div width="100%" border.color="black">
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.id }}</div>
+                        <div width="20%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{retiro.comprador.calle}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.altura}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.piso}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.dpto}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.cp}}</div>
+                        <div width="20%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{retiro.comprador.apenom}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center"></div>
+                    </div>
+                    <!-- tabla contenido -->
+                    {% endfor %}
+
+                </div><!-- contenedor -->
+
+                {% set contador = contador+1 %}
+            <placeholders>
+                <footer width="100%">
+                    <div height="120px" width="100%">
+                            <div margin-left="25px">
+                            <b>_________________________</b>
+                            </div>
+                        <div margin-top="10px" margin-left="25px">
+                            <b>Firma y Aclaracion Fasttrack</b>
+                        </div>
+
+                    </div>
+                    
+                </footer>
+            </placeholders>
+        </page>
+    </dynamic-page>
+    <dynamic-page encoding="UTF-8" font-type="Arial">
+        <page page-size="a4 landscape">
+
+            {% set contador = 0 %}
+
+            <!-- contenedor -->
+            <div width="100%" height="100%" border.color="black">
+                <div width="100%" border.color="black" text-align="center" font-size="24px">
+                    FASTTRACK
+                </div>
+                <div width="100%" border.color="black" margin-top="15px" text-align="center" font-size="16px">
+                    CONSOLIDADO DE GUIAS
+                </div>
+                <!-- remitente -->
+                <div width="15%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                    Remitente
+                </div>
+                <div width="35%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                    {{ entity.retiros[0].sender.empresa }}
+                </div>
+                <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                    Fecha
+                </div>
+                <div width="40%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" margin-top="15px" text-align="center" font-size="14px">
+                    {{ entity.fechaHora | date('d/m/y H:i') }}
+                </div>
+                <!-- remitente -->
+                <!-- direccion -->
+                <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    Calle
+                </div>
+                <div width="30%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    {{ entity.retiros[0].sender.calle }}
+                </div>
+                <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    Altura
+                </div>
+                <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    {{ entity.retiros[0].sender.altura }}
+                </div>
+                <div width="10%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    C.P.
+                </div>
+                <div width="30%" float="left" padding-top="2px" padding-bottom="2px" border.color="black" text-align="center" font-size="14px">
+                    {{ entity.retiros[0].sender.cp }}
+                </div>
+                <!-- direccion -->
+                <!-- tabla cabecera -->
+
+                <div width="100%" margin-top="25px">
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Tracking</div>
+                    <div width="20%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Calle</div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Altura</div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Piso</div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Dpto.</div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">CP</div>
+                    <div width="20%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Destinatario</div>
+                    <div width="10%" float="left" padding-top="2px" padding-bottom="2px" text-align="center">Control</div>
+                </div>
+                <!-- tabla cabecera -->
+                <!-- tabla contenido -->
+                {% for retiro in entity.retiros %}
+
+                    <div width="100%" border.color="black">
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.id }}</div>
+                        <div width="20%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{retiro.comprador.calle}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.altura}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.piso}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.dpto}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{ retiro.comprador.cp}}</div>
+                        <div width="20%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center">{{retiro.comprador.apenom}}</div>
+                        <div width="10%" border.color="black" float="left" padding-top="2px" padding-bottom="2px" text-align="center"></div>
+                    </div>
+                    <!-- tabla contenido -->
+                {% endfor %}
+            </div><!-- contenedor -->
+            <placeholders>
+                <footer width="100%">
+                    <div height="120px" width="100%">
+                        <div margin-left="25px">
+                            <b>_________________________</b>
+                        </div>
+                        <div margin-top="10px" margin-left="25px">
+                            <b>Firma y Aclaracion Vendedor</b>
+                        </div>
+
+                    </div>
+                </footer>
+            </placeholders>
+            {% set contador = contador+1 %}
+
+        </page>
+    </dynamic-page>
+</pdf>

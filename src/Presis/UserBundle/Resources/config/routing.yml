@@ -1,0 +1,5 @@
+presis_user_user:
+    resource: "@PresisUserBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
+

@@ -1,0 +1,2 @@
+1;129;129;OD;97;2017-12-27;900;1533;0;GALANDER;;1270;;1;0;0;1;0;comentarios;AMBA - Regular;;;
+1;129;129;OR;97;2017-12-27;900;258;0;MOVISTAR;Carlos Pellegrini8550;1009;Capital Federal;1;0;0;1;0;comentarios;AMBA - Regular;CEC PELLEGRINI;;

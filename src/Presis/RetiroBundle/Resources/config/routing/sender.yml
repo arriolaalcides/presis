@@ -1,0 +1,30 @@
+sender:
+    path:     /
+    defaults: { _controller: "PresisRetiroBundle:Sender:index" }
+
+sender_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisRetiroBundle:Sender:show" }
+
+sender_new:
+    path:     /new
+    defaults: { _controller: "PresisRetiroBundle:Sender:new" }
+
+sender_create:
+    path:     /create
+    defaults: { _controller: "PresisRetiroBundle:Sender:create" }
+    requirements: { _method: post }
+
+sender_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisRetiroBundle:Sender:edit" }
+
+sender_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisRetiroBundle:Sender:update" }
+    requirements: { _method: post|put }
+
+sender_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisRetiroBundle:Sender:delete" }
+    requirements: { _method: post|delete }

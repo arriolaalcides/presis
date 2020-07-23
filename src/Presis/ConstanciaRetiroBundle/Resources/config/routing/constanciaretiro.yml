@@ -1,0 +1,158 @@
+constanciaretiro:
+    path:     /
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:index" }
+
+constanciaretiro_solicitar:
+    path:     /solicitar
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:solicitar" }
+
+constanciaretiro_guardar_solicitud:
+    path:     /guardar
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:guardar" }
+    options:
+      expose: true
+
+constanciaretiro_show:
+    path:     /{id}/show
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:show" }
+
+constanciaretiro_new:
+    path:     /new
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:new" }
+
+constanciaretiro_create:
+    path:     /create
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:create" }
+    methods:  POST
+
+constanciaretiro_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:edit" }
+
+constanciaretiro_update:
+    path:     /{id}/update
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:update" }
+    methods:  [POST, PUT]
+
+manifiestocarga_update:
+    path:     /{id}/manifiestoupdate
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:updateManifiestos" }
+    methods:  [POST, PUT]
+
+
+constanciaretiro_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:delete" }
+    methods:  [POST, DELETE]
+
+constanciaretiro_cancelar:
+    path:     /eliminar
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:cancelar"}
+    options:
+      expose: true
+
+constanciaretiro_confirmar:
+    path:     /confirmar
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:retirada"}
+    options:
+      expose: true
+        
+constanciaretiro_buscar_sucursal:
+    path:     /asajax
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:buscarDatosSucursal" }
+    methods:  POST
+    options:
+      expose: true
+
+constanciaretiro_pendientes:
+    path:     /constancias-pendientes
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:constanciasPendientes" }
+    options:
+        expose: true
+
+constanciaretiro_listado:
+    path:     /listado-retiros
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:index" }
+    options:
+        expose: true
+
+constanciaretiro_pendientes_ajax:
+    path:     /constancias-pendientes-ajax
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:getPendientesAmba" }
+    options:
+        expose: true
+
+constanciaretiro_add_retiro_amba:
+    path:     /addRetiroAmba
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:addRetiroAmba" }
+    options:
+        expose: true
+
+constancia_showvoucher:
+    path:     /showconstancia
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:showconstancia",_format: "pdf"}
+    options:
+      expose: true
+
+constancia_showconstancias:
+    path:     /showconstanciasretiro
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:showconstanciasretiro",_format: "pdf"}
+    options:
+      expose: true
+
+constancia_manifiestos:
+    path:     /lista-manifiestos
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:getManifiestos"}
+    options:
+      expose: true
+      
+constancia_manifiesto_editar:
+    path:     /{id}/anular-manifiestos/
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:editarManifiestos"}
+    options:
+      expose: true
+      
+
+constancia_listar_ajax:
+    path:     /listar-asajax
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:listarAjax"}
+    methods:  POST
+    options:
+       expose: true
+
+constancia_manifiesto_estado: 
+    path:     /{id}/manifiesto-estado
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:manifiestoEstado"}
+    methods:  POST
+    options:
+       expose: true
+
+constancia_listar_retiros:
+    path:     /listar-retiros-asajax
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:listarRetirosAjax"}
+    methods:  GET
+    options:
+       expose: true
+
+constanciaretiro_fijos:
+    path:     /retiros-fijos
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:retirosFijos"}
+    methods:  GET
+    options:
+       expose: true
+       
+constancia_search_manifiesto:
+    path:     /search-manifiesto
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:manifiestoSearch"}
+    methods:  GET
+    options:
+       expose: true
+
+constancia_search_ajax:
+    path:     /search-manifiesto-ajax
+    defaults: { _controller: "ConstanciaRetiroBundle:ConstanciaRetiro:manifiestoAjaxSearch"}
+    options:
+       expose: true
+           
+        
+       

@@ -1,0 +1,7 @@
+destinatarios_destinatarios:
+    resource: "@DestinatariosBundle/Resources/config/routing/destinatarios.yml"
+    prefix:   /destinatarios
+
+destinatarios_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DestinatariosBundle:Default:index }

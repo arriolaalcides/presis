@@ -1,0 +1,2 @@
+1;129;129;OD;110;2017-12-29;300;1551;0;GALANDER;;1425;;1;0;0;1;0;comentarios;AMBA - Regular;;;
+1;129;129;OR;110;2017-12-29;300;276;0;MOVISTAR;;1270;;1;0;0;1;0;comentarios;AMBA - Regular;;;

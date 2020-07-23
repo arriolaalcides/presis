@@ -1,0 +1,74 @@
+<legend>Datos del Distribuidor</legend>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.codigo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {'autofocus': 'autofocus'} }) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.nombre,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {'autofocus': 'autofocus'} }) }}
+        {{ form_row(form.apellido,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.zona,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.direccion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.telefono,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.tipodni,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.dni,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.sucursal,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {class: 'input-sm', onkeypress:"return tabular(event,this)"}}) }}
+        {{ form_row(form.fechaAlta,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm date-picker'}}) }}
+        {{ form_row(form.fechaBaja,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm date-picker'}}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.imei,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+        {{ form_row(form.email,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.web,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.observaciones,{'style': 'horizontal', 'label_col': 2, 'widget_col': 10}) }}
+    </div>
+</div>
+<legend>Vehículo</legend>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.vehNombre,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.vehTipo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.vehMarca,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.vehPatente,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+    </div>
+</div>
+<legend>Propietario</legend>
+<div class="row">
+    <div class="form-group">
+        {{ form_row(form.propNombre,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.propDireccion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.propTelefono,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+        {{ form_row(form.propEquipo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+    </div>
+</div>
+<br />
+
+<!--<div class="row">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="button1id"></label>
+        <div class="col-md-7">
+        </div>
+    </div>
+</div>-->

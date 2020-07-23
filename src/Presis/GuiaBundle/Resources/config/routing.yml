@@ -1,0 +1,7 @@
+presis_guia_guia:
+    resource: "@PresisGuiaBundle/Resources/config/routing/guia.yml"
+    prefix:   /guia
+
+presis_guia_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PresisGuiaBundle:Default:index }

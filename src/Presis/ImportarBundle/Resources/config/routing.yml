@@ -1,0 +1,9 @@
+importar:
+    path:     /importar
+    defaults: { _controller: ImportarBundle:Default:index }
+
+download_route:
+    pattern:  /download/{filename}
+    defaults: { _controller: ImportarBundle:Default:download }
+    options:
+        expose: true

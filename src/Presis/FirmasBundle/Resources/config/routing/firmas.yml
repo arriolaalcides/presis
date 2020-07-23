@@ -1,0 +1,52 @@
+firmas:
+    path:     /
+    defaults: { _controller: "FirmasBundle:Firmas:index" }
+
+firmas_manifiestos:
+    path:     /firmas-manifiestos
+    defaults: { _controller: "FirmasBundle:Firmas:indexManifiestos" }
+
+firmas_show:
+    path:     /{id}/show
+    defaults: { _controller: "FirmasBundle:Firmas:show" }
+
+firmas_new:
+    path:     /new
+    defaults: { _controller: "FirmasBundle:Firmas:new" }
+
+firmas_create:
+    path:     /create
+    defaults: { _controller: "FirmasBundle:Firmas:create" }
+    methods:  POST
+
+firmas_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FirmasBundle:Firmas:edit" }
+
+firmas_update:
+    path:     /{id}/update
+    defaults: { _controller: "FirmasBundle:Firmas:update" }
+    methods:  [POST, PUT]
+
+firmas_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FirmasBundle:Firmas:delete" }
+    methods:  [POST, DELETE]
+
+firmas_asajax:
+    path:     /asajax
+    defaults: { _controller: "FirmasBundle:Firmas:asAjax" }
+    options:
+        expose: true
+
+firmas_manifiestos_asajax:
+    path:     /asajax-firma-manifiesto
+    defaults: { _controller: "FirmasBundle:Firmas:asAjaxManifiestos" }
+    options:
+        expose: true
+
+firmas_img_firma:
+    path:     /img-firma
+    defaults: { _controller: "FirmasBundle:Firmas:imgFirma" }
+    options:
+        expose: true

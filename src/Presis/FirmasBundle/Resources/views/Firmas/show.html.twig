@@ -1,0 +1,8 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+        {% for datos in data %}
+               {{ datos.tracking }}
+            <img alt="Embedded Image" src="data:image/png;base64,{{ datos.img }}" />
+        {% endfor %}
+{% endblock %}

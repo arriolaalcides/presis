@@ -1,0 +1,44 @@
+servicio:
+    path:     /
+    defaults: { _controller: "PresisServicioBundle:Servicio:index" }
+
+servicio_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisServicioBundle:Servicio:show" }
+    options:
+            expose: true
+
+servicio_new:
+    path:     /new
+    defaults: { _controller: "PresisServicioBundle:Servicio:new" }
+servicio_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisServicioBundle:Servicio:ajax" }
+    options:
+            expose: true
+
+servicio_desc:
+    path: /desc/{servicioNombre}
+    defaults: { _controller: "PresisServicioBundle:Servicio:getDesc" }
+    options:
+            expose: true
+servicio_create:
+    path:     /create
+    defaults: { _controller: "PresisServicioBundle:Servicio:create" }
+    requirements: { _method: post }
+
+servicio_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisServicioBundle:Servicio:edit" }
+    options:
+            expose: true
+
+servicio_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisServicioBundle:Servicio:update" }
+    requirements: { _method: post|put }
+
+servicio_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisServicioBundle:Servicio:delete" }
+    requirements: { _method: post|delete }

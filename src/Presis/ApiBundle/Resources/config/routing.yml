@@ -1,0 +1,47 @@
+presis_servicios_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/ServicioController.php"
+    name_prefix:  api_1_ # naming collision
+
+presis_precios_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/PrecioController.php"
+    name_prefix:  api_1_ # naming collision
+
+presis_retiros_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/RetiroController.php"
+    name_prefix:  api_1_ # naming collision
+
+presis_vouchers_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/VoucherController.php"
+    name_prefix: api_1_
+
+presis_etis_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/EtiController.php"
+    name_prefix: api_1_
+
+presis_notificaciones_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/NotificacionesController.php"
+    name_prefix: api_1_
+
+presis_entregas_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/EntregasController.php"
+    name_prefix: api_1_
+    
+presis_consultarguias_api:
+    type: rest
+    prefix: /v1
+    resource: "@PresisApiBundle/Controller/ConsultarguiasController.php"
+    name_prefix: api_1_    

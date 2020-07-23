@@ -1,0 +1,227 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <div class="col-lg-2">
+            <select class="form-control">
+                <option value="">Export Basic</option>
+                <option value="all">Export All</option>
+                <option value="selected">Export Selected</option>
+            </select>
+        </div>
+        <table id="retiros"
+               data-toggle="table"
+               data-show-export="true"
+               data-height="500"
+               data-side-pagination="server"
+               data-pagination="true"
+               data-page-list="[5, 10, 20, 50, 100, 200]"
+               data-search="true"
+               data-row-style="rowStyle"
+               data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th data-field="id" data-filter-control="input">Id</th>
+                <th data-field="cliente.empresa" data-filter-control="select">Empresa</th>
+                <th data-field="domicilio_retiro" data-filter-control="select">Direccion</th>
+                <th data-field="localidad" data-filter-control="select">Localidad</th>
+                <th data-field="cp" data-filter-control="select">CP</th>
+                <th data-field="dias" data-filter-control="select">Frecuencia</th>
+                <th data-field="franja" >Franja</th>
+                <th data-field="is_habilitado" data-formatter="isHabilitado">Estado</th>
+                <th data-field="fecha_asignado" >Fecha Agregado</th>
+                <th data-formatter="acciones">Acciones</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        var $table = $("#retiros");
+
+        var $pagina = 0;
+        var $limite = 10;
+
+        $(function () {
+            buildTable($table, 20, 20);
+            $('#fixedNumber').change(function () {
+                buildTable($table, 20, 20);
+            });
+        });
+
+        function buildTable($el, cells, rows) {
+            $el.bootstrapTable('destroy').bootstrapTable({
+                toolbar: '.toolbar'
+            });
+        }
+
+        function isHabilitado(value, row){
+            var $estado = "";
+            if(row.is_habilitado){
+                $estado = 'HABILITADO';
+            }else{
+                $estado = 'DESHABILITADO';
+            }
+            return $estado;
+        }
+
+        function fecha(value, row){
+            var $fecha = value.split(' ');
+            return $fecha[0];
+        }
+
+        function acciones(value, row){
+            if(!row.is_habilitado){
+                botones = "<a href="+Routing.generate('retirosfijos_edit',{id: row.id} )+"><i class='fa fa-pencil-square-o fa-2x'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='deleteRow("+row.id+");return false;'><i class='fa fa-times fa-2x' title='Eliminar registro'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='habilitar("+row.id+");return false;'><i class='fa fa-check-circle-o fa-2x' title='Habilitar registro'></i></a>" ;
+            }else{
+                botones = "<a href="+Routing.generate('retirosfijos_edit',{id: row.id} )+"><i class='fa fa-pencil-square-o fa-2x'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='deleteRow("+row.id+");return false;'><i class='fa fa-times fa-2x' title='Eliminar registro'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='deshabilitar("+row.id+");return false;'><i class='fa fa-ban fa-2x' title='Deshabilitar registro'></i></a>" ;
+            }
+            return botones;
+        }
+
+        function deleteRow(id) {
+            BootstrapDialog.show({
+                title: 'Atencion!!!!',
+                message: 'Realmente desea eliminar el registro?',
+                buttons: [{
+                    label: 'Aceptar',
+                    action: function(dialog) {
+                        $.ajax( {
+                            url: Routing.generate('retirosfijos_eliminar',{idFijo: id} )
+                        }).done(function(data) {
+                            dialog.close();
+                            if(data=='error'){
+                                BootstrapDialog.show({
+                                    title: 'Atencion!!!!',
+                                    message: 'La guia solo puede ser eliminada por el usuario que la genero.',
+                                    buttons: [{
+                                        label: 'Aceptar',
+                                        action: function(dialog) {
+                                            buscarRetiros();
+                                            dialog.close();
+                                        }
+                                    }]
+                                });
+                            }else{
+                                buscarRetiros();
+                            }
+                        });
+                    }
+                }, {
+                    label: 'Cancelar',
+                    action: function(dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        }
+
+        function deshabilitar(id) {
+            BootstrapDialog.show({
+                title: 'Atencion!!!!',
+                message: 'Realmente desea deshabilitar el registro?',
+                buttons: [{
+                    label: 'Aceptar',
+                    action: function(dialog) {
+                        $.ajax( {
+                            url: Routing.generate('retirosfijos_deshabilitar',{idFijo: id} )
+                        }).done(function(data) {
+                            dialog.close();
+                            buscarRetiros();
+                        });
+                    }
+                }, {
+                    label: 'Cancelar',
+                    action: function(dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        }
+
+        function habilitar(id) {
+            BootstrapDialog.show({
+                title: 'Atencion!!!!',
+                message: 'Realmente desea habilitar el registro?',
+                buttons: [{
+                    label: 'Aceptar',
+                    action: function(dialog) {
+                        $.ajax( {
+                            url: Routing.generate('retirosfijos_habilitar',{idFijo: id} )
+                        }).done(function(data) {
+                            dialog.close();
+                            buscarRetiros();
+                        });
+                    }
+                }, {
+                    label: 'Cancelar',
+                    action: function(dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        }
+
+        $(document).ready(function(){
+
+            buscarRetiros();
+
+            $table.bootstrapTable()
+                    .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+                        buscarRetiros();
+                    });
+        });
+
+        var buscarRetiros = function(){
+            $.blockUI({message: "<h3>Buscando datos...</h3>"});
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('retiros_fijos_ajax'),
+                data: obtenerParametrosBusqueda(),
+                success: function(data)
+                {
+                    var data = JSON.parse(data);
+
+                    $table.bootstrapTable('load', data);
+
+                    $.unblockUI();
+                },
+
+                error: function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        }
+
+        var obtenerParametrosBusqueda = function() {
+            return {pagina: $pagina, limite: $limite, search: $('.fixed-table-toolbar .search input').val()}
+        }
+
+        function rowStyle(row, index) {
+            var classes = ['HABILITADO', 'DESHABILITADO'];
+            if (row.is_habilitado) {
+                return {
+                    classes: classes[0]
+                };
+            }else{
+                return {
+                    classes: classes[1]
+                };
+            }
+            return {};
+        }
+    </script>
+{% endblock %}

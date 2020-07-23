@@ -1,0 +1,17 @@
+parameters:
+#    presis_servicio.example.class: Presis\ServicioBundle\Example
+
+services:
+#    presis_servicio.example:
+#        class: %presis_servicio.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+  presis_servicio:
+    class:  Presis\ServicioBundle\Services\ServiceManager
+    arguments:
+      em: "@doctrine.orm.entity_manager"
+      class: Presis\ServicioBundle\Entity\Servicio
+  presis_precio:
+    class:  Presis\ServicioBundle\Services\PrecioManager
+    calls:
+         - [setEntityManager, ["@doctrine.orm.entity_manager"]]
+

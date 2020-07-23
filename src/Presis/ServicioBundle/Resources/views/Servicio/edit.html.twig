@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+        <div class="container-fluid container-round">
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Editar servicio</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.codServ,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.descripcion,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">    
+                    {{ form_row(edit_form.detalleServicio,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <br />   
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button1id"></label>
+                    <div class="col-md-8">
+                        {{ form_widget(edit_form.submit) }}
+                        <a href="{{ path('servicio') }}" class="btn btn-primary">Volver a Servicios</a>
+
+                    </div>
+                </div>
+            </div>        
+        </fieldset>
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

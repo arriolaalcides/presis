@@ -1,0 +1,7 @@
+foto_fotos:
+    resource: "@FotoBundle/Resources/config/routing/fotos.yml"
+    prefix:   /fotos
+
+foto_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: FotoBundle:Default:index }

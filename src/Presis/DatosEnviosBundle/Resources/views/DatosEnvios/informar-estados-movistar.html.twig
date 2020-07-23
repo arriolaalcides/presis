@@ -1,0 +1,344 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <form id="form">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title pull-left">Modificar estado Movistar</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div style="border-style: solid; border-color: blue; padding-top: 10px; padding-bottom: 10px;" class="col-md-6">
+                            <label class="control-label col-lg-2" for="tracking">Nro Guia</label>
+                            <div class="col-lg-2">
+                                <input type="text" id="tracking" name="tracking" required="required" maxlength="15" class="form-control input-sm" required />
+                            </div>
+                            
+                            <label class="control-label col-lg-4" for="imei">Nro de IMEI(15 caracteres)</label>
+                            <div class="col-lg-4">
+                                <input type="text" id="imei" name="imei" maxlength="15" class="form-control input-sm" required />
+                            </div>
+                            <div class="clearboth">&nbsp;</div>
+                            <div class="col-lg-2">
+                                <button id="search" name="search" class="btn btn-primary btn-sm btn-primary">BUSCAR GESTION</button>
+                            </div>
+                        </div>
+                        <div style="border-style: solid; border-color: green;  padding-top: 10px; padding-bottom: 10px; margin-left: 20px;" class="col-md-5">
+                            <label class="control-label  col-lg-2" for="estado">Estado</label>
+                            <div id="estados" class="col-lg-4">
+                                <select required id="estados" name="estado" class="form-control input-sm">
+                                    {% for estado in estados %}
+                                        <option value="{{ estado.id }}">{{ estado.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div id ="e" hidden class="col-lg-4 ">
+                                <select required id="es" name="estado" class="form-control input-sm">
+                                    {% for e in estado_eac %}
+                                        <option value="{{ e.id }}">{{ e.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>    
+                            <div class="col-lg-2">
+                                <button id="modificar" name="modificar" class="btn btn-success btn-sm btn-primary" disabled>MODIFICAR GESTION</button>
+                            </div>    
+                        </div>
+                        
+                        
+                        
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">Datos de Gestion</h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="ani">Ani</label>
+                        <div class="col-lg-2">
+                            <input type="text" id="ani" name="ani" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="nroserie">Imei</label>
+                        <div class="col-lg-2">
+                            <input type="text" id="nroserie" name="nroserie" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="nomyape">Nombre y apellido</label>
+                        <div class="col-lg-2">
+                            <input type="text" id="nomyape" name="nomyape" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="usuario">Usuario</label>
+                        <div class="col-lg-2">
+                            <input type="text" id="usuario" name="usuario" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="nrosst">SST</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="nrosst" name="nrosst" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="aceptacargos">Acepta cargos</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="aceptacargos" name="aceptacargos" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="nivelderep">Nivel de rep.</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="nivelderep" name="nivelderep" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="muleto">Muleto</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="muleto" name="muleto" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="imeimuleto">Imei muleto</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="imeimuleto" name="imeimuleto" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="fechaactivacion">Activacion</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="fechaactivacion" name="fechaactivacion" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="origendelequipo">Origen equipo</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="origendelequipo" name="origendelequipo" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="sva">Sva</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="sva" name="sva" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="falla">Falla</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="falla" name="falla" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="rotura">Rotura</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="rotura" name="rotura" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="completitud">Completitud</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="completitud" name="completitud" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="estadointervencion">Estado intervencion</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="estadointervencion" name="estadointervencion" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="certificadoreparador">Certificado reparador</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="certificadoreparador" name="certificadoreparador" class="form-control input-sm" disabled>
+                        </div>
+                         <label class="control-label col-lg-1" for="placaswap">Swap</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="placaswap" name="placaswap" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="nroimei">Nro. imei</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="nroimei" name="nroimei" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="tipocliente">Tipo cliente</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="tipocliente" name="tipocliente" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="tiposervicio">Tipo servicio</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="tiposervicio" name="tiposervicio" class="form-control input-sm" disabled>
+                        </div>
+                        <label class="control-label col-lg-1" for="claimassurant">Claim assurant</label>
+                        <div class="col-lg-3">
+                            <input type="text" id="claimassurant" name="claimassurant" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="control-label col-lg-1" for="sms">Informado</label>
+                        <div class="col-lg-11">
+                            <input type="text" id="sms" name="sms" class="form-control input-sm" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+
+                $("#search").click(function(event){
+                    if ($("#tracking").val() != '' && $("#imei").val() != '' ){
+                    event.preventDefault();
+                    $.blockUI({message: "<h2>Buscando datos...</h2>"});
+                    $.ajax({
+                        url: Routing.generate("find_gestioncel"),
+                        type: 'GET',
+                        data: $("#form").serialize(),
+                        success: function (data) {
+                            
+                            if (data==2){
+                                 BootstrapDialog.show({
+                                    title: 'Error',
+                                    message: 'Nro. de Guia no coincide con numero de imei'
+                                });
+                                $.unblockUI();
+                            }
+                            if (data != null) {
+                                var estado = data.estadointervencion; 
+                                console.log(estado)
+                                if(estado != 'VUELVE CERTIFICADO FALREP EN GARANTIA'){
+                                    $.each(data, function (key, val) {
+                                        $("#" + key).val(val);
+                                        //disabled boton modificar cuando se carga el formulario telefono
+                                        $("#modificar").removeAttr('disabled');
+                                        //debe seleccionar un estado obligatoriamente
+                                        $("#estado").prop('required',true);
+                                        $("div #estados").css("display", "block");
+                                        $("div #e").css("display", "none");
+                                        $("#es").attr("name","otro");
+                                        $("#estados").attr("name","estado");
+                                        
+                                    });
+                                }else{
+                                    $.each(data, function (key, val) {
+                                        $("#" + key).val(val);
+                                        //disabled boton modificar cuando se carga el formulario telefono
+                                        $("#modificar").removeAttr('disabled');
+                                        //debe seleccionar un estado obligatoriamente
+                                        $("#estado").prop('required',true);
+                                        //oculta estados 163 y 164
+                                        //$("div #estados").hide()
+                                        //se visualiza estado 167
+                                       // $("div #e").removeAttr('hidden')
+                                        $("div #estados").css("display", "none");
+                                        $("div #e").css("display", "block");
+                                        $("#es").attr("name","estado");
+                                        $("#estados").attr("name","otro");
+                                    });
+                                }
+                                    
+                                 /*   if($("#estadointervencion").val() == 'PARA AUDITORIA\CONCILIACION'){
+                                 
+                                    }*/
+                            }
+                            
+                            $.unblockUI();
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                            $.unblockUI();
+                        }
+                    });
+                    }
+                });
+
+                $("#modificar").click(function(event){
+                   
+                    alert($("").val())   
+                    event.preventDefault();
+                    if($("select#estados option:checked").val() == '163'){
+                        alert("aqui")
+                    }
+                    $.blockUI({message: "<h2>Actualizando datos...</h2>"});
+                    $.ajax({
+                        url: Routing.generate("update_gestioncel_movistar"),
+                        type: 'POST',
+                        data: $("#form").serialize(),
+                        success: function (data) {
+                            if (data ==1){
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: 'Nro. de Guia no coincide con numero de imei'
+                            });
+                            $.unblockUI();
+                            }
+                            if (data ==2){
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: 'El Nro. de Guia ya finalizo su gestion'
+                            });
+                            $.unblockUI();
+                            }
+                            if (data ==3){
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: 'La guia no se encuentra con estado EQUIPO RECEPCIONADO EN CEC'
+                            });
+                            $.unblockUI();
+                            }
+                            if (data ==4){
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: 'La guia no se encuentra con estado TERMINADA OPERATORIO DE ST EN CEC'
+                            });
+                            $.unblockUI();
+                            }
+                            if (data != 1 && data!= 2 && data!= 3 && data!= 4){
+                                BootstrapDialog.show({
+                                    title: 'Atencion',
+                                    message: 'Datos Actualizados : '+data
+                                });
+                            }
+                             
+                            $("#tracking").val('');
+                            $("#imei").val('');
+                            $("#ani").val('');
+                            $("#nroserie").val('');
+                            $("#nomyape").val('');
+                            $("#usuario").val('');
+                            $("#nrosst").val('');
+                            $("#aceptacargos").val('');
+                            $("#nivelderep").val('');
+                            $("#muleto").val('');
+                            $("#imeimuleto").val('');
+                            $("#fechaactivacion").val('');
+                            $("#origendelequipo").val('');
+                            $("#sva").val('');
+                            $("#falla").val('');
+                            $("#rotura").val('');
+                            $("#completitud").val('');
+                            $("#estadointervencion").val('');
+                            $("#certificadoreparador").val('');
+                            $("#placaswap").val('');
+                            $("#nroimei").val('');
+                            $("#tipocliente").val('');
+                            $("#tiposervicio").val('');
+                            $("#claimassurant").val('');
+                            $("#sms").val('');
+                            $("#modificar").prop('disabled', true);
+                            $.unblockUI();
+                            
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                            $.unblockUI();
+                        }
+                    });
+                
+            });
+
+
+            });//FIN DEL DOCUMENTO
+        </script>
+    {% endblock %}

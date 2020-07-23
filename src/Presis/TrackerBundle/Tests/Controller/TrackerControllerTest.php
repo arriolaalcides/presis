@@ -1,0 +1,25 @@
+<?php
+
+namespace Presis\TrackerBundle\Tests\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class TrackerControllerTest extends WebTestCase
+{
+    /*
+    public function testCompleteScenario()
+    {
+        // Create a new client to browse the application
+        $client = static::createClient();
+
+        // Go to the list view
+        $crawler = $client->request('GET', '/tracker/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /tracker/");
+
+        // Go to the show view
+        $crawler = $client->click($crawler->selectLink('show')->link());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code");
+    }
+
+    */
+}

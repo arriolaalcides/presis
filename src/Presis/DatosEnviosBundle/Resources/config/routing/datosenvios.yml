@@ -1,0 +1,340 @@
+datosenvios:
+    path:     /
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:index" }
+
+datosenvios_show:
+    path:     /show
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:formFindGuia" }
+    options:
+        expose: true
+        
+datosenvios_new:
+    path:     /new
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:new" }
+    options:
+        expose: true
+
+datosenvios_create:
+    path:     /create
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:create" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_find_tracker:
+    path:     /findTracker
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:findTracker" }
+    methods:  GET
+    options:
+        expose: true
+
+datosenvios_create_csv:
+    path:     /create_csv
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:createFromCSV" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_find:
+    path:     /create
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:find" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_findGuia:
+    path:     /find
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:findGuia" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_pendientes_retiro:
+    path:     /pendientes-retiro
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesRetiro" }
+    options:
+        expose: true
+
+datosenvios_pendientes_pago:
+    path:     /pendientes-pago
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesPago" }
+    options:
+        expose: true
+
+datosenvios_pagos_confirmados:
+    path:     /pagos-confirmados
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pagosConfirmados" }
+    options:
+        expose: true
+
+datosenvios_pendientes:
+    path:     /pendientes
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesInterior" }
+    options:
+        expose: true
+
+datosenvios_pendientes_mas_logistica:
+    path:     /getpendientesmaslogistica
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getPendientesMasLogistica" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_pendientes_de_retiro:
+    path:     /getpendientes
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getPendientes" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_confirmar:
+    path:     /confirmar
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:confirmar" }
+    options:
+        expose: true
+
+datosenvios_confirmar_retiros:
+    path:     /getconfirmarretiros
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getConfirmarRetiros" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_confirmar_pagos:
+    path:     /getconfirmarpagos
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getConfirmarPagos" }
+    options:
+        expose: true
+
+datosenvios_get_pagos_confirmados:
+    path:     /getPagosConfirmados
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getPagosConfirmados" }
+    options:
+        expose: true
+
+datosenvios_confirmretiro:
+    path:     /confirmretiro
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:confirmretiro"}
+    options:
+        expose: true
+
+datosenvios_confirmpagoretiro:
+    path:     /confirmpagoretiro
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:confirmpagoretiro"}
+    options:
+        expose: true
+
+datosenvios_getfletepeso:
+    path:     /getfletepeso
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getFletePorPeso" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_getfletebultos:
+    path:     /getfletebultos
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getFletePorBultos" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_getfletevalordeclarado:
+    path:     /getfletevalordeclarado
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getFletePorValorDeclarado" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_calcular_peso:
+    path:     /calcularpeso
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:calcularPeso" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_servicio_adecuado:
+    path:     /servicioadecuado
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getServicioAdecuado" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_getseguro:
+    path:     /getseguro
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getSeguro" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:edit" }
+    options:
+        expose: true
+
+datosenvios_edit_client:
+    path:     /{id}/edit
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:edit" }
+    options:
+        expose: true
+
+datosenvios_update:
+    path:     /{id}/update
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:update" }
+    methods:  [POST, PUT]
+    options:
+        expose: true
+
+datosenvios_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:delete" }
+    methods:  [POST, DELETE]
+
+datosenvios_generarguiapdf:
+    path:     /generarpdf
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:generar",_format: "pdf" }
+    options:
+        expose: true
+
+datosenvios_verificar_cp:
+    path:     /verificarcp
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:verificarCP" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_agregar_datos_factura:
+    path:     /{id_retiro}/{nro_factura}/{fecha_factura}/agregarfactura
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:agregarDatosFactura" }
+    methods:  [GET]
+    options:
+        expose: true
+
+datosenvios_auditoria:
+    path:     /auditoria
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:formAuditoria" }
+    methods:  [GET]
+    options:
+        expose: true
+
+datosenvios_imprimir_constancia:
+    path:     /impresion
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:impresionConstancia" }
+    options:
+        expose: true
+
+datosenvios_getFleteRangoPeso:
+    path:     /getFleteRangoPeso
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getFleteRangoPeso" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_pendientes_bolsin:
+    path:     /pendientes-bolsin
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesBolsinMovistar" }
+    options:
+        expose: true
+
+datosenvios_confirmar_bolsin_movistar:
+     path:     /getconfirmarbolsin
+     defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getConfirmarBolsin" }
+     methods:  POST
+     options:
+        expose: true
+
+datosenvios_informar_reparados:
+    path:     /informar-reparados
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:informarReparados" }
+    options:
+        expose: true
+
+fin_gestion_save:
+    path:     /fin-gestion-save
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:saveGestion" }
+    requirements: { _method: post }
+
+gestioncel_update:
+    path:     /update-data
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:updateGestion" }
+    options:
+        expose: true
+
+datosenvios_pendientes_bolsin_galander:
+    path:     /pendientes-bolsin-galander
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesBolsinGalander" }
+    methods:  GET
+    options:
+        expose: true
+
+datosenvios_confirmar_bolsin_galander:
+     path:     /getconfirmarbolsinGalander
+     defaults: { _controller: "DatosEnviosBundle:DatosEnvios:getConfirmarBolsinGalander" }
+     methods:  POST
+     options:
+        expose: true
+
+datosenvios_pendientes_de_informar_galander:
+    path:     /informar-reparadosr
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:pendientesDeInformeGalander" }
+    options:
+        expose: true
+
+exportar_datos:
+    path:     /exportar
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:exportar" }
+    options:
+        expose: true
+
+nroSerie_find:
+    path:     /nroSerieFind
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:nroSerieFind" }
+    options:
+        expose: true
+
+datosenvios_informar_movistar:
+    path:     /informar-movistar
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:informarFinalMovistar" }
+    options:
+        expose: true
+
+find_gestioncel:
+    path:     /find-gestion
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:findGestion" }
+    methods:  GET
+    options:
+        expose: true
+
+update_gestioncel_movistar:
+    path:     /update-gestion-movistar
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:updateGestionMovistar" }
+    methods:  POST
+    options:
+        expose: true
+
+datosenvios_search_gestion_cel:
+    path:     /search-gestion
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:searchGestion" }
+    methods:  GET
+    options:
+        expose: true
+        
+datosenvios_search_ajax:
+    path:     /search-gestioncel
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:findGestionCel" }
+    options:
+        expose: true
+        
+datosenvios_search_gestion_cel_totus:
+    path:     /search-gestion-totus
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:searchGestionTotus" }
+    methods:  GET
+    options:
+        expose: true
+        
+datosenvios_search_ajax_tutos:
+    path:     /search-gestioncel-totus
+    defaults: { _controller: "DatosEnviosBundle:DatosEnvios:findGestionCelTotus" }
+    options:
+        expose: true
+        

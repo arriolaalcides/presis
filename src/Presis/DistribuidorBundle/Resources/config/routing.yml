@@ -1,0 +1,7 @@
+distribuidor_distribuidor:
+    resource: "@DistribuidorBundle/Resources/config/routing/distribuidor.yml"
+    prefix:   /distribuidor
+
+distribuidor_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DistribuidorBundle:Default:index }

@@ -1,0 +1,66 @@
+distribuidor:
+    path:     /
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:index" }
+
+distribuidor_show:
+    path:     /{id}/show
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:show" }
+
+distribuidor_new:
+    path:     /new
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:new" }
+    options:
+        expose: true
+
+distribuidor_create:
+    path:     /create
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:create" }
+    methods:  POST
+
+distribuidor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:edit" }
+    options:
+        expose: true
+
+distribuidor_update:
+    path:     /{id}/update
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:update" }
+    methods:  [POST, PUT]
+
+distribuidor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:delete" }
+    methods:  [GET]
+    options:
+        expose: true
+
+distribuidor_asajax:
+    path:     /asajax
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:ajax" }
+    options:
+        expose: true
+
+distribuidor_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:ajax4select" }
+    options:
+      expose: true
+
+distribuidor_presentismo:
+    path:     /presentismo
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:presentismo" }
+    options:
+      expose: true
+
+distribuidor_listaPresentismo:
+    path:     /listaPresentismo
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:listaPresentismo" }
+    options:
+      expose: true
+
+distribuidor_save_presente:
+    path:     /save-presente
+    defaults: { _controller: "DistribuidorBundle:Distribuidor:savePresente" }
+    options:
+      expose: true

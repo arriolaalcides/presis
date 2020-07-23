@@ -1,0 +1,57 @@
+<pdf>
+    <dynamic-page font-type="DejaVuSans">
+        <h1 align="center">Planilla de recorrido</h1>
+        <div id="div-general" width="100%" height="45%" border.color="black">
+            <div id="encabezado">
+                <div width="100%">
+                    <strong># Planilla</strong>
+                    {{ recorrido.id }}
+                </div>
+                <div width="100%">
+                    <strong>Colectora</strong>
+                    {{ recorrido.colectora }}
+                </div>
+                <div width="100%">
+                    <strong>Expreso</strong>
+                    {{ recorrido.expreso }}
+                </div>
+                <div width="100%">
+                    <strong>Distribuidor</strong>
+                    {{ recorrido.distribuidor }}
+                </div>
+                <div width="100%">
+                    <strong>Fecha</strong>
+                    {{ recorrido.fecha | date('d/m/y') }}
+                </div>
+                <div width="100%">
+                    <strong># Guía</strong>
+                    {{ recorrido.guiaExpreso }}
+                </div>
+                <div width="100%">
+                    <strong>Detalles</strong>
+                    {{ recorrido.detalles }}
+                </div>
+            </div>
+            <div id="retiros">
+                <table style="width:100%">
+                    <tr>
+                        <th>Tracking</th>
+                        <th>Comprador</th>
+                        <th>Dirección</th>
+                        <th>Email</th>
+                        <th>Localidad</th>
+                    </tr>
+                    {% for retiro in retiros %}
+                        <tr>
+                            <td>{{ retiro.id }}</td>
+                            <td>{{ retiro.nombreComprador }}</td>
+                            <td>{{ retiro.direccionComprador }}</td>
+                            <td>{{ retiro.emailComprador }}</td>
+                            <td>{{ retiro.localidadComprador }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </dynamic-page>
+</pdf>

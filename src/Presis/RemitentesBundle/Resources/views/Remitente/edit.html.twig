@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    {{ form_start(edit_form) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">Modificar Remitentes</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.codigo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.empresa,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4 }) }}
+                    {{ form_row(edit_form.remitente,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.celular,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                    {{ form_row(edit_form.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                    {{ form_row(edit_form.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                    {{ form_row(edit_form.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                    {{ form_row(edit_form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                    {{ form_row(edit_form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.otherInfo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11 }) }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-5">
+                        {{ form_widget(edit_form.submit) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}

@@ -1,0 +1,108 @@
+tracker:
+    path:     /
+    defaults: { _controller: "TrackerBundle:Tracker:index" }
+
+tracker_asajax:
+    path:     /asajax
+    defaults: { _controller: "TrackerBundle:Tracker:asajax" }
+    options:
+        expose: true
+        
+tracker_index:
+    path:     /indextracking
+    defaults: { _controller: "TrackerBundle:Tracker:index" }
+    options:
+        expose: true
+        
+
+tracker_newtracking:
+    path:     /newtracking
+    defaults: { _controller: "TrackerBundle:Tracker:newTracking" }
+    options:
+        expose: true
+
+tracker_show:
+    path:     /{id}/show
+    defaults: { _controller: "TrackerBundle:Tracker:show" }
+    options:
+        expose: true
+
+tracker_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "TrackerBundle:Tracker:edit" }
+    options:
+        expose: true
+        
+tracker_update:
+    path:     /{id}/update
+    defaults: { _controller: "TrackerBundle:Tracker:update" }
+    methods:  [POST, PUT]
+    options:
+        expose: true
+
+
+tracker_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "TrackerBundle:Tracker:delete" }
+    options:
+        expose: true
+
+tracker_getretiros_imei:
+    path:     /{id_retiro_atributo}/getretirosimei
+    defaults: { _controller: "TrackerBundle:Tracker:getRetirosImei" }
+    methods:  [GET]
+    options:
+        expose: true
+
+tracker_getretiros_remito:
+    path:     /{id_retiro_atributo}/getretirosremito
+    defaults: { _controller: "TrackerBundle:Tracker:getRetirosRemito" }
+    methods:  [GET]
+    options:
+        expose: true
+
+tracker_getretiros_guia_agente:
+    path:     /{id_retiro_atributo}/getretirosguiaagente
+    defaults: { _controller: "TrackerBundle:Tracker:getRetirosGuiaAgente" }
+    methods:  [GET]
+    options:
+        expose: true
+
+tracker_cambiar_estado:
+    path:     /cambiarestado
+    defaults: { _controller: "TrackerBundle:Tracker:cambiarEstado" }
+    methods:  POST
+    options:
+        expose: true
+
+tracker_movistar_new:
+    path:     /tracker-movistar-new
+    defaults: { _controller: "TrackerBundle:Tracker:newMovistar" }
+
+tracker_movistar:
+    path:     /tracker-movistar
+    defaults: { _controller: "TrackerBundle:Tracker:indexMovistar" }
+
+tracker_movistar_editar:
+    path:     /tracker-gestionar
+    defaults: { _controller: "TrackerBundle:Tracker:gestionarTracking" }
+    options:
+        expose: true
+
+tracker_create:
+    path:     /create
+    defaults: { _controller: "TrackerBundle:Tracker:create" }
+    requirements: { _method: post }
+    
+tracker_update_gestion:
+    path:     /tracker-data
+    defaults: { _controller: "TrackerBundle:Tracker:TrackerupdateGestion" }
+    options:
+        expose: true
+
+tracker_create_gestion:
+    path:     /tracker-data-create
+    defaults: { _controller: "TrackerBundle:Tracker:TrackercreateGestion" }
+    options:
+        expose: true
+

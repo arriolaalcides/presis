@@ -1,0 +1,394 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .INFORMADO{
+            color:#4cae4c;
+            font-weight: bold;
+        }
+        .RETIRADO{
+            color:#5bc0de;
+            font-weight: bold;
+        }
+        .ERROR{
+            color:#ff0000;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+    {% block contenido %}
+        <div class="container-fluid">
+        <legend>Asignación de guías pendientes de retiro AMBA</legend>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label for="distribuidor">Asignar a</label>
+                        <select id="distribuidor" name="distribuidor" class="form-control input-sm">
+                            <option value="" selected>Seleccionar</option>
+                            {% for item in entities  %}
+                                <option value="{{ item.id }}">{{ item.codigo ~ ' - ' ~ item.apellido ~ ', ' ~ item.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="distribuidor">Cliente</label>
+                        <select id="cliente" name="cliente" class="form-control input-sm">
+                            <option value="" selected>Seleccionar</option>
+                            {% for cliente in clientes  %}
+                                <option value="{{ cliente.id }}">{{ cliente.empresa}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="fecha">Fecha retiro</label>
+                        <input type="text" id="fecha" value="{{ "now"|date('d/m/Y') }}" class="form-control date-picker input-sm">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="fecha">Fecha asignado</label>
+                        <input type="text" id="fechaAsignado" class="form-control date-picker input-sm">
+                    </div>
+                    <br/>
+                    <div class="col-sm-2">
+                        <button type="button" id="buscar" class="btn btn-primary btn-sm">FILTRAR</button>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    {% if is_granted('ROLE_BACK_OFFICE')==false %}
+                        <button type="button" id="abrir-planilla" class="btn btn-primary btn-sm">ASIGNAR</button>
+                        <button type="button" id="imprimirSeleccion" class="btn btn-primary btn-sm">IMPRIMIR CONSTANCIA</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="prints">IMPRIMIR GUIAS</button>
+                        <button type="button" id="cancelarSeleccion" class="btn btn-primary btn-sm">CANCELAR</button>
+                        <button type="button" id="confirmarSeleccion" class="btn btn-success btn-sm">CONFIRMAR</button>
+                        <button type="button" id="actualizar" class="btn btn-success btn-sm">ACTUALIZAR</button>
+                        <button type="button" id="repactar" class="btn btn-danger btn-sm">REPACTAR</button>
+                    {% endif %}
+                </div>
+                <br />
+            </form>
+        </div>
+        <div class="container-fluid">
+            <table id="retiros"
+                   style="font-size: 10px;"
+                   data-toggle="table"
+                   data-row-style="rowStyle"
+                   data-click-to-select="true"
+                   data-filter-control="true">
+                <thead>
+                <tr>
+                    <th data-field="id" data-filter-control="input">Id</th>
+                    <th data-field="timestamp" data-filter-control="input">Fecha Base</th>
+                    <th data-field="fecha" data-filter-control="input">Fecha Retiro</th>
+                    <th data-field="retiro" data-sortable="true" data-filter-control="input">Remito</th>
+                    <th data-field="cliente.empresa" data-filter-control="select">Empresa</th>
+                    <th data-field="domicilio_retiro" data-filter-control="input">Direccion</th>
+                    <th data-field="localidad" data-filter-control="select">Localidad</th>
+                    <th data-field="cp" data-filter-control="input">CP</th>
+                    <th data-field="contacto" data-filter-control="input">Contacto</th>
+                    <th data-field="telefono" data-filter-control="input">Telefono</th>
+                    <th data-field="observaciones" data-filter-control="input">Obs</th>
+                    <th data-field="peso" data-filter-control="input">Peso</th>
+                    <th data-field="bultos" data-filter-control="input">Cantidad</th>
+                    <th data-field="estado" data-sortable="true" data-filter-control="select">Estado</th>
+                    <th data-field="distribuidor" data-filter-control="select">Distribuidor</th>
+                    <th data-field="fecha_hora" data-filter-control="input">Fecha Asignado</th>
+                    <th data-field="asigno" data-filter-control="input">Asigno</th>
+                    <th data-field="is_fijo" data-formatter="isFijo" data-filter-control="input">Fijo</th>
+                    <th data-field="recibido" data-formatter="isFijo" data-filter-control="input">Recibido</th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none" data-formatter="stateFormatter"></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            var $table = $('#retiros');
+
+            function acciones(value, row){
+                botones = "<a href="+Routing.generate('constancia_showvoucher',{id: row.id} )+" target='_blank' title='Imprimir constancia'><i class='fa fa-print fa-2x'></i></a> " +
+                        "<a href="+Routing.generate('retiro_showguia',{id: row.retiro} )+" target='_blank' title='Imprimir guia'><i class='fa fa-file-pdf-o fa-2x'></i></a>";
+                return botones;
+            }
+
+            function fechaRetiro(value, row){
+                var $fecha = value.split(' ');
+                return $fecha[0];
+            }
+
+            function horaRetiro(value, row){
+                var $hora = value.split(' ');
+                return $hora[1];
+            }
+
+            function isFijo(value, row){
+                var $fijo = "";
+                if(value==false){
+                    $fijo = "NO";
+                }else{
+                    $fijo = "SI";
+                }
+                return $fijo;
+            }
+
+            function stateFormatter(value, row, index) {
+                if(row.estado=='RETIRADO'){
+                    return {
+                        disabled: true
+                    };
+                }
+                return value;
+            }
+
+            function rowStyle(row, index) {
+                var classes = ['INFORMADO','RETIRADO','ERROR'];
+                if ((row.recibido==1 && row.estado=='ST - Solicitud de recolección transmitida')){
+                    return {
+                        classes: classes[0]
+                    };
+                }
+                if(row.estado!='ST - Solicitud de recolección transmitida' && row.estado!=null && row.estado!='ER - Envío recolectado'){
+                    return {
+                        classes: classes[2]
+                    };
+                }
+                return {};
+            }
+
+            $(document).ready(function () {
+
+                $("#distribuidor").select2();
+                $("#cliente").select2();
+                $table = $("#retiros");
+
+                $table.bootstrapTable();
+
+                cargarGrilla();
+
+
+                $("#buscar").click(function(){
+                    cargarGrilla();
+                });
+
+                $("#actualizar").click(function(){
+                    cargarGrilla();
+                });
+
+                $('#prints').click( function () {
+                    var ids=[];
+                    var data = $table.bootstrapTable('getSelections');
+                    var id = $.map(data, function (item) {
+                        // return alert(item.id);
+                        ids.push(item.retiro);
+                    });
+                    window.open( Routing.generate('retiro_showguias', {ids: ids} ))
+                } );
+
+
+                $('#cancelarSeleccion').click(function(event) {
+                    event.preventDefault();
+                    var $ids = [];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        $ids.push(item.id);
+                    });
+                    if ($ids.length === 0) {
+                        alert("Debe seleccionar al menos un registro.");
+                        return false;
+                    }
+                    BootstrapDialog.show({
+                        title: 'Atencion!!!!',
+                        message: 'Realmente desea cancelar el/los registro/s?',
+                        buttons: [{
+                            label: 'Aceptar',
+                            action: function (dialog) {
+                                $.ajax({
+                                    url: Routing.generate("constanciaretiro_cancelar"),
+                                    type: 'POST',
+                                    data: {ids: $ids },
+                                }).done(function (data) {
+                                    dialog.close();
+                                    if (data == 'error') {
+                                        BootstrapDialog.show({
+                                            title: 'Atencion!!!!',
+                                            message: 'La guia solo puede ser eliminada por el usuario que la genero.',
+                                            buttons: [{
+                                                label: 'Aceptar',
+                                                action: function (dialog) {
+                                                    dialog.close();
+                                                }
+                                            }]
+                                        });
+                                    } else {
+                                        cargarGrilla();
+                                    }
+                                });
+                            }
+                        }, {
+                            label: 'Cancelar',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }]
+                    });
+                });
+
+                $('#repactar').click(function(event) {
+                    event.preventDefault();
+                    var $ids = [];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        $ids.push(item.id);
+                    });
+                    if ($ids.length === 0) {
+                        alert("Debe seleccionar al menos un registro.");
+                        return false;
+                    }
+                    BootstrapDialog.show({
+                        title: 'Atencion!!!!',
+                        message: 'Realmente desea repactar el/los registro/s?',
+                        buttons: [{
+                            label: 'Aceptar',
+                            action: function (dialog) {
+                                $.ajax({
+                                    url: Routing.generate("constanciaretiro_repactar"),
+                                    type: 'POST',
+                                    data: {ids: $ids },
+                                }).done(function (data) {
+                                    dialog.close();
+                                    if (data == '1') {
+                                        BootstrapDialog.show({
+                                            title: 'Atencion!!!!',
+                                            message: 'Imposible repactar el retiro solicitado.',
+                                            buttons: [{
+                                                label: 'Aceptar',
+                                                action: function (dialog) {
+                                                    dialog.close();
+                                                }
+                                            }]
+                                        });
+                                    } else {
+                                        cargarGrilla();
+                                    }
+                                });
+                            }
+                        }, {
+                            label: 'Cancelar',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }]
+                    });
+                });
+
+                $('#confirmarSeleccion').click(function(event) {
+                    event.preventDefault();
+                    var $ids = [];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        $ids.push(item.id);
+                    });
+                    if ($ids.length === 0) {
+                        alert("Debe seleccionar al menos un registro.");
+                        return false;
+                    }
+                    BootstrapDialog.show({
+                        title: 'Atencion!!!!',
+                        message: 'Realmente desea confirmar el/los registro/s?',
+                        buttons: [{
+                            label: 'Aceptar',
+                            action: function (dialog) {
+                                $.ajax({
+                                    url: Routing.generate("constanciaretiro_confirmar"),
+                                    type: 'POST',
+                                    data: {ids: $ids },
+                                }).done(function (data) {
+                                    dialog.close();
+                                    cargarGrilla();
+                                });
+                            }
+                        }, {
+                            label: 'Cancelar',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }]
+                    });
+
+                });
+
+                function getIdSelection() {
+                    return $.map($table.bootstrapTable('getSelections'), function (row) {
+                        return row.id;
+                    });
+                }
+
+                $('#abrir-planilla').click( function () {
+                    var $ids=[];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        $ids.push(item.id);
+                    });
+                    var $distrib = $("#distribuidor").val();
+                    var $fecha = $("#fecha").val();
+                    if ($ids.length === 0) {
+                        alert("Debe seleccionar al menos un registro.");
+                        return false;
+                    }
+                    if($("#distribuidor").val()==''){
+                        alert("Debe seleccionar un distribuidor");
+                        return false;
+                    }
+                    window.open( Routing.generate('constanciaretiro_add_retiro_amba', {distribuidor: $distrib, fecha: $fecha, ids: $ids} ),'_self');
+                } );
+
+                $('#imprimirSeleccion').click( function () {
+                    var $ids=[];
+                    var data = $table.bootstrapTable('getSelections');
+                    var id = $.map(data, function (item) {
+                        // return alert(item.id);
+                        $ids.push(item.id);
+                    });
+                    if ($ids.length === 0) {
+                        alert("Debe seleccionar al menos un registro.");
+                        return false;
+                    }
+                    window.open( Routing.generate('constancia_showconstancias', {ids: $ids} ))
+                } );
+            });
+
+            var cargarGrilla = function(){
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('constanciaretiro_pendientes_ajax'),
+                    data: obtenerDatos(),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+                        $table.bootstrapTable('refresh', {silent: true});
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            }
+
+            var obtenerDatos = function(){
+                return {distrib:$("#distribuidor").val(), fecha: $("#fecha").val(), cliente: $("#cliente").val(), fechaAsignado: $("#fechaAsignado").val()};
+            }
+
+        </script>
+    {% endblock %}

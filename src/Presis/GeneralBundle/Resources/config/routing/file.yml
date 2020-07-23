@@ -1,0 +1,20 @@
+file:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:File:index" }
+file_upload:
+    path:     /upload
+    defaults: { _controller: "PresisGeneralBundle:File:upload" }
+file_show_selected:
+    path:     /selected
+    defaults: { _controller: "PresisGeneralBundle:File:showSelected" }
+file_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisGeneralBundle:File:ajax" }
+    options:
+      expose: true
+file_show:
+    path:      /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:File:show" }
+    options:
+      expose: true
+

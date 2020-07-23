@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(edit_form) }}
+            <legend>Editar Lista</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.descripcion,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.isGeneral,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_errors(edit_form.isGeneral) }}
+                    <div id="form_gender">
+                        {{ form_widget(edit_form.isGeneral) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">        
+                <div class="form-group">
+                    {{ form_row(edit_form.vendedor,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.cliente,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+            {{ form_errors(edit_form, { 'global_errors': true }) }}
+            <br />
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    <a href="{{ path('lista') }}" class="btn btn-primary">Volver a Listas</a>
+
+                </div>
+            </div>
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

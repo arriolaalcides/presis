@@ -1,0 +1,3 @@
+notivo_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: NotivoBundle:Default:index }

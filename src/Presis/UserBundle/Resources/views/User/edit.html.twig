@@ -1,0 +1,121 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="container container-round">
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Modificar usuario</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.userAdmin,{'style': 'horizontal', 'label_col': 4, 'widget_col': 2}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.vendedor,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.cliente,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.email,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.username,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.plainPassword.first,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.plainPassword.second,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.distribuidor,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.sucursal,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.roles,{'style': 'horizontal', 'label_col': 2, 'widget_col': 10}) }}
+                </div>
+            </div>    
+            <br />
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    <a href="{{ path('user') }}" class="btn btn-primary">Volver a Usuarios</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMINISTRACION')==false %}
+        <div class="container container-round">
+            {{ form_start(edit_form) }}
+            <fieldset>
+                <legend>Modificar usuario</legend>
+                <div class="row">
+                    <div class="form-group">
+                        {{ form_row(edit_form.email,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                        {{ form_row(edit_form.username,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        {{ form_row(edit_form.plainPassword.first,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                        {{ form_row(edit_form.plainPassword.second,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button1id"></label>
+                    <div class="col-md-8">
+                        {{ form_widget(edit_form.submit) }}
+                    </div>
+                </div>
+
+            </fieldset>
+
+
+            {{ form_end(edit_form) }}
+            {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*=====================================================================================================*/
+            $("#presis_user_registration_cliente").change(function() {
+                var data = {
+                    cliente_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("sucursal_selector") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_user_registration_sucursal');
+                        $city_selector.html('<option>Sucursales</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });
+            /*=====================================================================================================*/
+        });
+    </script>
+{% endblock %}

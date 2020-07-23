@@ -1,0 +1,297 @@
+{% extends '::base.html.twig' %}
+{% set msg_lista = 'Debe habilitarla tildando la opción "usa lista propietaria" ' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Agregar nuevo cliente</div>
+        <div class="panel-body">
+            {{ form_start(form) }}
+            <legend>Agregar nuevo cliente</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.fechaAlta,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.codcli,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.empresa,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    <div id="form_gender">
+                        {{ form_errors(form.custom_price_list) }}
+                        {{ form_label(form.custom_price_list) }}
+                        {{ form_widget(form.custom_price_list,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'}}) }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.contacto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.email,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.celular,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.vendedor,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        {{ form_row(form.tipoDocumento,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.documento,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_label(form.activo) }}
+                        {{ form_widget(form.activo,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.FechaBaja,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        {{ form_label(form.enviaMail) }}
+                        {{ form_widget(form.enviaMail,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-6">
+                        {{ form_label(form.enviaMailOrigen) }}
+                        {{ form_widget(form.enviaMailOrigen,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <legend>Facturaci&oacute;n</legend>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        {{ form_row(form.nroCta,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.rubro,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            {{ form_row(form.lista,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                            <span class="input-group-addon input-group-addon-icon">
+                                <i data-content="{{ msg_lista }}"class="fa fa-info" data-toggle="popover"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        {{ form_row(form.formaPago,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.tipoClienteBejerman,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.conTarifario, { 'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4">
+                        {{ form_row(form.tipoIva,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-4">
+                        {{ form_row(form.categoriaIva,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <legend>Cobro por contrareembolso</legend>
+            <div class="row">
+                <div class="form-group">
+                    <div id="signos">
+                        <div class="col-lg-3">
+                            {{ form_row(form.contrareembolsoEfectivo,{'style': 'horizontal', 'label_col':5, 'widget_col': 7, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.contrareembolsoCheque,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_label(form.is_porcentaje) }}
+                        {{ form_widget(form.is_porcentaje, { 'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.aforo,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Atención: </strong> si selecciona la opción “ES PORCENTAJE” el valor ingresado en los campos C. EFECTIVO y  C. CHEQUE serán aplicados como porcentaje sobre el valor contrareembolso. Caso contrario será un monto fijo.
+                    </div>
+                </div>
+            </div>
+            <legend>Tipo de cobro</legend>
+            <div class="row form-group">
+                <div class="col-lg-4">
+                    {{ form_row(form.tipoDeCobro,{'style': 'horizontal', 'label_col':5, 'widget_col': 7, 'attr':{onkeypress:'return tabular(event,this)'}}) }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form_row(form.tipoFacturacion,{'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                </div>
+            </div>
+            <div class="row form-group" id="cobro-por-valor">
+                {{ form_row(form.minimoACobrar,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, 'attr':{'disabled':'disabled', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.maximoACobrar,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, 'attr':{'disabled':'disabled', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.porcentajeACobrar,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, 'attr':{'disabled':'disabled', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.valorDeclaradoPorDefecto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, 'attr':{'disabled':'disabled', onkeypress:'return tabular(event,this)'}}) }}
+            </div>
+            <legend>Cobro de Seguro</legend>
+            <div class="row form-group">
+                {{ form_row(form.seguroMinimo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.porcentajeSeguro,{'style': 'horizontal', 'label_col': 2, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.seguroMaximo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+            </div>
+            <br/>
+            <legend>Cobro Adicionales</legend>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-2">
+                        {{ form_label(form.conRemito) }}
+                        {{ form_widget(form.conRemito, { 'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.montoServicio,{'style': 'horizontal', 'label_col':6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_label(form.conGuiaWeb) }}
+                        {{ form_widget(form.conGuiaWeb, { 'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.montoGuiaWeb,{'style': 'horizontal', 'label_col':6, 'widget_col': 6, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_label(form.cobroEfectivo) }}
+                        {{ form_widget(form.cobroEfectivo, { 'style': 'horizontal', 'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <legend>Cobro Adicional Kilos Fijos en el Interior del País</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Atención: </strong> debe ingresar el peso mínimo y el importe para los envíos puerta a puerta en el interior del país, superado este valor se adicionara el importe de excedente.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-3">
+                        {{ form_row(form.kgFijoPuertaPuerta,{'style': 'horizontal', 'label_col':5, 'widget_col': 7, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form_row(form.importeFijoPuertaPuerta,{'style': 'horizontal', 'label_col': 5, 'widget_col': 7, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <legend>Opciones</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.categorias,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                    {{ form_row(form.servicios,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(form.submit) }}
+                    <a href="{{ path('cliente') }}" class="btn btn-primary">Volver a Clientes</a>
+
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        var cambiarEstadoComboPeso = function() {
+            if(($tipoDeCobro.val()!="peso" && $tipoDeCobro.val()!="distancia")){
+                $("#presis_generalbundle_cliente_tipoFacturacion").attr('disabled', 'disabled');
+            }else{
+                $("#presis_generalbundle_cliente_tipoFacturacion").removeAttr('disabled');
+            }
+            //$("#presis_generalbundle_cliente_tipoFacturacion").prop("disabled", ($tipoDeCobro.val() != "peso"));
+        };
+
+        var $tipoDeCobro = $("select[id*='cliente_tipoDeCobro']");
+
+        $tipoDeCobro.change(function(){
+            cambiarEstadoComboPeso();
+
+            $porValorDeclarado = ($tipoDeCobro.val() === "valordeclarado");
+            $("#cobro-por-valor :input").prop("disabled", !$porValorDeclarado);
+            if($porValorDeclarado){
+                var $primerInput = $("input[id*='cliente_minimoACobrar']");
+                $primerInput.focus();
+                $primerInput.select();
+            }
+        });
+
+        $("#presis_generalbundle_cliente_lista").prop('disabled',true);
+
+        $("#presis_generalbundle_cliente_custom_price_list").change(function(){
+            if( $('#presis_generalbundle_cliente_custom_price_list').prop('checked') ) {
+                $("#presis_generalbundle_cliente_lista").prop('disabled',false);
+            }else{
+                $("#presis_generalbundle_cliente_lista").prop('disabled',true);
+                $('#presis_generalbundle_cliente_lista option:eq(0)').prop('selected', true)
+            }
+        });
+
+
+        $("#presis_generalbundle_cliente_is_porcentaje").click(function(){
+            if($(this).prop('checked')){
+                $('#signos .input-group-addon').text('%');
+            }else{
+                $('#signos .input-group-addon').text('$');
+            }
+        });
+
+        $('#presis_generalbundle_cliente_categorias').multiSelect({
+                    selectableHeader: "<div class='custom-header'>Disponibles</div>",
+                    selectionHeader: "<div class='custom-header'>Seleccionados</div>"
+                }
+        );
+
+        $('#presis_generalbundle_cliente_servicios').multiSelect({
+                    selectableHeader: "<div class='custom-header'>Disponibles</div>",
+                    selectionHeader: "<div class='custom-header'>Seleccionados</div>"
+                }
+        );
+
+        $("#presis_generalbundle_cliente_activo").click(function() {
+            var $fechaBaja = $('#presis_generalbundle_cliente_FechaBaja');
+            $fechaBaja.prop('readonly', this.checked);
+            if(this.checked) {
+                //$fechaBaja.datepicker( "option", "disabled", true );
+                $fechaBaja.datepicker('disable');
+            } else {
+                $fechaBaja.datepicker('enable');
+            }
+        });
+    </script>
+{% endblock %}

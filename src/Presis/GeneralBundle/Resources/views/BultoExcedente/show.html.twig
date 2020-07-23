@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido -%}
+    <h1>Bulto excedente</h1>
+
+    <div class="row" style="margin-left: 5%; margin-right: 5%">
+        <table class="record_properties table">
+            <tbody>
+            <tr>
+                <th width="30%">Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Bulto excedente</th>
+                <td>{{ entity.bultoExcedente }}</td>
+            </tr>
+            <tr>
+                <th>Costo bulto excedente</th>
+                <td>{{ entity.costoBultoExcedente }}</td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ entity.cliente }}</td>
+            </tr>
+            <tr>
+                <th>Servicio</th>
+                <td>{{ entity.servicio }}</td>
+            </tr>
+            <tr>
+                <th>Cordon retiro</th>
+                <td>{{ entity.cordonRetiro }}</td>
+            </tr>
+            <tr>
+                <th>Cordon entrega</th>
+                <td>{{ entity.cordonEntrega }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" style="margin-left: 1%">
+        <a class="btn btn-primary" href="{{ path('bultoexcedente_edit', { 'id': entity.id }) }}">Editar</a>
+        <a class="btn btn-primary" href="{{ path('bultoexcedente') }}">Volver a la lista</a>
+        <br>
+        <br>
+        {{ form(delete_form) }}
+    </div>
+{% endblock %}

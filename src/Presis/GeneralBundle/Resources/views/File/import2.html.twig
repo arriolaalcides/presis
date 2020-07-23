@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+    </style>
+{% endblock %}
+
+    {%  block contenido %}
+<form class="form-horizontal" method="post" role="form" action="{{ path('file_show_selected') }}">
+        <button type="submit" class="btn btn-success">Importar Retiros Seleccionados</button>
+        <table id="table_rimport" class="table .table-bordered">
+            <thead>
+            <tr>
+                <th>APELLIDO</th>
+                <th>CALLE</th>
+                <th>ALTURA</th>
+                <th>PISO</th>
+                <th>DPTO</th>
+                <th>OTRA INFO</th>
+                <th>CP</th>
+                <th>PESO</th>
+                <th>SUCURSAL</th>
+                <th>FRAGIL</th>
+                <th>SERVICIO</th>
+                <th>PRECIO</th>
+                <th>VALIDO</th>
+                <th>ERROR</th>
+                <th>IMPORTAR</th>
+
+
+            </tr>
+
+            </thead>
+            {% set i=0 %}
+            {% for fila in entities %}
+                {% if validos[i]==0 %}
+                    <tr class="danger">
+                {% else %}
+                    <tr class="success">
+                {%  endif %}
+
+                    <td><input class="form-control" type="text" name="apellido_list[]" value="{{ fila.comprador.apenom }}" readonly ></td>
+                    <td><input class="form-control" type="text" name="calle_list[]" value="{{ fila.comprador.calle }}" readonly ></td>
+                    <td><input class="form-control" type="number" name="altura_list[]" value="{{ fila.comprador.altura }}" readonly ></td>
+                    <td><input class="form-control" type="number" name="piso_list[]" value="{{ fila.comprador.piso }}" readonly ></td>
+                    <td><input class="form-control" type="text" name="dpto_list[]" value="{{ fila.comprador.dpto }}" readonly ></td>
+                    <td><input class="form-control" type="text" name="info_list[]" value="{{ fila.comprador.otherInfo }}" readonly ></td>
+                    <td><input class="form-control" type="number" name="cp_list[]" value="{{ fila.comprador.cp }}" readonly ></td>
+                    <td><input class="form-control" type="number" name="peso_list[]" value="{{ fila.peso }}" readonly ></td>
+                    {% if fila.sucursal %}
+                    <td><input class="form-control" type="text" name="sucursal_list[]" value="{{ fila.sucursal.codSuc }}" readonly ></td>
+                    {% else %}
+                        <td><input class="form-control" type="text" name="sucursal_list[]" value="-1" readonly ></td>
+                    {% endif %}
+                    <td><input class="form-control" type="number" name="fragil_list[]" value="{{ fila.fragil }}" readonly ></td>
+                    {% if fila.servicio %}
+                        <td><input class="form-control" type="text" name="servicio_list[]" value="{{ fila.servicio.codServ }}" readonly ></td>
+                    {% else %}
+                        <td><input class="form-control" type="text" name="servicio_list[]" value="-1" readonly ></td>
+                    {% endif %}
+
+                    <td><input class="form-control" type="number" name="precio_list[]" value="{{ fila.precio }}" readonly ></td>
+                    {% if validos[i] %}
+                    <td><input class="form-control" onClick="return false" type="checkbox" name="valido_list[]" checked readonly></td>
+                        <input class="form-control" onClick="return false" type="hidden" name="valido2_list[]" value=1 readonly></td>
+                    {% else %}
+                        <td><input class="form-control" onClick="return false" type="checkbox" name="valido_list[]" readonly></td>
+                        <input class="form-control" onClick="return false" type="hidden" name="valido2_list[]" value=0 readonly>
+                    {% endif %}
+                    <td><p>{{ mensajes[i] }}</p></td>
+                    <td><input class="form-control" type="checkbox" name="check_list[]" value="{{ i }}"></td>
+                </tr>
+                {% set i=i+1 %}
+            {% endfor %}
+
+        </table>
+</form>
+    {% endblock %}
+
+

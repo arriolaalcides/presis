@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+<div class="panel panel-default">
+    <div class="panel-heading">Agregar nueva sucursal de retiro</div>
+    <div class="panel-body">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.cliente,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.codSuc,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.razonSocial,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.cuit,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                <div id="form_gender">
+                    {{ form_label(form.esPropia) }}
+                    {{ form_widget(form.esPropia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'}}) }}
+                    &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.contacto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.celular,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.mail,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.kms,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.otherInfo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+                {{ form_row(form.descripcion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'}}) }}
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="button1id"></label>
+            <div class="col-md-8">
+                {{ form_widget(form.submit) }}
+                <a href="{{ path('sucursal') }}" class="btn btn-primary">Volver a Sucursales</a>
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+</div>
+{% endblock %}
+

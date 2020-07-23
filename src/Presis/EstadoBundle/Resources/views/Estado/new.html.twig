@@ -1,0 +1,6 @@
+{% block contenido %}
+        {{ form_start(form) }}
+        {{ include('@Estado/Estado/estado-fields.part.html.twig') }}
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}

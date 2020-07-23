@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+        {{ form_start(edit_form) }}
+        <legend>Modificar precio</legend>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(edit_form.rango,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(edit_form.servicio,{'style': 'horizontal', 'label_col':2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(edit_form.cordonEntrega,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(edit_form.cordonRetiro,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(edit_form.lista,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(edit_form.precio,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="button1id"></label>
+            <div class="col-md-8">
+                {{ form_widget(edit_form.submit) }}
+                <a href="{{ path('precio') }}" class="btn btn-primary">Volver a Precios</a>
+
+            </div>
+        </div>
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

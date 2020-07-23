@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(delete_form, { 'style': 'horizontal' }) }}
+        <fieldset>
+            <legend>Eliminar lista de precio</legend>
+            {{ form_control_static('Id',entity.id) }}
+
+            {{ form_control_static('Descripci&oacuten',entity.descripcion) }}
+            {% if entity.isGeneral %}
+                <div class="form-group"><label class="col-sm-2 control-label">Lista General</label><div class="col-sm-10"><p class="form-control-static">Si</p></div></div>
+
+            {% else %}
+                <div class="form-group"><label class="col-sm-2 control-label">Lista General</label><div class="col-sm-10"><p class="form-control-static">No</p></div></div>
+
+            {%  endif %}
+            {{ form_control_static('Vendedor',entity.vendedor) }}
+            {{ form_control_static('Cliente',entity.cliente) }}
+
+
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(delete_form.submit) }}
+                    <a href="{{ path('lista') }}" class="btn btn-primary">Volver a Listas</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+        {{ form_end(delete_form) }}
+
+
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('form').submit(function(e) {
+            var currentForm = this;
+            e.preventDefault();
+            bootbox.confirm("¿Esta seguro que desea eliminar el registro?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

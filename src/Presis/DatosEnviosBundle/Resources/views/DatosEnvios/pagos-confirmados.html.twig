@@ -1,0 +1,145 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <!--<div class="container-fluid">
+            <legend>Pagos confirmados</legend>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="fechaDesde">Fecha desde</label>
+                    <div class="input-group">
+                        <input type="text" id="fecha" value="{{ "now"|date('d/m/Y') }}" class="form-control date-picker input-sm">
+                    </div>
+                    <label for="fechaDesde">Hasta</label>
+                    <div class="input-group">
+                        <input type="text" id="fecha" value="{{ "now"|date('d/m/Y') }}" class="form-control date-picker input-sm">
+                    </div>
+                </div>
+                <button type="button" id="confirmar-pago" class="btn btn-primary btn-sm">BUSCAR</button>
+            </form>
+        </div>-->
+        <div class="container-fluid">
+            <div class="col-lg-2">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <table id="retiros"
+                   data-toggle="table"
+                   data-show-export="true"
+                   data-filter-show-clear="true"
+                   data-side-pagination="server"
+                   data-pagination="true"
+                   data-page-list="[5, 10, 20, 50, 100, 200]"
+                   data-search="true"
+                   data-advanced-search="true"
+                   data-id-table="advancedTable"
+                   data-height="500"
+                   data-toolbar="#toolbar">
+                <thead>
+                <tr>
+                    <th data-field="fech_hora">Fecha</th>
+                    <th data-field="id">Nro. Guia</th>
+                    <th data-field="clientenombre">Cliente</th>
+                    <th data-field="comprador">Comprador</th>
+                    <th data-field="datos_envios.bultos">Bultos</th>
+                    <th data-field="comprador_kms">Kms</th>
+                    <th data-field="datos_envios.peso">Peso</th>
+                    <th data-field="datos_envios.volumen">Peso Final</th>
+                    <th data-field="datos_envios.peso_volumetrico">Volumetrico</th>
+                    <th data-field="datos_envios.flete">Importe</th>
+                    <th data-field="datos_envios.valor_declarado">V Declarado</th>
+                    <th data-field="datos_envios.seguro">V seguro</th>
+                    <th data-field="datos_envios.total_flete">Total</th>
+                    <th data-field="comprador_direccion">Dirección</th>
+                    <th data-field="comprador_localidad_guia">Localidad</th>
+                    <th data-field="comprador_cp_guia">CP</th>
+                    <th data-field="comprador_provincia_guia">Provincia</th>
+                    <th data-field="comprador_email">Mail</th>
+                    <th data-field="pagoEn">Pago EN</th>
+                    <th data-field="compradorEmpresa">Empresa</th>
+                    <th data-field="compradorCuit">CUIT</th>
+                    <th data-field="createguia">Usuario</th>
+                    <th data-field="cobrado" data-formatter="isCobrado">Cobrado</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript">
+
+            var $table = $("#retiros");
+
+            var $pagina = 0;
+            var $limite = 10;
+
+            $(function () {
+                buildTable($table, 20, 20);
+                $('#fixedNumber').change(function () {
+                    buildTable($table, 20, 20);
+                });
+            });
+
+            function buildTable($el, cells, rows) {
+                $el.bootstrapTable('destroy').bootstrapTable({
+                    toolbar: '.toolbar'
+                });
+            }
+
+            function isCobrado(value, row){
+                var $cobrado;
+                if(row.cobrado==false){
+                    $cobrado = "NO";
+                }else{
+                    $cobrado = "SI";
+                }
+                return $cobrado;
+            }
+
+            var $_GET = {};
+
+
+            $(document).ready(function () {
+
+                actualizar();
+
+                $table.bootstrapTable()
+                        .on('page-change.bs.table', function (event, page, limit) {
+                            $pagina = page - 1;
+                            $limite = limit;
+
+                            actualizar();
+                        });
+            });
+
+            var actualizar = function(){
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_get_pagos_confirmados'),
+                    data: obtenerParametrosBusqueda(),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            }
+
+            var obtenerParametrosBusqueda = function() {
+                return {pagina: $pagina, limite: $limite, search: $('.fixed-table-toolbar .search input').val()}
+            }
+        </script>
+    {% endblock %}

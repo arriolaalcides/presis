@@ -1,0 +1,35 @@
+<pdf>
+    <dynamic-page font-type="DejaVuSans" page-size="302:150" margin="5px">
+        <div width="100%">
+            <div width="60%" float="left" height="80px">
+                <div font-size="12px" text-align="center"><b>{{ retiro.id }}</b></div>
+                <barcode type="code39" code="{{ retiro.id }}" float="left" bar-thin-width="3px" bar-thick-width="7px"/>
+            </div>
+            <div width="40%" float="left" height="80px">
+		<div width="100%" height="16px">REMITO: {{ retiro.remito }}</div>
+	        <div width="100%" height="16px">BULTOS: {{ retiro.datosenvios.bultos }}</div>
+                <div width="100%" height="16px">ZONA: {{ zona }}</div>
+                <div width="100%" height="16px">COBRAR: {{ retiro.datosenvios.contrareembolso }}</div>
+            </div>
+            <div width="60%" float="left" height="80px">
+                {% set hayComprador = retiro.comprador ? true : false %}
+                {% set direccion = hayComprador ?
+                retiro.comprador.calle ~ ' ' ~
+                retiro.comprador.altura ~ ' ' ~
+                retiro.comprador.piso ~ ' ' ~
+                retiro.comprador.dpto
+                : ''
+                %}
+                <div width="100%" height="25px">Comprador: {{ retiro.comprador.empresa }}</div>
+                <div width="100%" height="25px">Dirección: {{ direccion }}</div>
+                <div width="100%" height="25px">Localidad: {{ hayComprador ? retiro.comprador.localidad }}</div>
+                <div width="100%" height="25px">CSR: {{ retiro.datosenvios.csr == 1 ? "Sí" : "No" }}</div>
+            </div>
+            <div width="40%" float="left" height="80px">
+                <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="125px" height="34px" />
+                <br /><br />
+                <b>R.N.P.S.P. N°813</b>
+            </div>
+        </div>
+    </dynamic-page>
+</pdf>

@@ -1,0 +1,3 @@
+estadotracking:
+    path:     /
+    defaults: { _controller: "EstadoBundle:EstadoTracking:index" }

@@ -1,0 +1,120 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+
+    <div class="container">
+        <form id="form">
+        <legend>Agregar Nuevo Seguimiento de Tracking</legend>
+        <div class="clearboth">&nbsp;</div>
+        <div class="clearboth">&nbsp;</div>
+        <div class="hidden">
+                    {{ form_row(form.timestampModificacion) }}
+                    {{ form_row(form.estado) }}
+                    {{ form_row(form.sucursal) }}
+                    {{ form_row(form.motivo) }}
+                    {{ form_row(form.distribuidor) }}
+        </div>
+            <div class="row">
+                <div class="form-group">
+                    {#{{ form_row(form.user) }}#}
+                    {{ form_row(form.receptorNombre) }}
+                    {{ form_row(form.receptorApellido) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    
+                    {{ form_row(form.receptorFechaHora, {'label_col':1, required: true, 'widget_col': 1, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}  
+                    {{ form_row(form.nroPlanilla) }}
+                    <label class="control-label" for="tracking">Nro Guia</label>
+                    <input value="" type="text" id="tracking" name="tracking" required="required" maxlength="15" class="form-control input-sm" required />
+                    <br>
+                    <label for="sel1">Estado de Intervencion</label>
+                       <select class="form-control" id="estado">
+                           <option value = '165'>NUEVO REMITO GENERADO EN CEC</option>
+                           <option value = '157'>EQUIPO DISPONIBLE PARA RETIRAR POR TRANSPORTE</option>
+                           <option value = '158'>EQUIPO EN TRASLADO AL HUB REPARADOR</option>
+                           <option value = '159'>INGRESO AL HUB</option>
+                           <option value = '160'>FINALIZADA LA INTERVENCION</option>
+                           <option value = '166'>EQUIPO DISPONIBLE PARA RETIRAR POR TRANSPORTE A MO</option>
+                           <option value = '161'>EQUIPO EN TRASLADO AL CEC DE ORIGEN</option>
+                           <option value = '162'>EQUIPO RECEPCIONADO EN CEC</option>
+                           <option value = '163'>TERMINADA OPERATORIO DE ST EN CEC</option>
+                           <option value = '164'>EQUIPO ENTREGADO AL CLIENTE</option>
+                       </select>
+                    <br>
+                    {{ form_row(form.detalles) }}
+                    {{ form_row(form.dni) }} 
+                    {{ form_row(form.obs) }}
+                    {{ form_row(form.updateTracker) }}
+                    
+                </div>
+            </div>
+                  
+            <br />
+            
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-4">
+                    <button id="actualizar" name="actualizar" class="btn btn-success btn-block btn-primary">Agregar Seguimiento</button>
+                </div>
+                <div class="col-lg-2 ">
+                    <a href="{{ path('tracker_movistar_editar') }}" class="btn btn-primary">Volver</a>
+                </div>
+            </div>    
+
+        </form>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+
+        
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+             $("#actualizar").click(function(event){
+                    if($("#presis_trackerbundle_tracker_receptorFechaHora").val() != ''){
+                    event.preventDefault();
+
+                    $.blockUI({message: "<h2>Actualizando datos...</h2>"});
+                    $.ajax({
+                        url: Routing.generate("tracker_create_gestion"),
+                        type: 'POST',
+                        data: {
+                            receptor_nombre: $("#presis_trackerbundle_tracker_receptorNombre").val(),
+                            rf: $("#presis_trackerbundle_tracker_receptorFechaHora").val(),
+                            nroPlanilla: $("#presis_trackerbundle_tracker_nroPlanilla").val(), 
+                            guia: $("#tracking").val(), estado: $("#estado").val(),
+                            detalles: $("#presis_trackerbundle_tracker_detalles").val(), dni: $("#presis_trackerbundle_tracker_dni").val(),
+                            obs: $("#presis_trackerbundle_tracker_obs").val(), updateTracker: $("#presis_trackerbundle_tracker_updateTracker").text() 
+                        },
+                        success: function (data) {
+                                alert(data);
+                                BootstrapDialog.show({
+                                    title: 'Alerta',
+                                    message: 'Datos Creados Correctamente'
+                                });
+                            
+                            $.unblockUI();
+                            /*$table.bootstrapTable('refresh', {
+                                url: Routing.generate('datosenvios_pendientes_de_informar_galander')
+                            });*/
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                            $.unblockUI();
+                        }
+                    });
+                }
+                });
+        });
+    </script>
+    
+{% endblock %}
+

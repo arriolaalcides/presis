@@ -1,0 +1,7 @@
+cecos_cecos:
+    resource: "@CecosBundle/Resources/config/routing/cecos.yml"
+    prefix:   /cecos
+
+cecos_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: CecosBundle:Default:index }

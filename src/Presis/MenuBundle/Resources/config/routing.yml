@@ -1,0 +1,3 @@
+presis_menu_homepage:
+    path:     /menu
+    defaults: { _controller: PresisMenuBundle:Default:index }

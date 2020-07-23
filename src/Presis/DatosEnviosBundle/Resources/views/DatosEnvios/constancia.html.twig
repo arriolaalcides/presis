@@ -1,0 +1,6 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+    {% for retiro in vouchers %}
+        {{ retiro.id }}
+    {% endfor %}
+{% endblock %}

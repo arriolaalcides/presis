@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(form) }}
+        <legend>Agregar CP cord&oacute;n</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Atención: </strong> el campo KM hace referencia a los km desde un punto hasta la capital de la provincia.<br />
+                    <strong>Atención: </strong> el campo KM ADICIONALES hace referencia a los km desde la capital de la provincia hasta la localidad ingresada.<br />
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.cordon,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                    {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.partido,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3}) }}
+                    {{ form_row(form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3}) }}
+                    {{ form_row(form.barrio,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.zona,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                    {{ form_row(form.subzona,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                    {{ form_row(form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.prestador,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4}) }}
+                    {{ form_row(form.tiempoDeEntrega,{'style': 'horizontal', 'label_col': 2, 'widget_col': 1}) }}
+                    {{ form_row(form.tipoServicio,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.kms,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3}) }}
+                    {{ form_row(form.kmsAdicionales,{'style': 'horizontal', 'label_col': 2, 'widget_col': 2}) }}
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(form.submit) }}
+                    <a href="{{ path('cpcordon') }}" class="btn btn-primary">Volver a C&oacute;digos Postales</a>
+
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

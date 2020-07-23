@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(edit_form, { 'style': 'horizontal' }) }}
+        <fieldset>
+            <legend>Editar cord&oacute;n</legend>
+
+            {{ form_row(edit_form.descripcion) }}
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    <a href="{{ path('cordon') }}" class="btn btn-primary">Volver a Cordones</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

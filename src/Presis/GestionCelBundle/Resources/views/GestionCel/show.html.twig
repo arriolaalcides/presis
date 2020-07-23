@@ -1,0 +1,130 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GestionCel</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <td>{{ entity.usuario }}</td>
+            </tr>
+            <tr>
+                <th>Ani</th>
+                <td>{{ entity.ani }}</td>
+            </tr>
+            <tr>
+                <th>Nroserie</th>
+                <td>{{ entity.nroserie }}</td>
+            </tr>
+            <tr>
+                <th>Nomyape</th>
+                <td>{{ entity.nomyape }}</td>
+            </tr>
+            <tr>
+                <th>Nrosst</th>
+                <td>{{ entity.nrosst }}</td>
+            </tr>
+            <tr>
+                <th>Aceptacargos</th>
+                <td>{{ entity.aceptacargos }}</td>
+            </tr>
+            <tr>
+                <th>Nivelderep</th>
+                <td>{{ entity.nivelderep }}</td>
+            </tr>
+            <tr>
+                <th>Muleto</th>
+                <td>{{ entity.muleto }}</td>
+            </tr>
+            <tr>
+                <th>Imeimuleto</th>
+                <td>{{ entity.imeimuleto }}</td>
+            </tr>
+            <tr>
+                <th>Fechaactivacion</th>
+                <td>{{ entity.fechaactivacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechafabricacion</th>
+                <td>{{ entity.fechafabricacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fabricante</th>
+                <td>{{ entity.fabricante }}</td>
+            </tr>
+            <tr>
+                <th>Modelo</th>
+                <td>{{ entity.modelo }}</td>
+            </tr>
+            <tr>
+                <th>Origendelequipo</th>
+                <td>{{ entity.origendelequipo }}</td>
+            </tr>
+            <tr>
+                <th>Sva</th>
+                <td>{{ entity.sva }}</td>
+            </tr>
+            <tr>
+                <th>Falla</th>
+               {# <td>{{ entity.falla }}</td> #}
+                {% for item in entity.falla %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Rotura</th>
+                <td>{{ entity.rotura }}</td>
+            </tr>
+            <tr>
+                <th>Completitud</th>
+                {#<td>{{ entity.completitud }}</td>#}
+                 {% for item in entity.completitud %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Estadointervencion</th>
+                <td>{{ entity.estadointervencion }}</td>
+            </tr>
+            <tr>
+                <th>Certificadoreparador</th>
+                <td>{{ entity.certificadoreparador }}</td>
+            </tr>
+            <tr>
+                <th>Placaswap</th>
+                <td>{{ entity.placaswap }}</td>
+            </tr>
+            <tr>
+                <th>Nroimei</th>
+                <td>{{ entity.nroimei }}</td>
+            </tr>
+            <tr>
+                <th>Tipocliente</th>
+                <td>{{ entity.tipocliente }}</td>
+            </tr>
+            <tr>
+                <th>Tiposervicio</th>
+                <td>{{ entity.tiposervicio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('gestioncel') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('gestioncel_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

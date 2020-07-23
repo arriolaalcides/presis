@@ -1,0 +1,52 @@
+<pdf>
+    <dynamic-page font-type="DejaVuSans" margin="15px">
+        <div width="100%" height="100%" border.color="black">
+            <div width="50%" float="left" padding-top="10px">
+                <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="250px" height="68px" />
+            </div>
+            <div width="50%" float="left" padding-top="10px"  text-align="right">
+                <div width="100%">
+                    Fecha: {{ rendicion.fecha|date("d/m/Y") }}
+                </div>
+                <div width="100%" padding-right="20px" padding-top="10px">
+                    <b>Nro. rendición: {{ rendicion.id }}</b>
+                </div>
+                <div width="100%" padding-top="10px">
+                    <barcode type="code39" code="{{ rendicion.id }}" float="right" bar-thin-width="4px" bar-thick-width="10px" margin-right="15px" />
+                </div>
+            </div>
+            <div width="100%" margin-top="15px" padding-left="15px">
+                <p><b>Cliente: {{ rendicion.cliente.empresa }}</b><br />
+                <b>At.: {{ rendicion.cliente.contacto }}</b></p>
+            </div>
+            <div width="100%" margin-top="15px">
+                <div width="10%" float="left" border.color="black" text-align="center">GUIA</div>
+                <div width="10%" float="left" border.color="black" text-align="center">REMITO</div>
+                <div width="30%" float="left" border.color="black" text-align="center">DESTINATARIO</div>
+                <div width="25%" float="left" border.color="black" text-align="center">ESTADO</div>
+                <div width="25%" float="left" border.color="black" text-align="center">MOTIVO</div>
+            </div>
+            {% for retiro in retiros %}
+                <div width="100%">
+                    <div width="10%" height="20px" float="left" border.color="black" text-align="center">{{ retiro.id }}</div>
+                    <div width="10%" height="20px" float="left" border.color="black" text-align="center">{{ retiro.remito }}</div>
+                    <div width="30%" height="20px" float="left" border.color="black" text-align="center">{{ retiro.nombreComprador }}</div>
+                    <div width="25%" height="20px" float="left" border.color="black" text-align="center">{{ retiro.estado }}</div>
+                    <div width="25%" height="20px" float="left" border.color="black" text-align="center">{{ retiro.motivo }}</div>
+                </div>
+            {% endfor %}
+            <div padding-top="10px" padding-left="20px">
+                Nombre:__________________________________________________
+            </div>
+            <div padding-top="10px" padding-left="20px">
+                D.N.I.:__________________________________________________
+            </div>
+            <div padding-top="10px" padding-left="20px">
+                Firma:___________________________________________________
+            </div>
+            <div padding-top="10px" padding-left="20px">
+                Fecha:_____________________
+            </div>
+        </div>
+    </dynamic-page>
+</pdf>

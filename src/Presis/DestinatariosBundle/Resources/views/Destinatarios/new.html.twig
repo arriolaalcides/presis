@@ -1,0 +1,65 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    {{ form_start(form) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">Agregar Destinatario</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.codigo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4 }) }}
+                    {{ form_row(form.cuit,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.empresa,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4 }) }}
+                    {{ form_row(form.apellidoNombre,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.celular,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                    {{ form_row(form.mail,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                    {{ form_row(form.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                    {{ form_row(form.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                    {{ form_row(form.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                    {{ form_row(form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                    {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.kms,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                    {{ form_row(form.zona,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5 }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.otherInfo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11 }) }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-2 col-md-offset-5">
+                        {{ form_widget(form.submit) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}

@@ -1,0 +1,36 @@
+fotos:
+    path:     /
+    defaults: { _controller: "FotoBundle:Fotos:index" }
+
+fotos_show:
+    path:     /{id}/show
+    defaults: { _controller: "FotoBundle:Fotos:show" }
+
+fotos_new:
+    path:     /new
+    defaults: { _controller: "FotoBundle:Fotos:new" }
+
+fotos_create:
+    path:     /create
+    defaults: { _controller: "FotoBundle:Fotos:create" }
+    methods:  POST
+
+fotos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FotoBundle:Fotos:edit" }
+
+fotos_update:
+    path:     /{id}/update
+    defaults: { _controller: "FotoBundle:Fotos:update" }
+    methods:  [POST, PUT]
+
+fotos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FotoBundle:Fotos:delete" }
+    methods:  [POST, DELETE]
+
+fotos_asajax:
+    path:     /{tracking}/fotos-asajax
+    defaults: { _controller: "FotoBundle:Fotos:asAjax" }
+    options:
+        expose: true

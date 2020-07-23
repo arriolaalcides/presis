@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>GestionCel list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Usuario</th>
+                <th>Ani</th>
+                <th>Nroserie</th>
+                <th>Nomyape</th>
+                <th>Nrosst</th>
+                <th>Aceptacargos</th>
+                <th>Nivelderep</th>
+                <th>Muleto</th>
+                <th>Imeimuleto</th>
+                <th>Fechaactivacion</th>
+                <th>Fechafabricacion</th>
+                <th>Fabricante</th>
+                <th>Modelo</th>
+                <th>Origendelequipo</th>
+                <th>Sva</th>
+                <th>Falla</th>
+                <th>Rotura</th>
+                <th>Completitud</th>
+                <th>Estadointervencion</th>
+                <th>Certificadoreparador</th>
+                <th>Placaswap</th>
+                <th>Nroimei</th>
+                <th>Tipocliente</th>
+                <th>Tiposervicio</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('gestioncel_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.usuario }}</td>
+                <td>{{ entity.ani }}</td>
+                <td>{{ entity.nroserie }}</td>
+                <td>{{ entity.nomyape }}</td>
+                <td>{{ entity.nrosst }}</td>
+                <td>{{ entity.aceptacargos }}</td>
+                <td>{{ entity.nivelderep }}</td>
+                <td>{{ entity.muleto }}</td>
+                <td>{{ entity.imeimuleto }}</td>
+                <td>{% if entity.fechaactivacion %}{{ entity.fechaactivacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechafabricacion %}{{ entity.fechafabricacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.fabricante }}</td>
+                <td>{{ entity.modelo }}</td>
+                <td>{{ entity.origendelequipo }}</td>
+                <td>{{ entity.sva }}</td>
+                {#<td>{{ entity.falla }}</td>#}
+                {% for item in entity.falla %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+                <td>{{ entity.rotura }}</td>
+               {# <td>{{ entity.completitud }}</td>#}
+               {% for item in entity.completitud %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+                <td>{{ entity.estadointervencion }}</td>
+                <td>{{ entity.certificadoreparador }}</td>
+                <td>{{ entity.placaswap }}</td>
+                <td>{{ entity.nroimei }}</td>
+                <td>{{ entity.tipocliente }}</td>
+                <td>{{ entity.tiposervicio }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('gestioncel_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('gestioncel_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('gestioncel_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

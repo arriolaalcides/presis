@@ -1,0 +1,36 @@
+planilla:
+    path:     /
+    defaults: { _controller: "PresisRetiroBundle:Planilla:index" }
+
+planilla_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisRetiroBundle:Planilla:show" }
+
+planilla_new:
+    path:     /new
+    defaults: { _controller: "PresisRetiroBundle:Planilla:new" }
+
+planilla_create:
+    path:     /create
+    defaults: { _controller: "PresisRetiroBundle:Planilla:create" }
+    requirements: { _method: post }
+
+planilla_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisRetiroBundle:Planilla:edit" }
+
+planilla_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisRetiroBundle:Planilla:update" }
+    requirements: { _method: post|put }
+
+planilla_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisRetiroBundle:Planilla:delete" }
+    requirements: { _method: post|delete }
+
+planilla_ajax:
+  path:     /ajax
+  defaults: {_controller: "PresisRetiroBundle:Planilla:ajax" }
+  options:
+        expose: true

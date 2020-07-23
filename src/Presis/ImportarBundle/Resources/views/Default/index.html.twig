@@ -1,0 +1,233 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+    <div class="container container-round">
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERVISOR_OPERATIVO') or is_granted('ROLE_OPERATIVO') %}
+        <legend>Importar colector</legend>
+        <div class="row">
+            <div id="inputs" class="clearfix col-lg-2">
+                <input type="file" id="files" name="files[]" multiple /><br>
+            </div>
+        </div>
+        <div>
+            <div id="addretiro-successmessages" class="alert alert-success"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            <div id="addretiro-errormessages" class="alert alert-danger"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPERVISOR_OPERATIVO') or is_granted('ROLE_OPERATIVO') or is_granted('ROLE_BACK_OFFICE') %}
+        <legend>Cambiar estados</legend>
+        <div class="row">
+            <div id="inputs" class="clearfix col-lg-2">
+                <input type="file" id="filesEstados" name="files[]" multiple /><br>
+            </div>
+        </div>
+        <div>
+            <div id="cambiarestados-successmessages" class="alert alert-success"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            <div id="cambiarestados-errormessages" class="alert alert-danger"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
+        {% endif %}
+        {% if is_granted('ROLE_ADMINISTRACION') %}
+            <legend>Importar datos de factura</legend>
+            <div class="row">
+                <div id="inputs" class="clearfix col-lg-2">
+                    <input type="file" id="filesFacturas" name="fileFacturas[]" multiple /><br>
+                </div>
+            </div>
+        {% endif %}
+        <div>
+            <div id="importarfacturas-successmessages" class="alert alert-success"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            <div id="importarfacturas-errormessages" class="alert alert-danger"  style="display: none;">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMINISTRACION')==false %}
+            <legend>Importar Guías domésticas <small><a href="{{ path('download_route', { 'filename': 'ejemplo-importacion-cliente.csv' }) }}">Descargar archivo de ejemplo</a></small></legend>
+            <div class="row">
+                <div id="inputs" class="clearfix col-lg-2">
+                    <input type="file" id="fileGuias" name="fileGuias[]" multiple /><br>
+                </div>
+            </div>
+            <div>
+                <div id="guias-successmessages" class="alert alert-success"  style="display: none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+                <div id="guias-errormessages" class="alert alert-danger"  style="display: none;">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/importar/js/jquery.csv.min.js') }}"></script>
+    <script>
+        $(document).ready( function () {
+
+            if(isAPIAvailable()) {
+                $('#files').bind('change', handleFileSelect);
+                $('#filesFacturas').bind('change', handleFileFacturas);
+                $('#filesEstados').bind('change', handleCambioDeEstados);
+                $('#fileGuias').bind('change', handleGuiasFileSelect);
+            }
+
+            function isAPIAvailable() {
+                // Check for the various File API support.
+                if (window.File && window.FileReader && window.FileList && window.Blob) {
+                    // Great success! All the File APIs are supported.
+                    return true;
+                } else {
+                    // source: File API availability - http://caniuse.com/#feat=fileapi
+                    // source: <output> availability - http://html5doctor.com/the-output-element/
+                    document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />');
+                    // 6.0 File API & 13.0 <output>
+                    document.writeln(' - Google Chrome: 13.0 or later<br />');
+                    // 3.6 File API & 6.0 <output>
+                    document.writeln(' - Mozilla Firefox: 6.0 or later<br />');
+                    // 10.0 File API & 10.0 <output>
+                    document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />');
+                    // ? File API & 5.1 <output>
+                    document.writeln(' - Safari: Not supported<br />');
+                    // ? File API & 9.2 <output>
+                    document.writeln(' - Opera: Not supported');
+                    return false;
+                }
+            }
+
+            function handleFileSelect(evt) {
+                var files = evt.target.files; // FileList object
+                var file = files[0];
+
+                // read the file contents
+                addRetirosFromCsv(file);
+            }
+
+            function handleFileFacturas(evt) {
+                var files = evt.target.files; // FileList object
+                var file = files[0];
+
+                // read the file contents
+                addDatosDeFacturas(file);
+            }
+
+            function handleCambioDeEstados(evt) {
+                var files = evt.target.files; // FileList object
+                var file = files[0];
+
+                // read the file contents
+                cambiarEstadosFromCsv(file);
+            }
+
+            var crearRetiro = function sendRequest (retirosArray, index) {
+                if (index < retirosArray.length) {
+                    $.ajax({
+                        url:  Routing.generate("datosenvios_create_csv"),
+                        type: 'POST',
+                        data: retirosArray[index],
+                        success: function( data ) {
+                            $("#guias-successmessages").append('<p>'+data+'</p>').fadeIn( 300 );
+                        },
+                        error: function( data ) {
+                            $("#guias-errormessages").append('<p>'+data.responseText+'</p>').fadeIn( 300 );
+                        },
+                        complete: function () {
+                            sendRequest(retirosArray, index + 1);
+                        }
+                    });
+                }
+            };
+
+            function handleGuiasFileSelect(evt) {
+                var files = evt.target.files; // FileList object
+                var file = files[0];
+
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function(event){
+                    var csv = event.target.result;
+                    var data = $.csv.toObjects(csv, {separator: ';'});
+                    if(data.length > 0) {
+                        crearRetiro(data, 0);
+                    }
+                };
+                reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+            }
+
+            function cambiarEstadosFromCsv(file) {
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function(event){
+                    var csv = event.target.result;
+                    var data = $.csv.toObjects(csv, {separator: ';'});
+                    for(var row in data) {
+                        $.ajax({
+                            url:  Routing.generate("tracker_cambiar_estado"),
+                            type: 'POST',
+                            data: data[row],
+                            success: function( data ) {
+                                $("#cambiarestados-successmessages").append('<p>'+data+'</p>').fadeIn( 300 );
+                            },
+                            error: function( data ) {
+                                $("#cambiarestados-errormessages").append('<p>'+data.responseText+'</p>').fadeIn( 300 );
+                            }
+                        });
+                    }
+                };
+                reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+            }
+
+            function addRetirosFromCsv(file) {
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function(event){
+                    var csv = event.target.result;
+                    var data = $.csv.toArrays(csv, {separator: ';'});
+                    for(var row in data) {
+                        $.ajax({
+                            url:  Routing.generate("recorrido_planillar_retiro", {id_retiro: data[row][0], cod_distribuidor: data[row][1]}),
+                            type: 'GET',
+                            success: function( data ) {
+                                $("#addretiro-successmessages").append('<p>'+data+'</p>').fadeIn( 300 );
+                            },
+                            error: function( data ) {
+                                $("#addretiro-errormessages").append('<p>'+data.responseText+'</p>').fadeIn( 300 );
+                            }
+                        });
+                    }
+                };
+                reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+            }
+
+            function addDatosDeFacturas(file) {
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function(event){
+                    var csv = event.target.result;
+                    var data = $.csv.toArrays(csv, {separator: ';'});
+                    for(var row in data) {
+                        $.ajax({
+                            url:  Routing.generate("datosenvios_agregar_datos_factura", {id_retiro: data[row][0], nro_factura: encodeURIComponent(data[row][1]), fecha_factura: encodeURIComponent(data[row][2])}),
+                            type: 'GET',
+                            success: function( data ) {
+                                $("#importarfacturas-successmessages").append('<p>'+data+'</p>').fadeIn( 300 );
+                            },
+                            error: function( data ) {
+                                $("#importarfacturas-errormessages").append('<p>'+data.responseText+'</p>').fadeIn( 300 );
+                            }
+                        });
+                    }
+                };
+                reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+            }
+        });
+    </script>
+{% endblock %}

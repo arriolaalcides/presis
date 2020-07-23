@@ -1,0 +1,115 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        <div class="row">
+            <div>    
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#remitente" aria-controls="home" role="tab" data-toggle="tab">REMITENTE</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="destinatario" role="tab" data-toggle="tab">DESTINATARIO</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="envio" role="tab" data-toggle="tab">ENVIO</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="remitente">A</div>
+                <div role="tabpanel" class="tab-pane" id="destinatario">B</div>
+                <div role="tabpanel" class="tab-pane" id="envio">
+                    
+                </div>
+                <!--<div role="tabpanel" class="tab-pane" id="settings">D</div>-->
+            </div><!--tab-content-->
+            </div><!--div-->
+        </div><!--row-->
+    </div><!--container-->
+    <a href="{{ path('datosenvios_new') }}">
+                Create a new entry
+            </a>
+   <!-- <h1>DatosEnvios list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cantidad</th>
+                <th>Peso</th>
+                <th>Volumen</th>
+                <th>Observaciones</th>
+                <th>Vd</th>
+                <th>Contrare</th>
+                <th>Flete</th>
+                <th>Seguro</th>
+                <th>Pcontrare</th>
+                <th>Adicionales</th>
+                <th>Neto</th>
+                <th>Ivain</th>
+                <th>Total</th>
+                <th>Contado</th>
+                <th>Ccorriente</th>
+                <th>Facobrar</th>
+                <th>Contrareem</th>
+                <th>Remito</th>
+                <th>Cantreal</th>
+                <th>Ts</th>
+                <th>Src</th>
+                <th>Csr</th>
+                <th>Tipoop</th>
+                <th>Alto</th>
+                <th>Ancho</th>
+                <th>Largo</th>
+                <th>Productoloop</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('datosenvios_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.cantidad }}</td>
+                <td>{{ entity.peso }}</td>
+                <td>{{ entity.volumen }}</td>
+                <td>{{ entity.observaciones }}</td>
+                <td>{{ entity.vd }}</td>
+                <td>{{ entity.contrare }}</td>
+                <td>{{ entity.flete }}</td>
+                <td>{{ entity.seguro }}</td>
+                <td>{{ entity.pcontrare }}</td>
+                <td>{{ entity.adicionales }}</td>
+                <td>{{ entity.neto }}</td>
+                <td>{{ entity.ivain }}</td>
+                <td>{{ entity.contado }}</td>
+                <td>{{ entity.ccorriente }}</td>
+                <td>{{ entity.facobrar }}</td>
+                <td>{{ entity.contrareem }}</td>
+                <td>{{ entity.remito }}</td>
+                <td>{{ entity.cantreal }}</td>
+                <td>{{ entity.ts }}</td>
+                <td>{{ entity.src }}</td>
+                <td>{{ entity.csr }}</td>
+                <td>{{ entity.tipoOp }}</td>
+                <td>{{ entity.alto }}</td>
+                <td>{{ entity.ancho }}</td>
+                <td>{{ entity.largo }}</td>
+                <td>{{ entity.productoLoop }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('datosenvios_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('datosenvios_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('datosenvios_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>-->
+    {% endblock %}

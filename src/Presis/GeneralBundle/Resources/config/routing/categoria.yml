@@ -1,0 +1,48 @@
+categoria:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:Categoria:index" }
+
+
+
+categoria_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:Categoria:show" }
+    options:
+      expose: true
+
+
+categoria_ajax:
+  path:     /ajax
+  defaults: {_controller: "PresisGeneralBundle:Categoria:ajax" }
+  options:
+        expose: true
+
+categoria_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:Categoria:new" }
+    options:
+      expose: true
+categoria_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:Categoria:create" }
+    requirements: { _method: post }
+categoria_search:
+    path:     /search
+    defaults: { _controller: "PresisGeneralBundle:Categoria:search" }
+
+
+categoria_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:Categoria:edit" }
+    options:
+      expose: true
+
+categoria_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:Categoria:update" }
+    requirements: { _method: post|put }
+
+categoria_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:Categoria:delete" }
+    requirements: { _method: post|delete }

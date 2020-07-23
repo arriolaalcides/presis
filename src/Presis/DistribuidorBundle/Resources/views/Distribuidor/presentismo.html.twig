@@ -1,0 +1,178 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+        .modal-dialog {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+{% endblock %}
+
+    {%  block contenido %}
+        <div class="container-fluid">
+            <table id="retiros"
+                   data-toggle="table"
+                   data-click-to-select="true"
+                   data-toolbar="#toolbar">
+                <thead>
+                <tr>
+                    <th data-field="id" data-sortable="true">ID</th>
+                    <th data-field="codigo" data-sortable="true">Codigo</th>
+                    <th data-field="apenom" data-sortable="true">Apellido y Nombre</th>
+                    <th data-formatter="presentismo">Acciones</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Asignar presentismo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="frm1" name="frm1">
+                            <div class="form-group">
+                                <label for="fecha" class="col-sm-1 control-label">Fecha</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control date-picker input-sm" id="fecha" name="fecha" value="{{ "now"|date('d/m/Y') }}">
+                                </div>
+                                <label for="gestor" class="col-sm-1 control-label">Gestor</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm" id="gestor" name="gestor" readonly>
+                                </div>
+                                <label for="gestor_codigo" class="col-sm-1 control-label">Codigo</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control input-sm" id="gestor_codigo" name="gestor_codigo" readonly>
+                                </div>
+                                <label for="gestor_id" class="col-sm-1 control-label">id</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control input-sm" id="gestor_id" name="gestor_id" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="presente" class="col-sm-1 control-label">Presente</label>
+                                <div class="col-sm-3">
+                                    <select id="presente" name="presente" class="form-control">
+                                        <option>PRESENTE</option>
+                                        <option>AUSENTE</option>
+                                    </select>
+                                </div>
+                                <label for="recorrido" class="col-sm-1 control-label">Recorrido</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="recorrido" name="recorrido">
+                                </div>
+                                <label for="obs" class="col-sm-1 control-label">Observaciones</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control input-sm" id="obs" name="obs">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-default" id="guardar-presentismo">GUARDAR</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+    <script type="text/javascript">
+
+        var $table = $('#retiros');
+
+        function presentismo(value, row){
+            var botones = "<a href='#' data-id='"+row.id+'*'+row.codigo+'*'+row.apenom+"' class='modal-form'><i class='fa fa-pencil-square-o fa-2x'></i></a>";
+            return botones;
+        }
+
+        $(document).ready(function () {
+
+            $table.bootstrapTable();
+            $cargarTabla();
+
+            $("#guardar-presentismo").click(function(){
+                $("#myModal").modal('hide');
+                var $data = $("#frm1").serialize();
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('distribuidor_save_presente'),
+                    data: $data,
+                    success: function(data)
+                    {
+                        //var data = JSON.parse(data);
+                        $cargarTabla();
+                        $.unblockUI();
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            function buscarDistribuidores(){
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('distribuidor_ajax4select'),
+                    data: "",
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#distribuidor").empty();
+                        $("#distribuidor").append('<option value=""></option>');
+                        $.each(data, function(id,value){
+                            $("#distribuidor").append('<option value="'+value.id+'">'+value.apenom+'</option>');
+                        });
+                    }
+                });
+            }
+
+            $("#retiros").on('click','.modal-form', function(event){
+                event.preventDefault();
+                var data = $(this).data('id').split('*');
+                $(".modal-body #gestor_id").val( data[0] );
+                $(".modal-body #gestor_codigo").val( data[1] );
+                $(".modal-body #gestor").val( data[2] );
+                $("#myModal").modal('show');
+            });
+
+        });
+
+        var $cargarTabla = function(){
+            $.blockUI({message: "<h3>Buscando datos...</h3>"});
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('distribuidor_listaPresentismo'),
+                success: function(data)
+                {
+                    var data = JSON.parse(data);
+
+                    $table.bootstrapTable('load', data);
+
+                    $.unblockUI();
+                },
+
+                error: function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        }
+    </script>
+{% endblock %}

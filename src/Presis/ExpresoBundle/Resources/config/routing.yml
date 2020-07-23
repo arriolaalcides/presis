@@ -1,0 +1,7 @@
+expreso_expreso:
+    resource: "@ExpresoBundle/Resources/config/routing/expreso.yml"
+    prefix:   /expreso
+
+expreso_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ExpresoBundle:Default:index }

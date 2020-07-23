@@ -1,0 +1,30 @@
+gestioncel:
+    path:     /
+    defaults: { _controller: "GestionCelBundle:GestionCel:index" }
+
+gestioncel_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionCelBundle:GestionCel:show" }
+
+gestioncel_new:
+    path:     /new
+    defaults: { _controller: "GestionCelBundle:GestionCel:new" }
+
+gestioncel_create:
+    path:     /create
+    defaults: { _controller: "GestionCelBundle:GestionCel:create" }
+    methods:  POST
+
+gestioncel_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionCelBundle:GestionCel:edit" }
+
+gestioncel_update:
+    path:     /{id}/update
+    defaults: { _controller: "GestionCelBundle:GestionCel:update" }
+    methods:  [POST, PUT]
+
+gestioncel_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionCelBundle:GestionCel:delete" }
+    methods:  [POST, DELETE]

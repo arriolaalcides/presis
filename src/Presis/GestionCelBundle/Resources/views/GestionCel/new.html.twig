@@ -1,0 +1,193 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+
+{% block contenido -%}
+   
+      <div class="container-fluid container-round">
+        {{ form_start(form) }}
+         <fieldset>
+            <legend>Alta GestionCel</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.usuario,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.ani,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.nroserie,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.nomyape,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.nrosst,{'style': 'horizontal', 'label_col': 3, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.aceptacargos,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.nivelderep,{'style': 'horizontal', 'label_col': 3, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.muleto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+                
+            </div>
+            <div class="row">
+                 <div class="form-group">
+                    {{ form_row(form.imeimuleto,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.fechaactivacion,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3,attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'}})}}
+                </div>
+                 <div class="form-group">
+                    {{ form_row(form.fechafabricacion,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3,attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'}})}}
+                </div>
+            </div>
+              <div class="row">
+               
+                <div class="form-group">
+                    {{ form_row(form.fabricante,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.modelo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+               
+            </div>
+            <div class="row">
+                 <div class="form-group">
+                    {{ form_row(form.origendelequipo,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.sva,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+                
+                 <div class="form-group">
+                    {{ form_row(form.falla,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.rotura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+               <div class="form-group">
+                    {{ form_row(form.completitud,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+               <div class="form-group">
+                    {{ form_row(form.estadointervencion,{'style': 'horizontal', 'label_col': 3, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.certificadoreparador,{'style': 'horizontal', 'label_col': 3, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+               
+                <div class="form-group">
+                    {{ form_row(form.placaswap,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.nroimei,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="form-group">
+                    {{ form_row(form.tipocliente,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.tiposervicio,{'style': 'horizontal', 'label_col': 2, 'widget_col': 3})}}
+                </div>
+                
+            </div>
+        </fieldset>
+        <br>
+    
+        
+        {{ form_end(form) }}
+
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('gestioncel') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+
+
+{% block javascripts %}
+ {{ parent() }} {#sin esto no anda jquery#}
+<script>
+
+
+function CheckAceptaCambios(estado){
+    if(estado == "SI"){
+        $("#presis_gestioncelbundle_gestioncel_nivelderep").removeAttr('disabled');
+        $('#presis_gestioncelbundle_gestioncel_nivelderep option[value="NIVEL 4"]').attr("selected", true);   
+    }else{
+       $("#presis_gestioncelbundle_gestioncel_nivelderep").attr('disabled','disabled');
+    }
+}
+
+function CheckMuleto(estado){
+    if(estado == "SI"){
+        $("#presis_gestioncelbundle_gestioncel_imeimuleto").removeAttr('disabled');
+    }else{
+         $("#presis_gestioncelbundle_gestioncel_imeimuleto").attr('disabled','disabled');
+    }
+}
+
+function CheckPlacaSwap(estado){
+    if(estado == "SI"){
+        $("#presis_gestioncelbundle_gestioncel_nroimei").removeAttr('disabled');
+    }else{
+        $("#presis_gestioncelbundle_gestioncel_nroimei").attr('disabled','disabled');
+    }
+}
+    $(document).ready(function(){
+
+        var aceptacargosEstado = $( "#presis_gestioncelbundle_gestioncel_aceptacargos option:selected" ).text();
+        CheckAceptaCambios(aceptacargosEstado);
+
+        var muletoEstado = $( "#presis_gestioncelbundle_gestioncel_muleto option:selected" ).text();
+        CheckMuleto(muletoEstado);
+
+        var placaSwapEstado = $( "#presis_gestioncelbundle_gestioncel_placaswap option:selected" ).text();
+        CheckPlacaSwap(placaSwapEstado);
+
+        $("#presis_gestioncelbundle_gestioncel_aceptacargos").change(function(){
+             var aceptacargosEstado = $( "#presis_gestioncelbundle_gestioncel_aceptacargos option:selected" ).text();
+             CheckAceptaCambios(aceptacargosEstado);
+        });
+
+        $("#presis_gestioncelbundle_gestioncel_muleto").change(function(){
+             var muletoEstado = $( "#presis_gestioncelbundle_gestioncel_muleto option:selected" ).text();
+             CheckMuleto(muletoEstado);
+        });
+
+        $("#presis_gestioncelbundle_gestioncel_placaswap").change(function(){
+               var placaSwapEstado = $( "#presis_gestioncelbundle_gestioncel_placaswap option:selected" ).text();
+               CheckPlacaSwap(placaSwapEstado);
+        });
+       
+    });
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYBMbAbgxTcwvybm8Cv3Rwhit26szlWpU&callback=initMap"></script>
+{% endblock %}

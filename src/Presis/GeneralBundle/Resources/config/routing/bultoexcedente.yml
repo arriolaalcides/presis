@@ -1,0 +1,43 @@
+bultoexcedente:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:index" }
+    options:
+          expose: true
+
+bultoexcedente_get:
+    path:     /getBultosExcedentes
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:getBultosExcedentes" }
+    methods:  POST
+    options:
+        expose: true
+
+bultoexcedente_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:show" }
+    options:
+        expose: true
+
+bultoexcedente_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:new" }
+
+bultoexcedente_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:create" }
+    methods:  POST
+
+bultoexcedente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:edit" }
+    options:
+        expose: true
+
+bultoexcedente_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:update" }
+    methods:  [POST, PUT]
+
+bultoexcedente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:BultoExcedente:delete" }
+    methods:  [POST, DELETE]

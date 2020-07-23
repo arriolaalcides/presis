@@ -1,0 +1,23 @@
+movistar_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MovistarBundle:Default:index }
+
+modelos_select:
+    path:     /select_modelos
+    defaults: { _controller: "MovistarBundle:Default:select" }
+    options:
+        expose: true
+
+modelo_find:
+    path:     /findvd
+    defaults: { _controller: "MovistarBundle:Default:findvd" }
+    options:
+        expose: true
+
+movistar_fabricante:
+    resource: "@MovistarBundle/Resources/config/routing/fabricante.yml"
+    prefix:   /fabricante
+    
+movistar_modelo:
+    resource: "@MovistarBundle/Resources/config/routing/modelo.yml"
+    prefix:   /modelo

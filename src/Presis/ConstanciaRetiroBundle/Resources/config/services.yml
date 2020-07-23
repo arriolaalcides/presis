@@ -1,0 +1,4 @@
+services:
+#    constancia_retiro.example:
+#        class: Presis\ConstanciaRetiroBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

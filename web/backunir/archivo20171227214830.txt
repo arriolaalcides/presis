@@ -1,0 +1,2 @@
+1;129;129;OD;100;2017-12-27;27125;1565;0;GALANDER;Bulnes65;1176;CABA;1;0;0;1;0;comentarios;AMBA - Regular;;;
+1;129;129;OR;100;2017-12-27;27125;290;0;MOVISTAR;Av. Mitre580;1870;Avellaneda;1;0;0;1;0;comentarios;AMBA - Regular;Balderrama Fernando David;fernando.balderrama@telefonica.com;

@@ -1,0 +1,7 @@
+gestion_cel_gestioncel:
+    resource: "@GestionCelBundle/Resources/config/routing/gestioncel.yml"
+    prefix:   /gestioncel
+
+gestion_cel_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: GestionCelBundle:Default:index }

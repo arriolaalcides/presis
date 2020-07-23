@@ -1,0 +1,61 @@
+retirosfijos_listado:
+    path:     /listado-retiros-fijos
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:index" }
+    options:
+        expose: true
+
+retiros_fijos_ajax:
+    path:     /listado-retiros-fijo
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:listadoAjax" }
+    options:
+        expose: true
+
+retirosfijos_show:
+    path:     /{id}/show
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:show" }
+
+retirosfijos_new:
+    path:     /new
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:new" }
+
+retirosfijos_create:
+    path:     /create
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:create" }
+    methods:  POST
+
+retirosfijos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:edit" }
+    options:
+        expose: true
+
+retirosfijos_update:
+    path:     /{id}/update
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:update" }
+    methods:  [POST, PUT]
+
+retirosfijos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:delete" }
+    methods:  [POST, DELETE]
+
+retirosfijos_eliminar:
+    path:     /{idFijo}/eliminar
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:eliminar" }
+    methods:  [GET]
+    options:
+      expose: true
+
+retirosfijos_deshabilitar:
+    path:     /{idFijo}/deshabilitar
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:deshabilitar" }
+    methods:  [GET]
+    options:
+      expose: true
+
+retirosfijos_habilitar:
+    path:     /{idFijo}/habilitar
+    defaults: { _controller: "ConstanciaRetiroBundle:RetirosFijos:habilitar" }
+    methods:  [GET]
+    options:
+      expose: true

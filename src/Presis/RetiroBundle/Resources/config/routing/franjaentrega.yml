@@ -1,0 +1,45 @@
+franjaentrega:
+    path:     /
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:index" }
+    options:
+      expose: true
+
+franjaentrega_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:show" }
+    options:
+      expose: true
+
+franjaentrega_new:
+    path:     /new
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:new" }
+
+franjaentrega_create:
+    path:     /create
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:create" }
+    requirements: { _method: post }
+
+franjaentrega_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:edit" }
+    options:
+      expose: true
+
+franjaentrega_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:update" }
+    requirements: { _method: post|put }
+
+
+franjaentrega_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisRetiroBundle:FranjaEntrega:delete" }
+    requirements: { _method: post|delete }
+    options:
+      expose: true
+
+franjaentrega_ajax:
+  path:     /ajax
+  defaults: {_controller: "PresisRetiroBundle:FranjaEntrega:ajax" }
+  options:
+        expose: true

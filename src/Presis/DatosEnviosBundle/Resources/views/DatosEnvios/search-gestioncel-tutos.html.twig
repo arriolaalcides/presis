@@ -1,0 +1,392 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title pull-left">
+                Busqueda de guias
+            </h3>
+            <button class="btn btn-default pull-right btn-sm" data-toggle="collapse" data-target="#demo" id="boton"></button>
+            <div class="clearfix"></div>
+        </div>
+        <form class="form-inline" id="jsForm" role="form" method="GET" action="">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="min">Guia Desde:</label>
+                            <input type="text" class="form-control input-sm date-picker" id="min" name="min" value="{{ "now"|date_modify("-180 day")|date("d/m/Y") }}">
+                            <label for="max">Guia Hasta:</label>
+                            <input type="text" class="form-control input-sm date-picker" id="max" name="max" value="{{ "now"|date("d/m/Y") }}">
+                            <input class="btn btn-danger btn-sm" type="button" id="find" value="BUSCAR">             
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <input type="hidden" name="url" id="url" value="{{ url }}" />
+        <input type="hidden" name="tracker" id="tracker" value="{{ tracker }}" />
+        <div class="panel-body collapse in" id="demo">
+            
+            <br>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div id="toolbar">
+            <div class="col-lg-2">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            
+        </div>
+        <table id="retiros" class="ret"
+               data-toggle="table"
+               data-url="{{ path('datosenvios_search_ajax_tutos') }}"
+               data-show-export="true"
+               data-toolbar="#toolbar"
+               data-height="650"
+               data-side-pagination="server"
+               data-pagination="true"
+               data-page-list="[5, 10, 20, 50, 100, 200]"
+               data-method="post"
+               data-query-params="queryParams"
+               data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-field="retiro.id">GUIA</th><!--1-->
+                
+                <th data-field="ani">ANI</th><!--11-->
+                <th data-field="nroserie">NRO. SERIE</th>
+                <th data-field="nomyape">APELLIDO Y NOMBRE</th><!--2-->
+                <th data-field="nrosst">NRO. SST</th><!--3-->
+                <th data-field="aceptacargos">ACEPTA CARGOS</th><!--4-->
+                <th data-field="nivelderep">NIVEL DE REP.</th>
+                
+                <th data-field="fechaactivacion">FECHA ACTIVACION</th>
+                <th data-field="fechafabricacion">FECHA FABRICACION</th><!--5-->
+                <th data-field="origendelequipo">ORIGEN DEL EQUIPO</th><!--5 NO LO TRAEEEEEEE-->
+                <th data-field="sva">SVA</th><!--6-->
+                <th data-field="falla">FALLA</th><!--6-->
+                <th data-field="rotura">ROTURA</th>
+                <th data-field="completitud">COMPLETITUD</th>
+                
+                <th data-field="nroimei">NRO. IMEI</th>
+                
+                <th data-field="tiposervicio">TIPO SERVICIO</th>
+                <th data-field="claimassurant">CLAIMASSURANT</th>
+                
+                <th data-field="sucursal">SUCURSAL</th>
+                
+                <th data-field="fechaIngreso">FECHA INGRESO</th>
+                <th data-field="fabricante.descricion">FABRICANTE</th>
+                <th data-field="modelo.descripcion">MODELO</th>
+                
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <!--########################## MODAL DE PENDIENTES ############################-->
+    <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Tracker</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="trackeo"
+                           data-toggle="table"
+                           data-height="250">
+                        <thead>
+                        <tr>
+                            <th data-field="tracker">TRACKER</th>
+                            <th data-field="estado">ESTADO</th>
+                            <th data-field="detalles">DETALLES</th>
+                            <th data-field="timestamp_modificacion">FECHA</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--########################## MODAL DE PENDIENTES ############################-->
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+    <script src="{{ asset('bundles/presisgeneral/js/jquery.fileDownload.js') }}"></script>
+
+    <script type="text/javascript">
+
+        var $table = $("#retiros");
+
+        var $pagina = 0;
+        var $limite = 10;
+
+        $(function () {
+            buildTable($table, 20, 20);
+            $('#fixedNumber').change(function () {
+                buildTable($table, 20, 20);
+            });
+        });
+
+        function buildTable($el, cells, rows) {
+            $el.bootstrapTable('destroy').bootstrapTable({
+                toolbar: '.toolbar'
+            });
+        }
+        
+        function queryParams(params) {
+                params.fechaDesde = $("#min").val(); // add param1
+                params.fechaHasta = $("#max").val(); // add param2
+                return params;
+            }
+
+
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('destroy').bootstrapTable({
+                    exportDataType: $(this).val()
+                });
+            });
+        })
+
+        $(document).ready(function () {
+
+            /*=====================================================================================================*/
+
+            
+            
+            
+            $("#presis_gestioncelbundle_gestioncel_fabricante").change(function(event) {
+                event.preventDefault();
+                var data = {
+                    fabricante_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("modelos_select") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_gestioncelbundle_gestioncel_modelo');
+                        $city_selector.html('<option>SELECCIONAR</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });
+
+
+            /*=====================================================================================================*/
+
+            if ($("select[id*='retiro_distribuidor'] option:selected").val()) {
+                readonly("select[id*='retiro_distribuidor']", true);
+            }
+
+            //var $table = $('#retiros');
+            $table.bootstrapTable()
+                    .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+
+                        buscarGuias();
+                    });
+
+           /* $('.ret').on('click','.link', function(event){
+                event.preventDefault();
+                alert(getIdSelection());
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    dataType: "json",
+                    url: Routing.generate("datosenvios_find_tracker"),
+                    type: 'GET',
+                    data: {
+                        "id": function (d) {
+                            return getIdSelection();
+                        }
+                    },
+                    success: function (data) {
+                        var $tableTracker = $('#trackeo');
+                        $tableTracker.bootstrapTable()
+                        $tableTracker.bootstrapTable('load', data);
+                        $("#modalTable").modal('show');
+                    },
+                    error: function (error) {
+                        BootstrapDialog.show({
+                            title: 'Error',
+                            message: error.responseText
+                        });
+                    }
+                });
+                $.unblockUI();
+            });*/
+
+            function getIdSelection() {
+                return $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
+                });
+            }
+
+
+            $("#find").click(function(){
+                $("#demo").collapse('hide');
+                /*$("#boton").text(function(i,old){
+                    return old=='ABRIR' ?  'CERRAR' : 'ABRIR';
+                });*/
+            });
+
+
+            $("#exportar").click(function(){
+                $limite = 0;
+
+                exportarGuias();
+
+                $limite = 10;
+            });
+
+            var obtenerParametrosBusqueda = function() {
+
+                var $ani = $("#presis_gestioncelbundle_gestioncel_ani").val();
+                var $nroserie = $("#presis_gestioncelbundle_gestioncel_nroserie").val();
+                var $nomyape = $("#presis_gestioncelbundle_gestioncel_nomyape").val();
+                var $nrosst = $("#presis_gestioncelbundle_gestioncel_nrosst").val();
+                var $nivelderep = $("#presis_gestioncelbundle_gestioncel_nivelderep").val();
+                var $fabricante = $("#presis_gestioncelbundle_gestioncel_fabricante").val();
+                var $modelo = $("#presis_gestioncelbundle_gestioncel_modelo").val();
+
+                var $estadointervencion = $("#presis_gestioncelbundle_gestioncel_estadointervencion").val();
+                var $nroimei = $("#presis_gestioncelbundle_gestioncel_nroimei").val();
+
+                var $origendelequipo = $("#presis_gestioncelbundle_gestioncel_origendelequipo").val();
+                var $sva = $("#presis_gestioncelbundle_gestioncel_sva").val();
+                var $rotura = $("#presis_gestioncelbundle_gestioncel_rotura").val();
+                var $tipocliente = $("#presis_gestioncelbundle_gestioncel_tipocliente").val();
+                var $tiposervicio = $("#presis_gestioncelbundle_gestioncel_tiposervicio").val();
+                var $claimassurant = $("#presis_gestioncelbundle_gestioncel_claimassurant").val();
+                var $certificadoreparador = $("#presis_gestioncelbundle_gestioncel_certificadoreparador").val();
+                var $placaswap = $("#presis_gestioncelbundle_gestioncel_placaswap").val();
+
+                var $fechaDesde = $("#fechaDesde").val();
+                var $fechaHasta = $("#fechaHasta").val();
+                var $codSuc = $("#codSuc").val();
+                var $estado = $("#estado").val();
+
+                return {ani: $ani, nroserie: $nroserie, nomyape: $nomyape,
+                    nrosst: $nrosst, fabricante: $fabricante,modelo: $modelo,
+                    estadointervencion: $estadointervencion, nroimei: $nroimei,
+                    origendelequipo: $origendelequipo, sva: $sva, rotura: $rotura,
+                    tipocliente: $tipocliente, tiposervicio: $tiposervicio,
+                    claimassurant: $claimassurant, certificadoreparador: $certificadoreparador, placaswap: $placaswap,
+                    fechaDesde: $fechaDesde, fechaHasta: $fechaHasta, codSuc: $codSuc, estado: $estado,
+                    pagina: $pagina, limite: $limite};
+            };
+
+
+            var exportarGuias = function(){
+                $.fileDownload(Routing.generate('datosenvios_findGuia'), {
+                    httpMethod: "POST",
+                    data: obtenerParametrosBusqueda()
+                });
+            };
+
+           
+            var crearArchivo = function(){
+                var $ani = $("#presis_gestioncelbundle_gestioncel_ani").val();
+                var $nroserie = $("#presis_gestioncelbundle_gestioncel_nroserie").val();
+                var $nomyape = $("#presis_gestioncelbundle_gestioncel_nomyape").val();
+                var $nrosst = $("#presis_gestioncelbundle_gestioncel_nrosst").val();
+                var $nivelderep = $("#presis_gestioncelbundle_gestioncel_nivelderep").val();
+                var $fabricante = $("#presis_gestioncelbundle_gestioncel_fabricante").val();
+                var $modelo = $("#presis_gestioncelbundle_gestioncel_modelo").val();
+
+                var $estadointervencion = $("#presis_gestioncelbundle_gestioncel_estadointervencion").val();
+                var $nroimei = $("#presis_gestioncelbundle_gestioncel_nroimei").val();
+
+                var $origendelequipo = $("#presis_gestioncelbundle_gestioncel_origendelequipo").val();
+                var $sva = $("#presis_gestioncelbundle_gestioncel_sva").val();
+                var $rotura = $("#presis_gestioncelbundle_gestioncel_rotura").val();
+                var $tipocliente = $("#presis_gestioncelbundle_gestioncel_tipocliente").val();
+                var $tiposervicio = $("#presis_gestioncelbundle_gestioncel_tiposervicio").val();
+                var $claimassurant = $("#presis_gestioncelbundle_gestioncel_claimassurant").val();
+                var $certificadoreparador = $("#presis_gestioncelbundle_gestioncel_certificadoreparador").val();
+                var $placaswap = $("#presis_gestioncelbundle_gestioncel_placaswap").val();
+
+                var $fechaDesde = $("#fechaDesde").val();
+                var $fechaHasta = $("#fechaHasta").val();
+                var $codSuc = $("#codSuc").val();
+                var $estado = $("#estado").val();
+
+                window.open('http://trackers.onlinegeotrack.com.ar/desarrollo/maslogistica/excel/sabana.php?fechaD='+$fechaDesde+'&fechaH='+$fechaHasta+
+                    '&codSuc='+$codSuc+'&ani='+$ani+'&nroserie='+$nroserie+'&nomyape='+$nomyape+'&sst='+$nrosst+
+                    '&fabricante='+$fabricante+'&modelo='+$modelo+'&estadointervencion='+$estadointervencion+
+                    '&nroimei='+$nroimei+'&origendelequipo='+$origendelequipo+'&sva='+$sva+'&rotura='+$rotura+
+                    '&tipocliente='+$tipocliente+'&tiposervicio='+$tiposervicio+'&claimassurant='+$claimassurant+
+                    '&certificadoreparador='+$certificadoreparador+'&placaswap='+$placaswap+'&estado='+$estado,'_blank')
+
+                /*window.open('http://maslogistica.epresis.com/movistar/excel/sabana.php?fechaD='+$fechaDesde+'&fechaH='+$fechaHasta+
+                    '&codSuc='+$codSuc+'&ani='+$ani+'&nroserie='+$nroserie+'&nomyape='+$nomyape+'&sst='+$nrosst+
+                    '&fabricante='+$fabricante+'&modelo='+$modelo+'&estadointervencion='+$estadointervencion+
+                    '&nroimei='+$nroimei+'&origendelequipo='+$origendelequipo+'&sva='+$sva+'&rotura='+$rotura+
+                    '&tipocliente='+$tipocliente+'&tiposervicio='+$tiposervicio+'&claimassurant='+$claimassurant+
+                    '&certificadoreparador='+$certificadoreparador+'&placaswap='+$placaswap+'&estado='+$estado,'_blank')*/
+            };
+
+
+            $("#archivo").click(crearArchivo);
+
+            $('#prints').click( function () {
+                var ids=[];
+                var data = $table.bootstrapTable('getSelections');
+                var id = $.map(data, function (item) {
+                   // return alert(item.id);
+                    ids.push(item.id);
+                });
+                window.open( Routing.generate('retiro_showguias', {ids: ids} ))
+                /* var ids=[];
+                 var cant=table.rows('.success').data().length;
+                 table.rows('.success').indexes().each( function (idx) {
+                     var d = table.row( idx ).data();
+                     ids.push(d.id);
+
+                 } );
+                 window.open( Routing.generate("retiro_showvoucher",{'ids':ids}))*/
+            } );
+
+            $('#etiquetas').click( function () {
+                var ids=[];
+                var data = $table.bootstrapTable('getSelections');
+                var id = $.map(data, function (item) {
+                    // return alert(item.id);
+                    ids.push(item.id);
+                });
+                window.open( Routing.generate('retiro_showetiquetas', {ids: ids} ))
+                /* var ids=[];
+                 var cant=table.rows('.success').data().length;
+                 table.rows('.success').indexes().each( function (idx) {
+                 var d = table.row( idx ).data();
+                 ids.push(d.id);
+
+                 } );
+                 window.open( Routing.generate("retiro_showvoucher",{'ids':ids}))*/
+            } );
+            
+            $("#find").click(function() {
+                $table.bootstrapTable('refresh', {
+                    url: '{{ path('datosenvios_search_ajax_tutos') }}'
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Editar Modelo</legend>
+            
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.descripcion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4}) }}
+                    {{ form_row(edit_form.valorDeclarado,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4}) }}
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.fabricante,{'style': 'horizontal', 'label_col': 1, 'widget_col': 4}) }}
+                </div>
+            </div>
+            <br>
+            <br>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    <a href="{{ path('modelo') }}" class="btn btn-primary">Volver a Modelos</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

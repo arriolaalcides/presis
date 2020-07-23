@@ -1,0 +1,62 @@
+<!-- Collect the nav links, forms, and other content for toggling -->
+{% if empresa=='maslogistica' %}
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">OPERACIONES <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('datosenvios_new') }}">GENERAR GUIAS</a></li>
+                    <li><a href="{{ path('datosenvios_search_gestion_cel') }}">CONSULTAR GUIAS</a></li>
+                    <li><a href="{{ path('constancia_search_manifiesto') }}">CONSULTAR MANIFIESTOS</a></li>
+                    <li><a href="{{ path('datosenvios_pendientes_bolsin') }}">ARMAR BOLSIN MOVISTAR</a></li>
+                    <li><a href="{{ path('datosenvios_informar_movistar') }}">RECEPCION Y ENTREGA DE EQUIPOS</a></li>
+                    <li><a href="{{ path('constancia_manifiestos') }}">MANIFIESTOS GENERADOS</a></li>
+                    <li><a href="{{ path('datosenvios_auditoria') }}">MODIFICAR GUIAS</a></li>
+                    <li><a href="{{ path('firmas_manifiestos') }}">FIRMAS MANIFIESTOS</a></li>
+                    <li><a href="{{ path('datosenvios_informar_reparados') }}">INFORMAR REPARADOS</a></li>
+                    <li><a href="{{ path('datosenvios_pendientes_bolsin_galander') }}">ARMAR BOLSIN GALANDER</a></li>
+                    <li><a href="{{ path('datosenvios_search_gestion_cel_totus') }}">EXPORTACION TOTUS</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">SEGUIMIENTO<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('tracker_movistar') }}">TRACKING</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Fabricantes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('fabricante_new') }}">AGREGAR FABRICANTE</a></li>
+                    <li><a href="{{ path('fabricante') }}">LISTADO</a></li>
+                </ul>
+            </li>
+         
+         
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Modelos <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('modelo_new') }}">AGREGAR MODELO</a></li>
+                    <li><a href="{{ path('modelo') }}">LISTADO</a></li>
+                </ul>
+            </li>
+         
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">PERFIL<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('user') }}">MIS DATOS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <!--<li><a href="{{ path('fos_user_security_logout') }}" class="menu-webpack"><strong>Logout</strong></a></li>-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('fos_user_security_logout') }}">LOGOUT</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+{% endif %}

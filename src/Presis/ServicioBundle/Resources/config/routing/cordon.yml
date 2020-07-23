@@ -1,0 +1,37 @@
+cordon:
+    path:     /
+    defaults: { _controller: "PresisServicioBundle:Cordon:index" }
+
+cordon_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisServicioBundle:Cordon:show" }
+    options:
+      expose: true
+cordon_new:
+    path:     /new
+    defaults: { _controller: "PresisServicioBundle:Cordon:new" }
+cordon_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisServicioBundle:Cordon:ajax" }
+    options:
+      expose: true
+cordon_create:
+    path:     /create
+    defaults: { _controller: "PresisServicioBundle:Cordon:create" }
+    requirements: { _method: post }
+
+cordon_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisServicioBundle:Cordon:edit" }
+    options:
+      expose: true
+cordon_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisServicioBundle:Cordon:update" }
+    requirements: { _method: post|put }
+    options:
+          expose: true
+cordon_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisServicioBundle:Cordon:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,127 @@
+retiro:
+    path:     /
+    defaults: { _controller: "PresisRetiroBundle:Retiro:index" }
+
+retiro_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisRetiroBundle:Retiro:show",_format: "pdf" }
+    options:
+      expose: true
+
+retiro_showeti:
+    path:     /showEti
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showEti",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_showvoucher:
+    path:     /showVoucher
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showVoucher",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_new:
+    path:     /new
+    defaults: { _controller: "PresisRetiroBundle:Retiro:new" }
+
+retiro_showpendientes:
+    path:     /showPendientes
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showPendientes",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_save:
+    path:     /save
+    defaults: { _controller: "PresisRetiroBundle:Retiro:save" }
+    requirements: { _method: post }
+
+retiro_create:
+    path:     /create
+    defaults: { _controller: "PresisRetiroBundle:Retiro:create" }
+    requirements: { _method: post }
+
+retiro_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisRetiroBundle:Retiro:edit" }
+
+retiro_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisRetiroBundle:Retiro:update" }
+    requirements: { _method: post|put }
+
+retiro_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisRetiroBundle:Retiro:delete" }
+    requirements: { _method: post|delete }
+
+servicio_ajax_habilitados:
+    path:     /ajaxHabilitados
+    defaults: { _controller: "PresisRetiroBundle:Retiro:ajaxHabilitados" }
+    options:
+            expose: true
+retiro_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisRetiroBundle:Retiro:ajax" }
+    options:
+        expose: true
+
+retiro_generarguias:
+    path:     /generar
+    defaults: { _controller: "PresisRetiroBundle:Retiro:generar",_format: "pdf" }
+    options:
+        expose: true
+
+retiro_asajax:
+    path:     /asajax
+    defaults: { _controller: "PresisRetiroBundle:Retiro:asajax" }
+    options:
+        expose: true
+
+retiro_showguia:
+    path:     /showguia
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showguia",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_showguias:
+    path:     /showguias
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showguias",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_email_check:
+    path:     /email
+    defaults: { _controller: "PresisRetiroBundle:Retiro:email" }
+    options:
+      expose: true
+
+retiro_showetiquetas:
+    path:     /showetiquetas
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showetiquetas",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_showetiqueta:
+    path:     /showetiqueta
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showetiqueta",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_eliminar:
+    path:     /{id_retiro}/eliminar
+    defaults: { _controller: "PresisRetiroBundle:Retiro:eliminar" }
+    methods:  [GET]
+    options:
+      expose: true
+
+retiro_showconstancia:
+    path:     /showconstancia
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showconstancia",_format: "pdf"}
+    options:
+      expose: true
+
+retiro_showconstancia2:
+    path:     /showconstancia2
+    defaults: { _controller: "PresisRetiroBundle:Retiro:showconstancia2",_format: "pdf"}
+    options:
+      expose: true

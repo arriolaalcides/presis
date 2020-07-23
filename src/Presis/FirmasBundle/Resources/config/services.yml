@@ -1,0 +1,4 @@
+services:
+#    firmas.example:
+#        class: Presis\FirmasBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,65 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(delete_form, { 'style': 'horizontal' }) }}
+        <fieldset>
+            <legend>Eliminar cliente</legend>
+            {{ form_control_static('Id',entity.id) }}
+
+            {{ form_control_static('Empresa',entity.empresa) }}
+            {{ form_control_static('Contacto',entity.contacto) }}
+            {{ form_control_static('Aforo',entity.aforo) }}
+            {% if entity.custompricelist %}
+                <div class="form-group"><label class="col-sm-2 control-label">Lista cliente</label><div class="col-sm-10"><p class="form-control-static">Si</p></div></div>
+
+            {% else %}
+                <div class="form-group"><label class="col-sm-2 control-label">Lista cl</label><div class="col-sm-10"><p class="form-control-static">No</p></div></div>
+
+            {%  endif %}
+            {{ form_control_static('Lista',entity.lista) }}
+            {{ form_control_static('Comercial',entity.vendedor) }}
+            {{ form_control_static('Rubro',entity.rubro) }}
+
+            {{ form_control_static('Categorías','') }}
+            {% for categoria in entity.categorias %}
+                {{ form_control_static('*',categoria.nombre) }}
+            {% endfor %}
+            {{ form_control_static('Sucursales','') }}
+            {% for sucursal in entity.sucursales %}
+                {{ form_control_static('*',sucursal.descripcion) }}
+            {% endfor %}
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(delete_form.submit) }}
+                    <a href="{{ path('cliente') }}" class="btn btn-primary">Volver a Clientes</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+        {{ form_end(delete_form) }}
+
+
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('form').submit(function(e) {
+            var currentForm = this;
+            e.preventDefault();
+            bootbox.confirm("¿Esta seguro que desea eliminar el registro?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

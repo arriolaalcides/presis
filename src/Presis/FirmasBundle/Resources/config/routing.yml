@@ -1,0 +1,7 @@
+firmas_firmas:
+    resource: "@FirmasBundle/Resources/config/routing/firmas.yml"
+    prefix:   /firmas
+
+firmas_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: FirmasBundle:Default:index }

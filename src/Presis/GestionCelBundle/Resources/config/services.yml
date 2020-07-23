@@ -1,0 +1,4 @@
+services:
+#    gestion_cel.example:
+#        class: Presis\GestionCelBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

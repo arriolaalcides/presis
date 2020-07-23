@@ -1,0 +1,111 @@
+BODY {
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 12px;
+}
+.tablaImp{
+	vertical-align: top;
+	background-color: #F7F7F7;
+	border: solid 1px #525252; 	
+	text-align: left;	
+	font-size: 12px;
+}
+.trHeader
+{
+	COLOR: #000000;	
+	background-color: #ECF4DE;	
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bolder;	
+}
+.trHeader2
+{
+	COLOR: #000000;
+	background-color: #ffffff;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+}
+
+.tdTitulo
+{
+	font-weight: bolder;	
+}
+
+.inputButton
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	background-color: #CE0000;
+	color: White;
+	height: 21px;
+	width: 105px;
+	text-align: center;
+	border-left: 1px solid #D3D3D3;
+	border-top: 1px solid #D3D3D3;
+	border-right: 1px solid #697B25;
+	border-bottom: 1px solid #697B25;
+}
+.inputButtonHover
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	background-color: #FF2828;
+	color: White;
+	height: 21px;
+	width: 105px;
+	text-align: center;
+	border-left: 1px solid #D3D3D3;
+	border-top: 1px solid #D3D3D3;
+	border-right: 1px solid #697B25;
+	border-bottom: 1px solid #697B25;
+}
+
+.inputButtonLarge
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	background-color: #CE0000;
+	color: White;
+	height: 21px;
+	width: 125px;
+	text-align: center;
+	border-left: 1px solid #D3D3D3;
+	border-top: 1px solid #D3D3D3;
+	border-right: 1px solid #697B25;
+	border-bottom: 1px solid #697B25;
+}
+.inputButtonHoverLarge
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	background-color: #FF2828;
+	color: White;
+	height: 21px;
+	width: 125px;
+	text-align: center;
+	border-left: 1px solid #D3D3D3;
+	border-top: 1px solid #D3D3D3;
+	border-right: 1px solid #697B25;
+	border-bottom: 1px solid #697B25;
+}
+
+
+@media all {
+   div.saltopagina{
+      display: none;
+   }
+}
+   
+@media print{
+   div.saltopagina{ 
+      display:block; 
+      page-break-before:always;
+   }
+   div.oculBot{ 
+      display:none; 
+   }
+} 

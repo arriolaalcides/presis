@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido -%}
+    <h1>Tipos de reclamo</h1>
+
+    <div class="row" align="center">
+        <a class="btn btn-primary" href="{{ path('tiporeclamo_new') }}">Agregar un nuevo tipo</a>
+    </div>
+    <br>
+    <div class="row" style="margin-left: 1%; margin-right: 1%">
+        <table class="records_list table table-bordered" width="90%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('tiporeclamo_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.nombre }}</td>
+                    <td width="10%">
+                        <a href="{{ path('tiporeclamo_show', { 'id': entity.id }) }}"><i class='fa fa-search-plus fa-2x' title='Ver tipo'></i></a>
+                        <a href="{{ path('tiporeclamo_edit', { 'id': entity.id }) }}"><i class='fa fa-pencil-square fa-2x' title='Editar tipo'></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}

@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido -%}
+    <h1>Nuevo Tipo de reclamo</h1>
+
+    {{ form(form) }}
+
+    <div class="row" style="margin-left: 1%">
+        <a class="btn btn-primary" href="{{ path('tiporeclamo') }}">Volver a la lista</a>
+    </div>
+{% endblock %}

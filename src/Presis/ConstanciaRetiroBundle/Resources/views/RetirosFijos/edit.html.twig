@@ -1,0 +1,98 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Carga de retiros fijos de AMBA</h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(edit_form) }}
+                <div class="col-lg-10">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.fecha,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm date-picker', onkeypress:"return tabular(event,this)"}}) }}
+                            {{ form_row(edit_form.franja,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" }}) }}
+                            {{ form_row(edit_form.usuario,{value: "" ~ app.user.username, 'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm' , onkeypress:"return tabular(event,this)"}})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.cliente,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {class: 'input-sm', onkeypress:"return tabular(event,this)"}}) }}
+                            {{ form_row(edit_form.sucursal,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {class: 'input-sm', onkeypress:"return tabular(event,this)"}}) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.contacto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.telefono,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.mail,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(edit_form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.observaciones,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(edit_form.dias,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-lg-2 col-lg-offset-5">
+                        {{ form_widget(edit_form.submit) }}
+                    </div>
+                </div>
+                {{ form_end(edit_form) }}
+            </div>
+        </div>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*=====================================================================================================*/
+            $("#presis_constanciaretirobundle_retirosfijos_cliente").change(function() {
+                var data = {
+                    cliente_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("sucursal_selector") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_constanciaretirobundle_retirosfijos_sucursal');
+                        $city_selector.html('<option>Sucursales</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });
+            /*=====================================================================================================*/
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,234 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{%  block contenido %}
+    <div class="container-fluid">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="nroPlanilla" class="col-sm-1 control-label">Planilla</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm" id="nroPlanilla" name="nroPlanilla" >
+                </div>
+                <label for="colectora" class="col-sm-1 control-label">Colectora</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm" id="colectora" name="colectora" >
+                </div>
+                <label for="guiaExpreso" class="col-sm-1 control-label">Guia Expreso</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm" id="guiaExpreso" name="guiaExpreso" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="desde" class="col-sm-1 control-label">Fecha</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm date-picker" id="desde" name="desde" >
+                </div>
+                <label for="hasta" class="col-sm-1 control-label">Hasta</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control input-sm date-picker" id="hasta" name="hasta" >
+                </div>
+                <label for="distribuidor" class="col-sm-1 control-label">Distribuidor</label>
+                <div class="col-sm-2">
+                    <select class="form-control input-sm" id="distribuidor" name="distribuidor" >
+                    </select>
+                </div>
+                <label for="expresos" class="col-sm-1 control-label">Expresos</label>
+                <div class="col-sm-2">
+                    <select class="form-control input-sm" id="expresos" name="expresos" >
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div id="toolbar">
+            <div class="col-lg-2">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-success btn-sm" id="find">BUSCAR PLANILLAS</button>
+            </div>
+        </div>
+        <table id="retiros" class="ret"
+               data-toggle="table"
+               data-show-export="true"
+               data-click-to-select="true"
+               data-toolbar="#toolbar"
+               data-height="400"
+               data-side-pagination="server"
+               data-pagination="true"
+               data-page-list="[5, 10, 20, 50, 100, 200]"
+               data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-field="id" >Id</th><!--1-->
+                <th data-field="fecha">Fecha</th>
+                <th data-field="cerrada" data-formatter="isCerrada">Cerrada</th>
+                <th data-field="es_entrega" data-formatter="isEntrega">Es Entrega</th>
+                <th data-field="bultos" >Bultos</th>
+                <th data-field="cantidad_retiros"  >Guías</th>
+                <th data-field="expreso" >Expreso</th>
+                <th data-field="distribuidor" >Distribuidor</th>
+                <th data-field="colectora" >Colectora</th>
+                <th data-field="guia_expreso"  >Guia Expreso</th>
+                <th data-formatter="acciones" >Acciones</th><!--14-->
+                <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th><!--15-->
+            </tr>
+            </thead>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+    <script src="{{ asset('bundles/presisgeneral/js/jquery.fileDownload.js') }}"></script>
+
+    <script type="text/javascript">
+
+        var $table = $("#retiros");
+
+        var $pagina = 0;
+        var $limite = 10;
+
+        $(function () {
+            buildTable($table, 20, 20);
+            $('#fixedNumber').change(function () {
+                buildTable($table, 20, 20);
+            });
+        });
+
+        function buildTable($el, cells, rows) {
+            $el.bootstrapTable('destroy').bootstrapTable({
+                toolbar: '.toolbar'
+            });
+        }
+
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('destroy').bootstrapTable({
+                    exportDataType: $(this).val()
+                });
+            });
+        })
+
+        function isCerrada(val,row){
+            var $icon = (row.cerrada)?"fa-check-square-o":"fa-square-o";
+            return "<i class='" + $icon + " fa fa-2x' style='width: 100%;text-align:center'></i>";
+        }
+
+        function isEntrega(value,row){
+            var $icon = (row.es_entrega)?"fa-check-square-o":"fa-square-o";
+            return "<i class='" + $icon + " fa fa-2x' style='width: 100%;text-align:center'></i>";
+        }
+
+        function acciones(value,row){
+            var botones = "<a href="+Routing.generate('recorrido_show',{id:row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i> </a>";
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CLIENTE') or is_granted('ROLE_VENDEDOR') %}
+            botones = "<a href="+Routing.generate('recorrido_edit',{id:row.id} )+" target='_blank'><i class='fa fa-pencil-square-o fa-2x'></i> </a>" +
+                    botones;
+            {% endif %}
+            return botones;
+        }
+
+        $(document).ready(function () {
+
+            var $table = $('#retiros');
+            $table.bootstrapTable()
+                    .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+                        buscarGuias();
+                    });
+
+            buscarDistribuidores();
+            buscarExpresos();
+
+            function getIdSelection() {
+                return $.map($table.bootstrapTable('getSelections'), function (row) {
+                    return row.id;
+                });
+            }
+
+            var obtenerParametrosBusqueda = function() {
+                var $desde = $("#desde").val();
+                var $hasta = $("#hasta").val();
+                var $distribuidor = $("#distribuidor").val();
+                var $expreso = $("#expresos").val();
+
+                var $nroPlanilla = $("#nroPlanilla").val();
+                var $guiaExpreso = $("#guiaExpreso").val();
+                var $colectora = $("#colectora").val();
+
+                if($.trim($desde)!='' && $.trim($hasta)==''){
+                    $("#hasta").val($desde);
+                    $hasta = $desde;
+                }
+
+                return {desde: $desde, hasta: $hasta, distribuidor: $distribuidor, nroPlanilla: $nroPlanilla,
+                    guiaExpreso: $guiaExpreso, colectora: $colectora, expreso: $expreso, pagina: $pagina, limite: $limite};
+            };
+
+
+
+            var buscarGuias = function(){
+
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('recorrido_asajax'),
+                    data: obtenerParametrosBusqueda(),
+                    success: function(data, dataType)
+                    {
+                        var data = JSON.parse(data);
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            };
+            $("#find").click(buscarGuias);
+        });
+
+        function buscarDistribuidores(){
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('distribuidor_ajax4select'),
+                data: "",
+                dataType: 'json',
+                success: function (data) {
+                    $("#distribuidor").empty();
+                        $("#distribuidor").append('<option value=""></option>');
+                    $.each(data, function(id,value){
+                        $("#distribuidor").append('<option value="'+value.id+'">'+value.apenom+'</option>');
+                    });
+                }
+            });
+        }
+
+        function buscarExpresos(){
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('expreso_ajax4select'),
+                data: "",
+                dataType: 'json',
+                success: function (data) {
+                    $("#expresos").empty();
+                    $("#expresos").append('<option value=""></option>');
+                    $.each(data, function(id,value){
+                        $("#expresos").append('<option value="'+value.id+'">'+value.nombre+'</option>');
+                    });
+                }
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,2 @@
+1;129;129;OD;119;2018-01-03;100;1545;0;GALANDER;;1270;;1;0;0;1;0;comentarios;AMBA - Regular;;;
+1;129;129;OR;119;2018-01-03;100;270;0;MOVISTAR;;1650;;1;0;0;1;0;comentarios;AMBA - Regular;Roberto Valente;ranval60@gmail.com;

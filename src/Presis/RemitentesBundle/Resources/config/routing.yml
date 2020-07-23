@@ -1,0 +1,7 @@
+remitentes_remitente:
+    resource: "@RemitentesBundle/Resources/config/routing/remitente.yml"
+    prefix:   /remitente
+
+remitentes_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RemitentesBundle:Default:index }

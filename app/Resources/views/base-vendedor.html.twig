@@ -1,0 +1,116 @@
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Servicios<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#"><strong>SERVICIOS</strong></a></li>
+                    <li><a href="{{ path('servicio') }}">LISTADO</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><strong>HABILITACIONES</strong></a></li>
+                    <li><a href="{{ path('habilitaciones') }}">LISTADO</a></li>
+                </ul>
+            </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Rubros <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('rubro_new') }}">AGREGAR RUBRO</a></li>
+                <li><a href="{{ path('rubro') }}">LISTADO</a></li>
+            </ul>
+        </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Comerciales <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('vendedor') }}">LISTADO</a></li>
+                </ul>
+            </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Carga domestica <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('datosenvios_new') }}">GENERAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_show') }}">CONSULTAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_confirmar') }}">CONFIRMAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_auditoria') }}">AUDITORIA</a></li>
+                <li><a href="{{ path('tracker') }}">TRACKER</a></li>
+                <li><a href="{{ path('rendicion') }}">CONSULTAR RENDICION</a></li>
+                <li><a href="{{ path('constancia_manifiestos') }}">MANIFIESTOS GENERADOS</a></li>
+            </ul>
+        </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Usuarios <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('user_new') }}">AGREGAR USUARIO</a></li>
+                    <li><a href="{{ path('user') }}">LISTADO</a></li>
+                </ul>
+            </li>
+            <!--<li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Importar <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('file_upload') }}">SUBIR ARCHIVO</a></li>
+                    <li><a href="{{ path('file') }}">LISTADO</a></li>
+                </ul>
+            </li>-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Zonas <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#"><strong>CODIGOS POSTALES</strong></a></li>
+
+                    <li><a href="{{ path('cpcordon') }}">LISTADO</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><strong>CORDONES</strong></a></li>
+
+                    <li><a href="{{ path('cordon') }}">LISTADO</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><strong>FRANJAS DE ENTREGA</strong></a></li>
+
+                    <li><a href="{{ path('franjaentrega') }}">LISTADO</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Importes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                        <li><a href="#"><strong>PRECIOS</strong></a></li>
+                        <li><a href="{{ path('precio_new') }}">AGREGAR PRECIO</a></li>
+                         <li><a href="{{ path('lista_upload') }}">IMPORTAR PRECIOS</a></li>
+                        <li><a href="{{ path('precio') }}">LISTADO</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><strong>BULTOS</strong></a></li>
+                        <li><a href="{{ path('bultoexcedente') }}">COSTO DE BULTO EXCEDENTE</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><strong>LISTA DE PRECIOS</strong></a></li>
+                        <li><a href="{{ path('lista_new') }}">AGREGAR LISTA</a></li>
+                        <li><a href="{{ path('lista_aumento') }}">MODIFICAR PRECIOS</a></li>
+                        <li><a href="{{ path('lista') }}">LISTADO</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">Clientes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#"><strong>SUCURSALES</strong></a></li>
+                    <li><a href="{{ path('sucursal_new') }}">AGREGAR SUCURSAL</a></li>
+                    <li><a href="{{ path('sucursal') }}">LISTADO</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><strong>CLIENTES</strong></a></li>
+                    <li><a href="{{ path('cliente_new') }}">AGREGAR CLIENTE</a></li>
+                    <li><a href="{{ path('cliente') }}">LISTADO</a></li>
+                </ul>
+            </li>
+        <li class="dropdown">
+            <!--<li><a href="{{ path('fos_user_security_logout') }}" class="menu-webpack"><strong>Logout</strong></a></li>-->
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                {% if empresa=='maslogistica' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_maslogistica/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                {% if empresa=='caktus' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_caktus/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                {% if empresa=='fasttrack' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_ft/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_security_logout') }}">LOGOUT</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><!-- /.navbar-collapse -->

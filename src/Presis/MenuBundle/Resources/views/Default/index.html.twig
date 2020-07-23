@@ -1,0 +1,147 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+
+    </style>
+{% endblock %}
+    {%  block contenido %}
+        {% if empresa=='maslogistica' %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>GUIAS</legend>
+                                <p><a href="{{ path('datosenvios_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GENERAR GUIAS</a></p>
+                                <p><a href="{{ path('datosenvios_show') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTAR GUIAS</a></p>
+                                <p><a href="{{ path('importar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">IMPORTAR GUIAS</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>PLANIFICACION</legend>
+                                <p><a href="{{ path('recorrido') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTA DE RECORRIDOS</a></p>
+                                <p><a href="{{ path('recorrido_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">NUEVA PLANILLA DE RECORRIDO</a></p>
+                                <p><a href="{{ path('tracker') }}" class="btn btn-primary btn-sm btn-block" target="_blank">MODIFICAR ESTADO</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>CONFIRMACIONES</legend>
+                                <p><a href="{{ path('datosenvios_confirmar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GUIAS SIN CONFIRMAR</a></p>
+                                <p><a href="{{ path('datosenvios_pendientes_retiro') }}" class="btn btn-primary btn-sm btn-block" target="_blank">ASIGNAR RETIRO A CHOFER</a></p>
+                                <p><a href="{{ path('datosenvios_pendientes_pago') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONFIRMACION DE PAGO</a></p>
+                                <p><a href="{{ path('datosenvios_pagos_confirmados') }}" class="btn btn-primary btn-sm btn-block" target="_blank">PAGOS CONFIRMADOS</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if is_granted('ROLE_ADMINISTRACION') %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>GUIAS</legend>
+                                <p><a href="{{ path('datosenvios_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GENERAR GUIAS</a></p>
+                                <p><a href="{{ path('datosenvios_show') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTAR GUIAS</a></p>
+                                <p><a href="{{ path('importar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">IMPORTAR GUIAS</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>PLANIFICACION</legend>
+                                <p><a href="{{ path('recorrido') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTA DE RECORRIDOS</a></p>
+                                <p><a href="{{ path('recorrido_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">NUEVA PLANILLA DE RECORRIDO</a></p>
+                                <p><a href="{{ path('tracker') }}" class="btn btn-primary btn-sm btn-block" target="_blank">MODIFICAR ESTADO</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>CONFIRMACIONES</legend>
+                                <p><a href="{{ path('datosenvios_confirmar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GUIAS SIN CONFIRMAR</a></p>
+                                <p><a href="{{ path('datosenvios_pendientes_pago') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONFIRMACION DE PAGO</a></p>
+                                <p><a href="{{ path('datosenvios_pagos_confirmados') }}" class="btn btn-primary btn-sm btn-block" target="_blank">PAGOS CONFIRMADOS</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if is_granted('ROLE_OPERATIVO') %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>GUIAS</legend>
+                                <p><a href="{{ path('datosenvios_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GENERAR GUIAS</a></p>
+                                <p><a href="{{ path('datosenvios_show') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTAR GUIAS</a></p>
+                                <p><a href="{{ path('importar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">IMPORTAR GUIAS</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>PLANIFICACION</legend>
+                                <p><a href="{{ path('recorrido') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTA DE RECORRIDOS</a></p>
+                                <p><a href="{{ path('recorrido_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">NUEVA PLANILLA DE RECORRIDO</a></p>
+                                <p><a href="{{ path('tracker') }}" class="btn btn-primary btn-sm btn-block" target="_blank">MODIFICAR ESTADO</a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-12 well center-block">
+                                <legend>CONFIRMACIONES</legend>
+                                <p><a href="{{ path('datosenvios_confirmar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GUIAS SIN CONFIRMAR</a></p>
+                                <p><a href="{{ path('datosenvios_pendientes_retiro') }}" class="btn btn-primary btn-sm btn-block" target="_blank">ASIGNAR RETIRO A CHOFER</a></p>
+                                <p><a href="{{ path('datosenvios_pagos_confirmados') }}" class="btn btn-primary btn-sm btn-block" target="_blank">PAGOS CONFIRMADOS</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if is_granted('ROLE_SUCURSAL') %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="col-md-12 well center-block">
+                            <legend>GUIAS</legend>
+                            <p><a href="{{ path('datosenvios_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">GENERAR GUIAS</a></p>
+                            <p><a href="{{ path('datosenvios_show') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTAR GUIAS</a></p>
+                            <p><a href="{{ path('importar') }}" class="btn btn-primary btn-sm btn-block" target="_blank">IMPORTAR GUIAS</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="col-md-12 well center-block">
+                            <legend>PLANIFICACION</legend>
+                            <p><a href="{{ path('recorrido') }}" class="btn btn-primary btn-sm btn-block" target="_blank">CONSULTA DE RECORRIDOS</a></p>
+                            <p><a href="{{ path('recorrido_new') }}" class="btn btn-primary btn-sm btn-block" target="_blank">NUEVA PLANILLA DE RECORRIDO</a></p>
+                            <p><a href="{{ path('tracker') }}" class="btn btn-primary btn-sm btn-block" target="_blank">MODIFICAR ESTADO</a></p>
+                            <p><a href="{{ path('expreso') }}" class="btn btn-primary btn-sm btn-block" target="_blank">EXPRESOS</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if empresa=='fasttrack' %}
+            <div class="row vertical-center-row" style="text-align: center">
+                <h3><a href="http://trackers.onlinegeotrack.com.ar/fasttrack/manual-epresis.pdf" target="_blank">Descargar Manual de usuario</a></h3>
+                <h3><a href="http://trackers.onlinegeotrack.com.ar/fasttrack/manual-epresis-retiros.pdf" target="_blank">Descargar Manual de retiros</a></h3>
+            </div>
+        {% endif %}
+     {#   {% if empresa=='maslogistica' %}
+            <div class="row vertical-center-row" style="text-align: center">
+                <h3><a href="http://trackers.onlinegeotrack.com.ar/maslogistica/manual-epresis.pdf" target="_blank">Descargar Manual de usuario</a></h3>
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMINISTRACION') or is_granted('ROLE_OPERATIVO') %}
+                    <h3><a href="http://trackers.onlinegeotrack.com.ar/maslogistica/manual-epresis-empresa.pdf" target="_blank">Descargar Manual de usuario empresa</a></h3>
+                {% endif %}
+            </div>
+        {% endif %}
+    #}
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

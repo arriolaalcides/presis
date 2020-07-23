@@ -1,0 +1,108 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+        .glyphicon-ok {
+            color: green;
+        }
+        /* Red X. */
+        .glyphicon-remove {
+            color: red;
+        }
+        div.FixedHeader_Cloned th,
+        div.FixedHeader_Cloned td {
+            background-color: white !important;
+        }
+    </style>
+{% endblock %}
+{% block banner %}
+{% endblock %}
+    {%  block contenido %}
+
+        <table id="table_precio" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>Rango</th>
+                <th>Cord&oacute;n Entrega</th>
+                <th>Cord&oacute;n Retiro</th>
+                <th>Lista</th>
+                <th>Servicio</th>
+                <th>Precio</th>
+
+                <th>Acciones</th>
+
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>Rango</th>
+                <th>Cord&oacute;n Entrega</th>
+                <th>Cord&oacute;n Retiro</th>
+                <th>Lista</th>
+                <th>Servicio</th>
+                <th>Precio</th>
+
+                <th>Acciones</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready( function () {
+            var table = $('#table_precio').DataTable({
+                "dom": 'T<"clear">lfrtip',
+                "responsive": true,
+                "tableTools": {
+                    "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+                },
+                "ajax":Routing.generate("precio_ajax"),
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+                },
+                "columnDefs": [ {
+                    "targets":6,
+                    "data": "id",
+                    "render": function ( data, type, full, meta ) {
+                        return "<a href="+Routing.generate('precio_edit',{id:data} )+"><i class='fa fa-pencil-square-o fa-2x' title='Editar registro'></i> </a><a href="+Routing.generate('precio_show',{id:data} )+"><i class='fa fa-eye fa-2x' title='Ver detalles'></i></a>";
+                    }
+                } ],
+                "columns": [
+
+                    {"data":"rango"},
+                    {
+                        "data":"cordonE"
+
+                    },
+
+
+                    {
+                        "data":"cordonRetiro",
+                        "defaultContent": "N/A"
+                    },
+                    {"data":"lista",
+                        "defaultContent":"N/A"
+                    },
+                    {
+                        "data":"servicio"
+
+
+                    },
+                    {
+                        "data":"precio"
+
+
+                    },
+
+                ]
+
+            });
+        } );
+
+    </script>
+
+{% endblock %}

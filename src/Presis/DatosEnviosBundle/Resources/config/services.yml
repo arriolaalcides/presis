@@ -1,0 +1,4 @@
+services:
+#    datos_envios.example:
+#        class: Presis\DatosEnviosBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

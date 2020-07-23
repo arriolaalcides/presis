@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+        {{ form_start(form) }}
+            <legend>Modificaci&oacute;n de precios</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.lista,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                    {{ form_row(form.porcentaje,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                </div>
+            </div>
+        {{ form_end(form)}}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('form').submit(function(e) {
+            var currentForm = this;
+            e.preventDefault();
+            bootbox.confirm("&iquest;Est&aacute; seguro que desea modificar los precios?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

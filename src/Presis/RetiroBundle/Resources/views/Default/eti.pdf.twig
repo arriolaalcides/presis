@@ -1,0 +1,38 @@
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+    {% for retiro in vouchers %}
+
+        <dynamic-page font-type="DejaVuSans">
+            <page page-size="302:188">
+                <div width="100%" height="100%" ><!-- contenedor -->
+                    <div width="50%" height="25px" float="left"><!-- cabecera -->
+
+                    </div>
+                    <div width="50%" height="25px" float="left">
+                        <div width="100%" text-align="right">
+                            <b>Fecha: 15/08/2015</b>
+                        </div>
+                        <div width="100%" font-size="14px" text-align="center">
+                            <!--<barcode type="code39" code="800" margin-left="130px" margin-top="20px" float="right" bar-thin-width="4px" bar-thick-width="10px" />-->
+                            {{ retiro.id }}
+                        </div>
+                    </div><!-- cabecera -->
+                    <div width="70%" padding="10px" ><!-- detalle -->
+                        <b> {{ retiro.sender.empresa }}</b>
+                    </div><!-- detalle -->
+                    <div width="70%" padding="10px" ><!-- detalle -->
+                        <b> {{ retiro.comprador.apenom }}</b>
+                    </div><!-- detalle -->
+                    <div width="70%" padding="10px" ><!-- detalle -->
+                        <b>{{ retiro.comprador.calle ~ " " ~ retiro.comprador.altura ~ " " ~ retiro.comprador.piso ~ " " ~ retiro.comprador.dpto ~ " " ~ retiro.comprador.cp }}
+                        </b>
+                    </div><!-- detalle -->
+                    <div width="70%" padding="10px"><!-- detalle -->
+                        <b>{{ retiro.rango }}</b>
+                    </div><!-- detalle -->
+                </div><!-- contenedor -->
+            </page>
+        </dynamic-page>
+    {% endfor %}
+
+</pdf>

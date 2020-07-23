@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8" />
+
+        <title>{% block title %}E-Presis{% endblock %}</title> 
+        {% block stylesheets %}
+            <!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/presisgeneral/css/bootstrap.min.css') }}">
+            <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css">-->
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/presisgeneral/css/dataTables.bootstrap.css') }}">
+            <!--<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/jquery-ui.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/easyui.css') }}">
+            <!--<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">-->
+            <!--<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/icon.css') }}">
+            <!--<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/demo.css') }}">
+            <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/dataTables.tableTools.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/dashboard.css') }}">
+            <link rel="stylesheet"  media="screen" type="text/css" href="{{ asset('bundles/presisgeneral/css/multi-select.css') }}">
+            <!--<link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.6/css/dataTables.responsive.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/dataTables.responsive.css') }}">
+            <!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/raleway.css') }}">
+            <link href='{{ asset('bundles/presisgeneral/css/bootstrap-datepicker3.min.css') }}' rel='stylesheet' type='text/css'>
+            <link href="{{ asset('bundles/presisgeneral/css/bootstrap.css') }}" rel="stylesheet" media="screen">
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/bootstrap-table.css') }}">
+
+            <!--<link rel="stylesheet" href="//rawgit.com/wenzhixin/bootstrap-table-fixed-columns/master/bootstrap-table-fixed-columns.css">-->
+            <link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/bootstrap-table-fixed-columns.css') }}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css">
+            <!--<link rel="stylesheet" href="{{ asset('bundles/presisgeneral/css/bootstrap-table-filter.css') }}">-->
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.css">
+
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <!-- Bootstrap -->
+
+
+            <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+            {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+
+            <style>
+                .close{
+                    font-size: 24px;
+                    color: #ff0000;
+                }
+                thead{
+                    background-color: #c21720;
+                    color: white;
+                }
+                .container-round{
+                    width: 90%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    border: 2px solid #c21720;
+                    border-radius: 5px;
+                    padding: 10px;
+                    background-color: #f9fafc;
+                }
+                label.required:after {
+                    content: "(*) ";
+                }
+                .menu-webpack{
+                    font-family: 'Raleway';
+                    font-size: 1.1em;
+                }
+                .navbar {
+                    background-color:#f8f8f8;
+                    //color:#b80614;
+                    border-bottom: 3px solid;
+                    border-bottom-color: #c21720;
+                    font-family: 'Raleway';
+                }
+
+                .navbar .navbar-nav > li > a {
+                    color:#000;
+                }
+                /*.navbar .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+                    color: #b80614;
+                    background-color:transparent;
+                }*/
+                .actives{
+                    background-color: #CCCCCC !important;
+                    color: #f9fafc !important;
+                }
+                .navbar .navbar-brand {
+                    color:#b80614;
+                }
+                .navbar .navbar-nav > li > a:hover,
+                .navbar .navbar-nav > li > a:focus {
+                    background-color: #CCCCCC;
+                    color: #FFFFFF;
+                  }
+
+                .input-group-addon-icon {
+                    border: 0px;
+                    background-color: transparent;
+                }
+                #boton.collapsed:before
+                {
+                    content:'ABRIR' ;
+                    display:block;
+                }
+                #boton:before
+                {
+                    content:'CERRAR' ;
+                    display:block;
+                }
+                .HABILITADO{
+                    color:#336699;
+                }
+                .DESHABILITADO{
+                    color:#cc6666;
+                }
+            </style>
+
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+
+            <style>
+                .btn-danger {
+                    border-color: #b11f39;
+                    background-color: #b11f39;
+                }
+            </style>
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {% include 'base-admin.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_VENDEDOR') %}
+                        {% include 'base-vendedor.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_SUPERVISOR_OPERATIVO') %}
+                        {% include 'base-supervisor-operativo.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_OPERATIVO') %}
+                        {% include 'base-operativo.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_BACK_OFFICE') %}
+                        {% include 'base-back-office.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_DISTRIBUIDOR') %}
+                        {% include 'base-distribuidor.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMINISTRACION') %}
+                        {% include 'base-administracion.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_CLIENTE') %}
+                        {% include 'base-cliente.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_SUCURSAL') %}
+                        {% include 'base-sucursal.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ANALISTA_ST') %}
+                        {% include 'base-analista-st.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ANALISTA_GERENCIA_ST') %}
+                        {% include 'base-analista-gerencia-st.html.twig' ignore missing %}
+                    {% endif %}
+                    {% if is_granted('ROLE_GALANDER') %}
+                        {% include 'base-galander.html.twig' ignore missing %}
+                    {% endif %}
+                </div><!-- /.container-fluid -->
+            </nav>
+
+            {% block banner %}
+
+            {% endblock %}
+
+            <div class="col-sm main">    
+                {%  block contenido %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+        
+        {% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-copyright" class="text-center">
+                            <p>&copy; {{ 'now'|date('Y') }} - Powered by <a href="http://www.presisconsultores.com.ar/">Presis Consultores</a></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+    </body>
+    
+    {% block javascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" type="text/javascript"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" type="text/javascript"></script>
+        <!--script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
+        <!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/jquery-1.11.0.min.js') }}" type="text/javascript"></script>
+        <!--<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/jquery-migrate-1.2.1.min.js') }}" type="text/javascript"></script>
+        <!--<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/jquery-ui.js') }}" type="text/javascript"></script>
+        {#<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>#}
+
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/jquery.easyui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/datagrid-detailview.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/easyui-lang-es.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/dataTables.bootstrap.js') }}"></script>
+
+        <!--<script src="/voucher/web/js/fos_js_routes.js"></script>-->
+
+        <!--<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js"></script>-->
+
+        <!--<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>-->
+
+
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/dataTables.tableTools.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/jquery.multi-select.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/bootbox.min.js') }}"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap.min.js') }}" type="text/javascript"></script>
+        <!--<script type="text/javascript" src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.js"></script>-->
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/dataTables.responsive.js') }}" ></script>
+        <script src="{{ asset('bundles/presisgeneral/js/dataTables.tableTools.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/blockUi.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/funciones.js') }}" type="text/javascript"></script>
+
+        <script src="{{ asset('js/jquery.numeric.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-datepicker.es.min.js') }}" type="text/javascript"></script>
+        <!--<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/jquery.easyui.min.js') }}" type="text/javascript"></script>
+        {#<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>#}
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/bootstrap-table.js') }}"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-export.js') }}" type="text/javascript"></script>
+        <!--<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/tableExport.js') }}" type="text/javascript"></script>
+
+
+        <!--<script src="https://use.fontawesome.com/9f3e8aa7f0.js"></script>-->
+        <!--<script src="{{ asset('bundles/presisgeneral/js/b8a3e17818.js') }}" type="text/javascript"></script>-->
+        <!--<script src="//rawgit.com/wenzhixin/bootstrap-table-fixed-columns/master/bootstrap-table-fixed-columns.js"></script>-->
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-fixed-columns.js') }}" type="text/javascript"></script>
+        <!-- Include all JavaScripts, compiled by Assetic -->
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/jquery.datagrid.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-dialog.js') }}" type="text/javascript"></script>
+
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/bs-table.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/presisgeneral/js/bootstrap-table-toolbar.js') }}"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Remove active for all items.
+                $('.page-sidebar-menu li').removeClass('actives');
+                // highlight submenu item
+                $('li a[href="' + this.location.pathname + '"]').parent().addClass('actives');
+                // Highlight parent menu item.
+                $('ul a[href="' + this.location.pathname + '"]').parents('li').addClass('actives');
+            });
+
+            $(".date-picker").datepicker({
+                format: "dd/mm/yyyy",
+                weekStart: 1,
+                maxViewMode: 2,
+                todayBtn: "linked",
+                clearBtn: true,
+                language: "es",
+                autoclose: true,
+                todayHighlight: true
+            });
+        </script>
+    {% endblock %}
+</html>

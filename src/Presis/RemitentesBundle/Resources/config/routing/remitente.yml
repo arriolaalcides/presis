@@ -1,0 +1,66 @@
+remitente:
+    path:     /
+    defaults: { _controller: "RemitentesBundle:Remitente:index" }
+
+remitente_listar:
+    path:     /listar-remitentes
+    defaults: { _controller: "RemitentesBundle:Remitente:listarRemitentes" }
+    options:
+        expose: true
+
+remitente_eliminar:
+    path:     /{id_remitente}/eliminar
+    defaults: { _controller: "RemitentesBundle:Remitente:eliminar" }
+    methods:  [GET]
+    options:
+      expose: true
+
+remitente_show:
+    path:     /{id}/show
+    defaults: { _controller: "RemitentesBundle:Remitente:show" }
+    options:
+        expose: true
+
+remitente_ajax_habilitados:
+    path:     /ajaxHabilitados
+    defaults: { _controller: "RemitentesBundle:Remitente:ajaxHabilitados" }
+    options:
+        expose: true
+remitente_getComboRemitente:
+    path:     /{id}/getComboRemitente
+    defaults: { _controller: "RemitentesBundle:Remitente:getComboRemitente" }
+    options:
+        expose: true
+
+remitente_new:
+    path:     /new
+    defaults: { _controller: "RemitentesBundle:Remitente:new" }
+    options:
+        expose: true
+
+remitente_find:
+    path:     /{id}/find
+    defaults: { _controller: "RemitentesBundle:Remitente:find" }
+    options:
+        expose: true
+
+remitente_create:
+    path:     /create
+    defaults: { _controller: "RemitentesBundle:Remitente:create" }
+    methods:  POST
+
+remitente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "RemitentesBundle:Remitente:edit" }
+    options:
+        expose: true
+
+remitente_update:
+    path:     /{id}/update
+    defaults: { _controller: "RemitentesBundle:Remitente:update" }
+    methods:  [POST, PUT]
+
+remitente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "RemitentesBundle:Remitente:delete" }
+    methods:  [POST, DELETE]

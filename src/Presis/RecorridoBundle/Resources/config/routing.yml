@@ -1,0 +1,7 @@
+recorrido_recorrido:
+    resource: "@RecorridoBundle/Resources/config/routing/recorrido.yml"
+    prefix:   /recorrido
+
+recorrido_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RecorridoBundle:Default:index }

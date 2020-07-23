@@ -1,0 +1,3 @@
+tipo_dni_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TipoDNIBundle:Default:index }

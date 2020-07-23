@@ -1,0 +1,67 @@
+<pdf>
+    {% for i in 1..retiro.datosenvios.bultos %}
+        <dynamic-page font-type="DejaVuSans" page-size="604:150" margin="5px">
+            <div width="100%">
+                <div width="30%" float="left" height="100%">
+                    <div font-size="12px" width="100%" text-align="center">
+                        <b>{{ retiro.id }}</b>
+                    </div>
+                    <div font-size="12px" width="100%" text-align="center">
+                        <barcode type="code39" code="{{ retiro.id }}" float="left" bar-thin-width="3px" bar-thick-width="7px"/>
+                    </div>
+                    <div width="100%" float="left" height="50px">
+                        <div height="66px">
+                            {% if empresa=='fasttrack' %}
+                                <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="250px" height="66px" />
+                            {% endif %}
+                            {% if empresa=='maslogistica' %}
+                                <img src="{{ pdf_image('PresisRetiroBundle:maslogistica.png') }}" width="223px" height="82px" />
+                            {% endif %}
+                        </div>
+                        <div height="34px" font-size="8px" text-align="center">
+                            <div>infotransporte@maslogistica.com.ar</div>
+                            <div>CUIT:  30-71241429-0</div>
+                        </div>
+                    </div>
+                </div>
+                <div width="70%" float="left" height="100%">
+                    <div width="50%" float="left">
+                        {% set haySender = retiro.sender ? true : false %}
+                        {% set direccion = haySender ?
+                        retiro.sender.calle ~ ' ' ~
+                        retiro.sender.altura ~ ' ' ~
+                        retiro.sender.piso ~ ' ' ~
+                        retiro.sender.dpto
+                        : ''
+                        %}
+                        <div height="18px" font-size="14px"><b>Remito: </b>{{ retiro.remito }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Remitente: </b>{{ retiro.sender.empresa }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Dirección: </b>{{ direccion }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Localidad: </b>{{ haySender ? retiro.sender.localidad }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Provincia: </b>{{ haySender ? retiro.sender.provincia }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>CP: </b>{{ haySender ? retiro.sender.cp }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Tel.: </b>{{ haySender ? retiro.sender.celular }}</div>
+                    </div>
+
+                    <div width="50%" float="left" font-size="12px">
+                        {% set hayComprador = retiro.comprador ? true : false %}
+                        {% set direccion = hayComprador ?
+                        retiro.comprador.calle ~ ' ' ~
+                        retiro.comprador.altura ~ ' ' ~
+                        retiro.comprador.piso ~ ' ' ~
+                        retiro.comprador.dpto
+                        : ''
+                        %}
+                        <div height="18px" font-size="14px"><b>Bultos: </b>{{ i }} / {{ retiro.datosenvios.bultos }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Destinatario: </b>{{ retiro.comprador.empresa }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Dirección: </b>{{ direccion }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Localidad: </b>{{ hayComprador ? retiro.comprador.localidad }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Provincia: </b>{{ hayComprador ? retiro.comprador.provincia }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>CP: </b>{{ hayComprador ? retiro.comprador.cp }}</div>
+                        <div height="18px" margin-top="5px" font-size="14px"><b>Tel.: </b>{{ hayComprador ? retiro.comprador.celular }}</div>
+                    </div>
+                </div>
+            </div>
+        </dynamic-page>
+    {% endfor %}
+</pdf>

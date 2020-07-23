@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(form) }}
+        <legend>Agregar Modelo</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.descripcion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                    {{ form_row(form.valorDeclarado,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.fabricante,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                </div>
+            </div>
+                  
+            
+            <br />
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(form.submit) }}
+                    <a href="{{ path('modelo') }}" class="btn btn-primary">Volver a Modelos</a>
+
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

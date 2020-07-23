@@ -1,0 +1,7 @@
+datos_envios_datosenvios:
+    resource: "@DatosEnviosBundle/Resources/config/routing/datosenvios.yml"
+    prefix:   /datosenvios
+
+datos_envios_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DatosEnviosBundle:Default:index }

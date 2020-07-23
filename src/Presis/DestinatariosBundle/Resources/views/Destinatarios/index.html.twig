@@ -1,0 +1,184 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <h3>Administración de destintarios - <small>Puede filtrar por código, empresa o por nombre y apellido</small></h3>
+        <div class="container-fluid">
+            <div class="col-lg-2">
+                <select class="form-control input-sm">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-primary btn-sm" id="new">Nuevo Destinatario</button>
+            </div>
+            <table id="retiros"
+                   data-toggle="table"
+                   data-show-export="true"
+                   data-filter-show-clear="true"
+                   data-height="500"
+                   data-side-pagination="server"
+                   data-pagination="true"
+                   data-page-list="[5, 10, 20, 50, 100, 200]"
+                   data-search="true"
+                   data-toolbar="#toolbar">
+                <thead>
+                <tr>
+                    <th data-field="id" data-sortable="true" >ID</th>
+                    <th data-field="codigo" data-sortable="true">CODIGO</th>
+                    <th data-field="empresa" data-sortable="true">EMPRESA</th>
+                    <th data-field="cuit" data-sortable="true">CUIT</th>
+                    <th data-field="apellido_nombre" data-sortable="true">NOMBRE Y APELLIDO</th>
+                    <th data-field="mail" data-sortable="true">MAIL</th>
+                    <th data-field="celular" data-sortable="true">CELULAR</th>
+                    <th data-field="calle" data-sortable="true">CALLE</th>
+                    <th data-field="altura" data-sortable="true">ALTURA</th>
+                    <th data-field="piso" data-sortable="true">PISO</th>
+                    <th data-field="dpto" data-sortable="true">DPTO</th>
+                    <th data-field="localidad" data-sortable="true">LOCALIDAD</th>
+                    <th data-field="provincia" data-sortable="true">PROVINCIA</th>
+                    <th data-field="cp" data-sortable="true">CP</th>
+                    <th data-field="otherInfor" data-sortable="true">OBS</th>
+                    <th data-field="cliente.empresa" data-sortable="true">CLIENTE</th>
+                    <th data-field="user" data-sortable="true">USUARIO</th>
+                    <th data-field="kms" data-sortable="true">KMS</th>
+                    <th data-field="zona" data-sortable="true">ZONA</th>
+                    <th data-formatter="acciones">Acciones</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+        <script type="text/javascript">
+
+            var $table = $("#retiros");
+
+            var $pagina = 0;
+            var $limite = 10;
+
+            $(function () {
+                buildTable($table, 20, 20);
+                $('#fixedNumber').change(function () {
+                    buildTable($table, 20, 20);
+                });
+            });
+
+            function buildTable($el, cells, rows) {
+                $el.bootstrapTable('destroy').bootstrapTable({
+                    toolbar: '.toolbar'
+                });
+            }
+
+            function acciones(value, row){
+                var botones = "<a href="+Routing.generate('destinatarios_edit', {id: row.id} )+" target='_blank'><i class='fa fa-pencil-square-o fa-2x'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='deleteRow("+row.id+");return false;'><i class='fa fa-times fa-2x' title='Eliminar registro'></i></a>";
+                return botones;
+            }
+
+            function deleteRow(id) {
+                BootstrapDialog.show({
+                    title: 'Atencion!!!!',
+                    message: 'Realmente desea eliminar el registro?',
+                    buttons: [{
+                        label: 'Aceptar',
+                        action: function(dialog) {
+                            $.ajax( {
+                                url: Routing.generate('destinatarios_eliminar',{id_destinatario: id} )
+                            }).done(function(data) {
+                                dialog.close();
+                                if(data=='error'){
+                                    BootstrapDialog.show({
+                                        title: 'Atencion!!!!',
+                                        message: 'La guia solo puede ser eliminada por el usuario que la genero.',
+                                        buttons: [{
+                                            label: 'Aceptar',
+                                            action: function(dialog) {
+                                                dialog.close();
+                                            }
+                                        }]
+                                    });
+                                }else{
+                                    buscarGuias();
+                                }
+                            });
+                        }
+                    }, {
+                        label: 'Cancelar',
+                        action: function(dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+            }
+
+            $(document).ready(function () {
+
+                buscarGuias();
+
+                $table.bootstrapTable()
+                        .on('page-change.bs.table', function (event, page, limit) {
+                            $pagina = page - 1;
+                            $limite = limit;
+
+                            buscarGuias();
+                        });
+                /*$table = $('#retiros');
+                $table.bootstrapTable();
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('destinatarios_listar'),
+                    success: function(data)
+                    {
+                        //alert(data);
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });*/
+
+                $("#new").click(function(){
+                    window.open(Routing.generate('destinatarios_new'),'_parent');
+                });
+
+            });
+
+            var buscarGuias = function(){
+
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('destinatarios_listar'),
+                    data: obtenerParametrosBusqueda(),
+                    success: function(data, dataType)
+                    {
+                        var data = JSON.parse(data);
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            };
+
+            var obtenerParametrosBusqueda = function() {
+                return {pagina: $pagina, limite: $limite, search: $('.fixed-table-toolbar .search input').val()}
+            }
+        </script>
+    {% endblock %}

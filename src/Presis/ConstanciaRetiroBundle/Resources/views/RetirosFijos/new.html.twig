@@ -1,0 +1,139 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Carga de retiros fijos de AMBA</h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                <div class="col-lg-10">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.fecha,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{onkeypress:"return tabular(event,this)"}}) }}
+                            {{ form_row(form.franja,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" }}) }}
+                            {{ form_row(form.usuario,{value: "" ~ app.user.username, 'style': 'horizontal', 'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm' , onkeypress:"return tabular(event,this)"}})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.cliente,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {class: 'input-sm', onkeypress:"return tabular(event,this)"}}) }}
+                            {{ form_row(form.sucursal,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, 'attr': {class: 'input-sm', onkeypress:"return tabular(event,this)"}}) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.contacto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.telefono,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.mail,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.provincia,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                            {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.observaciones,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(form.dias,{'style': 'horizontal', 'label_col': 1, 'widget_col': 11, attr:{class: 'input-sm', onkeypress:"return tabular(event,this)" } }) }}
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-lg-2 col-lg-offset-5">
+                        {{ form_widget(form.submit) }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#presis_constanciaretirobundle_retirosfijos_sucursal").change(function () {
+                if ($.trim($(this).val())=='') {
+                    $("#presis_constanciaretirobundle_retirosfijos_calle").val('')
+                    $("#presis_constanciaretirobundle_retirosfijos_altura").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_piso").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_dpto").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_localidad").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_provincia").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_cp").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_contacto").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_telefono").val('');
+                    $("#presis_constanciaretirobundle_retirosfijos_mail").val('');
+                    return false
+                }else{
+                    $.blockUI({message: '<h2>Buscando datos...</h2>'});
+                    $.ajax({
+                        type: "POST",
+                        url: Routing.generate('sucursal_showJson1', {id: $(this).val()} ),
+                        data: "",
+                        success: function (data) {
+                            //console.log(data);
+                            //  $.each($.parseJSON(data), function (key,value) {
+                            //alert(value.calle);
+                            $("#presis_constanciaretirobundle_retirosfijos_calle").val(data['calle'])
+                            $("#presis_constanciaretirobundle_retirosfijos_altura").val(data['altura']);
+                            $("#presis_constanciaretirobundle_retirosfijos_piso").val(data['piso']);
+                            $("#presis_constanciaretirobundle_retirosfijos_dpto").val(data['depto']);
+                            $("#presis_constanciaretirobundle_retirosfijos_localidad").val(data['localidad']);
+                            $("#presis_constanciaretirobundle_retirosfijos_provincia").val(data['provincia']);
+                            $("#presis_constanciaretirobundle_retirosfijos_cp").val(data['cp']);
+                            $("#presis_constanciaretirobundle_retirosfijos_contacto").val(data['contacto']);
+                            $("#presis_constanciaretirobundle_retirosfijos_telefono").val(data['telefono']);
+                            $("#presis_constanciaretirobundle_retirosfijos_mail").val(data['mail']);
+                            //});
+                            $.unblockUI();
+                        }
+                    });
+                }
+            });
+
+            /*=====================================================================================================*/
+            $("#presis_constanciaretirobundle_retirosfijos_cliente").change(function() {
+                var data = {
+                    cliente_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("sucursal_selector") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_constanciaretirobundle_retirosfijos_sucursal');
+                        $city_selector.html('<option value="">Sucursales</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });
+            /*=====================================================================================================*/
+        });
+    </script>
+{% endblock %}

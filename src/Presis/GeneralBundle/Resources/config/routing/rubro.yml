@@ -1,0 +1,39 @@
+rubro:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:Rubro:index" }
+
+rubro_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:Rubro:show" }
+    options:
+      expose: true
+
+rubro_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:Rubro:new" }
+
+rubro_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:Rubro:create" }
+    requirements: { _method: post }
+
+rubro_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:Rubro:edit" }
+    options:
+      expose: true
+
+rubro_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:Rubro:update" }
+    requirements: { _method: post|put }
+
+rubro_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:Rubro:delete" }
+    requirements: { _method: post|delete }
+rubro_ajax:
+  path:     /ajax
+  defaults: {_controller: "PresisGeneralBundle:Rubro:ajax" }
+  options:
+        expose: true

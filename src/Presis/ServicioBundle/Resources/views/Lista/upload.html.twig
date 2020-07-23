@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+
+        $('form').submit(function(e) {
+            var currentForm = this;
+            e.preventDefault();
+            bootbox.confirm("Esto reemplazara la lista de precios seleccionada,¿Est&aacute seguro que desea continuar?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

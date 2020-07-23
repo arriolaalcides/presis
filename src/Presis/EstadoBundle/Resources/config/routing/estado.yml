@@ -1,0 +1,42 @@
+estado:
+    path:     /
+    defaults: { _controller: "EstadoBundle:Estado:index" }
+
+estado_show:
+    path:     /{id}/show
+    defaults: { _controller: "EstadoBundle:Estado:show" }
+
+estado_new:
+    path:     /new
+    defaults: { _controller: "EstadoBundle:Estado:new" }
+    options:
+        expose: true
+
+estado_create:
+    path:     /create
+    defaults: { _controller: "EstadoBundle:Estado:create" }
+    methods:  POST
+
+estado_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "EstadoBundle:Estado:edit" }
+    options:
+        expose: true
+
+estado_update:
+    path:     /{id}/update
+    defaults: { _controller: "EstadoBundle:Estado:update" }
+    methods:  [POST, PUT]
+
+estado_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "EstadoBundle:Estado:delete" }
+    methods:  [GET]
+    options:
+        expose: true
+
+estado_ajax:
+    path:     /ajax
+    defaults: { _controller: "EstadoBundle:Estado:ajax" }
+    options:
+        expose: true

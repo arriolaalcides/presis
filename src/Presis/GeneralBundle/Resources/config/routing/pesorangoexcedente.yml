@@ -1,0 +1,41 @@
+pesorangoexcedente:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:index" }
+
+pesorangoexcedente_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:show" }
+    options:
+        expose: true
+
+pesorangoexcedente_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:new" }
+
+pesorangoexcedente_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:create" }
+    methods:  POST
+
+pesorangoexcedente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:edit" }
+    options:
+        expose: true
+
+pesorangoexcedente_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:update" }
+    methods:  [POST, PUT]
+
+pesorangoexcedente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:delete" }
+    methods:  [POST, DELETE]
+
+pesorangoexcedente_get:
+    path:     /getRangoPesoExcedente
+    defaults: { _controller: "PresisGeneralBundle:PesoRangoExcedente:getRangoPesoExcedente" }
+    methods:  POST
+    options:
+        expose: true

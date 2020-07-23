@@ -1,0 +1,113 @@
+movistar:
+    resource: "@MovistarBundle/Resources/config/routing.yml"
+    prefix:   /
+
+gestion:
+    resource: "@GestionCelBundle/Resources/config/routing.yml"
+    prefix:   /
+
+foto:
+    resource: "@FotoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+firmas:
+    resource: "@FirmasBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+constancia_retiro:
+    resource: "@ConstanciaRetiroBundle/Resources/config/routing.yml"
+    prefix:   /
+
+cecos:
+    resource: "@CecosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+importar:
+    resource: "@ImportarBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_menu:
+    resource: "@PresisMenuBundle/Resources/config/routing.yml"
+    prefix:   /
+
+planilla:
+    resource: "@RecorridoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+rendicion:
+    resource: "@RendicionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+expreso:
+    resource: "@ExpresoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+reclamo:
+    resource: "@ReclamoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tipo_dni:
+    resource: "@TipoDNIBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tracker:
+    resource: "@TrackerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+estado:
+    resource: "@EstadoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+distribuidor:
+    resource: "@DistribuidorBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_guia:
+    resource: "@PresisGuiaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_fixture:
+    resource: "@PresisFixtureBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+presis_user:
+    resource: "@PresisUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_retiro:
+    resource: "@PresisRetiroBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_general:
+    resource: "@PresisGeneralBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_servicio:
+    resource: "@PresisServicioBundle/Resources/config/routing.yml"
+    prefix:   /
+
+datos_envios:
+    resource: "@DatosEnviosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+presis_api:
+  type: rest
+  prefix: /api
+  resource: "@PresisApiBundle/Resources/config/routing.yml"
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/v1/doc
+remitentes:
+    resource: "@RemitentesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+destinatarios:
+    resource: "@DestinatariosBundle/Resources/config/routing.yml"
+    prefix:   /

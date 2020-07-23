@@ -1,0 +1,273 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container">
+        {{ form_start(form) }}
+        <legend>Complete los datos para la entrega</legend>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.apenom,{'style': 'horizontal', 'label_col': 2, 'widget_col': 5}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.calle,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                {{ form_row(form.comprador.altura,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.piso,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1}) }}
+                {{ form_row(form.comprador.dpto,{'style': 'horizontal', 'label_col': 1, 'widget_col': 1}) }}
+                {{ form_row(form.comprador.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                {{ form_row(form.comprador.localidad,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.franja,{'style': 'horizontal', 'label_col': 2, 'widget_col': 5}) }}
+            </div>
+        </div>
+        <legend>Informaci&oacute;n adicional</legend>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.otherInfo,{'style': 'horizontal', 'label_col': 1, 'widget_col': 10}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.email,{'style': 'horizontal', 'label_col': 1, 'widget_col': 10}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.comprador.celular,{'style': 'horizontal', 'label_col': 1, 'widget_col': 10}) }}
+            </div>
+        </div>
+        <br />
+        <legend>Servicios habilitados</legend>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.cantidad,{'style': 'horizontal', 'label_col': 2, 'widget_col': 2}) }}
+                {{ form_row(form.sucursal,{'style': 'horizontal', 'label_col': 2, 'widget_col': 2}) }}
+                {{ form_row(form.servicio,{'style': 'horizontal', 'label_col': 2, 'widget_col': 2}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.servicio,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(form.serviDesc,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6}) }}
+                {{ form_row(form.fragil,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+            </div>
+        </div>
+        <!--<div class="row">
+                <div class="form-group">
+                    {{ form_row(form.fragil) }}
+                    {{ form_errors(form.fragil) }}
+                </div>
+            </div>       -->
+        <div id="productos" class="productos" data-prototype="{{ form_widget(form.productos.vars.prototype)|e }}">                {# iterate over each existing tag and render its only field: name #}
+            <h3>{{ form_row(form.productos) }}</h3>
+            {% for producto in form.productos %}
+                {{ form_widget(producto.formaCarga) }}
+                {{ form_widget(producto.peso) }}
+                {{ form_widget(producto.categoria) }}
+                {{ form_widget(producto.alto) }}
+                {{ form_widget(producto.largo) }}
+                {{ form_widget(producto.profundidad) }}
+
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="button1id"></label>
+            <div class="col-md-8">
+                {{ form_widget(form.submit) }}
+                <a href="{{ path('retiro') }}" class="btn btn-primary">Volver a Retiros</a>
+
+            </div>
+        </div>
+        <div class="errors">
+            {{ form_errors(form, { 'global_errors': true }) }}
+        </div>
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+
+        // setup an "add a tag" link
+        var $addTagLink = $('<a href="#" class="add_tag_link">Agregar Producto</a>');
+        var $newLinkLi = $(' <div class="col-lg-12"></div>').append($addTagLink);
+
+        jQuery(document).ready(function() {
+
+            // Get the ul that holds the collection of tags
+            var $collectionHolder = $('#productos');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTagLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see code block below)
+                addTagForm($collectionHolder, $newLinkLi);
+
+
+            });
+
+
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '$$name$$' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            var ocu="presis_retirobundle_retiro_productos_"+index+"_categoria";
+            var ocu2="#presis_retirobundle_retiro_productos_"+index+" .form-group";
+            var ocu4="#presis_retirobundle_retiro_productos_"+index+"_categoria";
+            var ocu5="#presis_retirobundle_retiro_productos_"+index+"_formaCarga";
+            var ocu6="#presis_retirobundle_retiro_productos_"+index+"_peso";
+
+            var ocu3='label[for="'+ocu+'"]'
+            var nombre="producto_"+index;
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<div class="row"><div class="product_row"></div></div>').append(newForm);
+
+            // also add a remove button, just for this example
+            $newFormLi.append('<a href="#" class="remove-tag"><b>X</b></a>');
+
+            $newLinkLi.before($newFormLi);
+            $(ocu2).each(function(index){
+                if (index==1){
+                    $(this).wrap('<div class="cate"></div>');
+
+                    $(this).parent().parent().find('.cate').hide();
+
+                }
+                if (index==0){
+                    $(this).wrap('<div class="peso"></div>');
+                    $(this).find("input").wrap('<div class="input-group"></div>');
+                    $(this).find("input").before('<div class="input-group-addon">Kg</div>');
+
+
+                }
+                if (index==2 || index==3 || index ==4){
+                    $(this).wrap('<div class="dime"></div>');
+                    $(this).find("input").wrap('<div class="input-group"></div>');
+                    $(this).find("input").before('<div class="input-group-addon">Mts</div>');
+
+                }
+                if (index==4){
+                    $(this).parent().parent().find('.dime').hide();
+                }
+            });
+
+            $(ocu5).change(function(){
+                if ($(this).val()==1) {
+                    $(this).parent().parent().parent().find('.cate').hide();
+                    $(this).parent().parent().parent().find('.peso').hide();
+                    $(this).parent().parent().parent().find('.dime').show();
+                }
+                if ($(this).val()==2) {
+                    $(this).parent().parent().parent().find('.cate').hide();
+                    $(this).parent().parent().parent().find('.peso').show();
+                    $(this).parent().parent().parent().find('.dime').hide();
+                }
+                if ($(this).val()==3) {
+                    $(this).parent().parent().parent().find('.cate').show();
+                    $(this).parent().parent().parent().find('.peso').hide();
+                    $(this).parent().parent().parent().find('.dime').hide();
+                }
+                if ($(this).val()==4) {
+                    $(this).parent().parent().parent().find('.cate').hide();
+                    $(this).parent().parent().parent().find('.peso').show();
+                    $(this).parent().parent().parent().find('.dime').show();
+                }
+
+            });
+            // handle the removal, just for this example
+            $('.remove-tag').click(function(e) {
+                e.preventDefault();
+
+                $(this).parent().remove();
+
+                return false;
+            });
+            return ocu2;
+        }
+        $("#presis_retirobundle_retiro_comprador_cp").change(function(){
+            var data = {
+                cp: $(this).val(),
+                sucursal: $(presis_retirobundle_retiro_sucursal).val()
+            };
+            $.ajax({
+                type: 'post',
+                url: '{{ path("servicio_ajax_habilitados") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#presis_retirobundle_retiro_servicio');
+                    $city_selector.html('<option>Servicio</option>');
+                    // foreach ($ciudades as $ciudad) {
+                    //}
+                    $.each($.parseJSON(data), function (key,value) {
+                        $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                    });
+                }
+            });
+        });
+        $("#presis_retirobundle_retiro_sucursal").change(function(){
+            var data = {
+                cp: $(presis_retirobundle_retiro_comprador_cp).val(),
+                sucursal: $(this).val()
+            };
+            $.ajax({
+                type: 'post',
+                url: '{{ path("servicio_ajax_habilitados") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#presis_retirobundle_retiro_servicio');
+                    $city_selector.html('<option>Servicio</option>');
+                    // foreach ($ciudades as $ciudad) {
+                    //}
+                    $.each($.parseJSON(data), function (key,value) {
+                        $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                    });
+                }
+            });
+        });
+        $("#presis_retirobundle_retiro_servicio").change(function(){
+            var servicio=$("#presis_retirobundle_retiro_servicio option:selected").text();
+
+            var url = Routing.generate('servicio_desc', { 'servicioNombre': servicio  });
+            $.post(url,
+                    { 'servicioNombre': servicio
+                    },function(data){
+                        $("#presis_retirobundle_retiro_serviDesc").val(data);
+                    });
+
+        });
+
+    </script>
+{% endblock %}

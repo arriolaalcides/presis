@@ -1,0 +1,322 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <legend>Confirmación de guías para retiro</legend>
+        <div class="row">
+            <!--<div class="col-lg-4">
+                <label class="control-label col-lg-4" for="distribuidor">Asignar a</label>
+                <div class="col-lg-8">
+                    <select id="distribuidor" name="distribuidor" class="form-control">
+                        {% for d in entities %}
+                            <option value="{{ d.id }}">{{ d }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>-->
+            <input type="hidden" name="username" id="username" value="{{ app.user.username }}" />
+            {% if is_granted('ROLE_ADMIN')  %}
+                <input type="hidden" name="is_admin" id="is_admin" value="si" />
+            {% endif %}
+            <div class="col-lg-2">
+                <input type="text" id="fecha" value="{{ "now"|date('d/m/Y') }}" class="form-control date-picker input-sm">
+            </div>
+            <div class="col-lg-2">
+                <button type="button" id="abrir-planilla" class="btn btn-primary" disabled>Confirmar guias para retiro</button>
+            </div>
+            <div class="col-lg-4">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    Total de bultos: <b class="lead" id="total-bultos">0</b>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div id="toolbar">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <table id="retiros"
+                   data-toggle="table"
+                   data-show-export="true"
+                   data-filter-control="true"
+                   data-click-to-select="true"
+                   data-show-columns="true"
+                   data-toolbar="#toolbar">
+                <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none" data-formatter="stateFormatter"></th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="id" data-sortable="true" data-filter-control="input">Nro. Guia</th>
+                    <th data-field="sub_zona_origen" data-sortable="true" data-filter-control="input">Zona O</th>
+                    <th data-field="sub_zona_destino" data-sortable="true" data-filter-control="input">Zona D</th>
+                    <th data-field="clientenombre" data-sortable="true" data-filter-control="select">Cliente</th>
+
+                    <th data-field="remitente_empresa" data-sortable="true" data-filter-control="select">Remitente</th>
+                    <th data-field="remitente_direccion" data-sortable="true" data-filter-control="select">Dirección</th>
+                    <th data-field="remitente_localidad" data-sortable="true" data-filter-control="select">Localidad</th>
+                    <th data-field="remitente_provincia" data-sortable="true" data-filter-control="select">Provincia</th>
+                    <th data-field="cp_remitente" data-sortable="true" data-filter-control="select">CP</th>
+
+                    <th data-field="comprador" data-sortable="true" data-filter-control="select">Comprador</th>
+                    <th data-field="datos_envios.peso" data-sortable="true">Peso</th>
+                    <th data-field="datos_envios.bultos"data-sortable="true" >Bultos</th>
+                    <th data-field="comprador_direccion" data-sortable="true" data-filter-control="select">Dirección</th>
+                    <th data-field="comprador_localidad_guia" data-sortable="true" data-filter-control="select">Localidad</th>
+                    <th data-field="comprador_provincia_guia" data-sortable="true" data-filter-control="select">Provincia</th>
+                    <th data-field="comprador_cp_guia" data-sortable="true" data-filter-control="input">CP</th>
+                    <!--<th data-field="zona" data-sortable="true" data-filter-control="select">Zona</th>-->
+                    <th data-field="createguia" data-sortable="true" data-filter-control="select">Usuario</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            var $table = "";
+
+            function acciones(value, row){
+                var botones = "<a href="+Routing.generate('retiro_showguia', {id: row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i></a>" +
+                        "&nbsp;&nbsp;<a href="+Routing.generate('retiro_showetiqueta', {id: row.id} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>" +
+                        "&nbsp;&nbsp;<a href='#' onclick='deleteRow("+row.id+");return false;'><i class='fa fa-times fa-2x' title='Eliminar retiro'></i></a>";
+                {% if is_granted('ROLE_ADMIN')  %}
+                botones = "<a href="+Routing.generate('datosenvios_edit',{id: row.id} )+" target='_blank'><i class='fa fa-search fa-2x'></i></a>" +
+                        "<a href="+Routing.generate('retiro_showetiqueta',{id: row.id} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>" +
+                        botones;
+                {% endif %}
+                return botones;
+            }
+
+            var $_GET = {};
+
+            document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                function decode(s) {
+                    return decodeURIComponent(s.split("+").join(" "));
+                }
+                $_GET[decode(arguments[1])] = decode(arguments[2]);
+            });
+
+            function stateFormatter(value, row, index) {
+                if((row.createguia!=$("#username").val()) && ($("#is_admin").val()!='si')){
+                    return {
+                        disabled: true
+                    };
+                }
+                return value;
+            }
+
+            function deleteRow(id) {
+                BootstrapDialog.show({
+                    title: 'Atencion!!!!',
+                    message: 'Realmente desea eliminar el registro?',
+                    buttons: [{
+                        label: 'Aceptar',
+                        action: function(dialog) {
+                            $.ajax( {
+                                url: Routing.generate('retiro_eliminar',{id_retiro: id} )
+                            }).done(function(data) {
+                                dialog.close();
+                                if(data=='error'){
+                                    BootstrapDialog.show({
+                                        title: 'Atencion!!!!',
+                                        message: 'La guia solo puede ser eliminada por el usuario que la genero.',
+                                        buttons: [{
+                                            label: 'Aceptar',
+                                            action: function(dialog) {
+                                                dialog.close();
+                                            }
+                                        }]
+                                    });
+                                }else{
+                                    actualizar();
+                                }
+                            });
+                        }
+                    }, {
+                        label: 'Cancelar',
+                        action: function(dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+            }
+
+            $(document).ready(function () {
+                var totalBultos = function () {
+                    var seleccionados = $table.bootstrapTable('getSelections');
+                    var total = 0;
+                    $('#abrir-planilla').attr("disabled", (seleccionados.length == 0));
+                    $.map(seleccionados, function (item) {
+                        total += item.datos_envios.bultos;
+                    });
+                    $('#total-bultos').html(total);
+                };
+
+                $table = $('#retiros');
+                $table.bootstrapTable()
+                        .on('check.bs.table', totalBultos)
+                        .on('uncheck.bs.table', totalBultos)
+                        .on('check-all.bs.table', totalBultos)
+                        .on('uncheck-all.bs.table', totalBultos);
+
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_confirmar_retiros'),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+
+                $('#abrir-planilla').click( function () {
+                    var ids=[];
+                    var sumar = 0;
+                    var sumaAmba = 0;
+                    var guiasInt = '';
+                    var $fecha = $("#fecha").val();
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        if(item.sub_zona_origen=='INT'){
+                            sumar +=1;
+                            guiasInt +=item.id+'-'
+                        }else{
+                            sumaAmba +=1;
+                        }
+                            ids.push(item.id);
+                    });
+                    $.blockUI({message: "<h3>Actualizando datos...</h3>"})
+                    $.ajax({
+                        type: "GET",
+                        url: Routing.generate('datosenvios_confirmretiro'),
+                        data: {ids: ids, fecha: $fecha},
+                        success: function(data)
+                        {
+                            if(sumar!=0 && sumaAmba==0) {
+                                bootbox.dialog({
+                                    closeButton: false,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se han confirmado <b>" + sumar + "</b> solicitudes de retiro para el interior.<br />Nros: " + guiasInt,
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Cerrar',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                actualizar();
+                                            }
+                                        },
+                                    }
+                                });
+                            }else if(sumar!=0 && sumaAmba!=0){
+                                bootbox.dialog({
+                                    closeButton: false,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se han confirmado <b>" + sumar + "</b> solicitudes de retiro para el interior.<br />Nros: " + guiasInt,
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Cerrar',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                bootbox.dialog({
+                                                    closeButton: true,
+                                                    title: "Solicitudes confirmadas",
+                                                    message: "Se ha generado el manifiesto nro."+data+", desea imprimirlo?",
+                                                    buttons: {
+                                                        confirm: {
+                                                            label: 'Imprimir',
+                                                            className: 'btn-success',
+                                                            callback: function () {
+                                                                window.open( Routing.generate('retiro_showconstancia2', {id: data} ));
+                                                            }
+                                                        },
+                                                    }
+                                                });
+                                                // SI window.open( Routing.generate('retiro_showconstancia', {ids: ids} ));
+                                                actualizar();
+                                            }
+                                        },
+                                    }
+                                });
+                            }else{
+                                bootbox.dialog({
+                                    closeButton: true,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se ha generado el manifiesto nro."+data+", desea imprimirlo?",
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Imprimir',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                window.open( Routing.generate('retiro_showconstancia2', {id: data} ));
+                                            }
+                                        },
+                                    }
+                                });
+                                // SI window.open( Routing.generate('retiro_showconstancia', {ids: ids} ));
+                                actualizar();
+                            }
+                        },
+
+                        error: function(XMLHttpRequest, textStatus, errorThrown)
+                        {
+                            alert('Error : ' + errorThrown);
+                        }
+                    });
+                    /*if(sumar!=0){
+                        bootbox.dialog({
+                            closeButton: false,
+                            title: "Solicitudes confirmadas",
+                            message: "Se han confirmado <b>"+sumar+"</b> solicitudes de retiro para el interior.<br />Nros: "+guiasInt,
+                            buttons: {
+                                confirm: {
+                                    label: 'Cerrar',
+                                    className: 'btn-success',
+                                    callback: function () {
+                                        window.open( Routing.generate('datosenvios_confirmretiro', {ids: ids, fecha: $fecha} ),'_self');
+                                    }
+                                },
+                            }
+                        });
+                    }*/
+                    /*window.open( Routing.generate('datosenvios_confirmretiro', {ids: ids, fecha: $fecha} ),'_self');
+                    window.open( Routing.generate('retiro_showconstancia', {ids: ids} ));*/
+                });
+            });
+
+            var actualizar = function(){
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_confirmar_retiros'),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+                        $table.bootstrapTable('load', data);
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            }
+        </script>
+    {% endblock %}

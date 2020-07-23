@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+    <dynamic-page font-type="DejaVuSans" page-size="a4-landscape" margin="5px">
+        <placeholders>
+            <header>
+                <div height="100px" width="100%" float="left">
+                    <div float="right" padding-right="15px">
+                        <page-info offset="0" format="Hoja %s de %s" />
+                    </div>
+                    <div height="100px" width="100%" float="left">
+                        <p margin-left="100px">
+                            <div width="20%" float="left"><b>Hoja de Ruta {{ recorrido.esEntrega ? '(Entregas)' : '(Retiros)' }}</b></div>
+                            <div width="20%" float="left"><b>RNPSP: 0813</b></div>
+                            <div width="20%" float="left"><b>{{ recorrido.distribuidor }}</b></div>
+                            <div width="20%" float="left"><b>Expreso: {{ recorrido.expreso }}</b></div>
+                            <div width="20%" float="left"><b>Colectora: {{ recorrido.colectora }}</b></div>
+                        </p>
+                        <p margin-left="100px">
+                            <div height="100px" width="100%" float="left">
+                                <div width="30%" float="left">
+                                    <b>Nro.: {{ recorrido.id }}</b>
+                                </div>
+                                <div width="50%" float="left">
+                                    <b>Detalles: {{ recorrido.detalles }}</b>
+                                </div>
+                                <div width="20%" float="left">
+                                    <b>Fecha: {{ recorrido.fecha | date('d/m/y') }}</b>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </header>
+        </placeholders>
+        <div width="100%" height="25px" border.color="black" padding-top="5px" font-size="10px">
+            <div width="8%" float="left">Guía</div>
+            <div width="8%" float="left">Cliente</div>
+            <div width="8%" float="left">Ceco</div>
+            <div width="8%" float="left">DNI</div>
+            <div width="12%" float="left">Horario</div>
+            <div width="12%" float="left">{{ recorrido.esEntrega ? 'Destinatario' : 'Remitente' }}</div>
+            <div width="12%" float="left">Dirección</div>
+            <div width="12%" float="left">Localidad</div>
+            <div width="8%" float="left">Zona</div>
+            <div width="10%" float="left">Estado</div>
+        </div>
+
+        {% set totalContrareembolso = 0 %}
+        {% set totalBultos = 0 %}
+        {% set totalGuias = 0 %}
+
+        {% for retiro in retiros %}
+
+            {% set totalContrareembolso = totalContrareembolso + retiro.datosenvios.contrareembolso %}
+            {% set totalBultos = totalBultos + retiro.datosenvios.bultos %}
+            {% set totalGuias = retiros|length %}
+
+            <div padding-top="10px" padding-bottom="10px" width="100%" breakable="false" font-size="10px">
+                <div width="8%" float="left" breakable="false">{{ retiro.id }}</div>
+                <div width="8%" float="left" breakable="false">{{ retiro.cliente }}</div>
+                <div width="8%" float="left" breakable="false">{{ retiro.datosEnvios.cecoDesc }}</div>
+                <div width="8%" float="left" breakable="false">{{ retiro.compradorDocumento }}</div>
+                <div width="12%" float="left" breakable="false">{{ retiro.compradorHorario }}</div>
+                <div width="12%" float="left" breakable="false">{{ recorrido.esEntrega ? retiro.nombreComprador : retiro.remitenteNombre }}</div>
+                <div width="12%" float="left" breakable="false">{{ recorrido.esEntrega ? retiro.direccionComprador :  retiro.remitenteDireccion}}</div>
+                <div width="12%" float="left" breakable="false">{{ recorrido.esEntrega ? retiro.localidadComprador : retiro.remitenteLocalidad }}</div>
+                <div width="8%" float="left" breakable="false">{{ retiro.compradorZona }}</div>
+                <div width="10%" float="left" breakable="false">{{ retiro.compradorEstado }}</div>
+
+                <div width="100%" breakable="false" padding-top="5px">
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Tel.:</b>
+                        {{ retiro.compradorCelular }}
+                    </div>
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Observaciones:</b>
+                        {{ retiro.compradorObs1 }}
+                    </div>
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Observaciones:</b>
+                        {{ retiro.compradorObs2 }}
+                    </div>
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Observaciones:</b>
+                        {{ retiro.compradorObs3 }}
+                    </div>
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Observaciones:</b>
+                        {{ retiro.compradorObs4 }}
+                    </div>
+                    <div width="100%" float="left" breakable="false" font-size="10px"><b>Remito:</b>
+                        {{ retiro.remito }}
+                    </div>
+                </div>
+            </div>
+            <div padding-top="5px" width="100%" border.color="black" border.type="top"></div>
+        {% endfor %}
+        <div height="50px" width="100%" text-align="center">
+            <b>T. Cobro: {{ totalContrareembolso }}</b>
+            <b>T. Bultos: {{ totalBultos }}</b>
+            <b>Cantidad de guías: {{ totalGuias }}</b>
+        </div>
+    </dynamic-page>
+</pdf>

@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block contenido -%}
+    <h1>Tipo de reclamo</h1>
+
+    <div class="row" style="margin-left: 5%; margin-right: 5%">
+        <table class="record_properties table">
+            <tbody>
+            <tr>
+                <th width="30%">Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" style="margin-left: 1%">
+        <a class="btn btn-primary" href="{{ path('tiporeclamo_edit', { 'id': entity.id }) }}">Editar</a>
+        <a class="btn btn-primary" href="{{ path('tiporeclamo') }}">Volver a la lista</a>
+        <br>
+        <br>
+        {{ form(delete_form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+<!--<img src="{{ asset('bundles/presisgeneral/images/tivendedores1680.jpg') }}" class="img-responsive" width="100%"/>-->
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid container-round">
+            <legend>Agregar nuevo comercial</legend>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.nombre,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                    {{ form_row(form.telefono,{'style': 'horizontal', 'label_col': 1, 'widget_col': 5}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(form.direccion,{'style': 'horizontal', 'label_col': 1, 'widget_col': 7}) }}
+                    {{ form_row(form.cp,{'style': 'horizontal', 'label_col': 1, 'widget_col': 2}) }}
+                </div>
+            </div>
+                <br />
+            <div class="row">    
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button1id"></label>
+                    <div class="col-md-8">
+                        {{ form_widget(form.submit) }}
+                        <a href="{{ path('vendedor') }}" class="btn btn-primary">Volver a Vendedores</a>
+
+                    </div>
+                </div>
+            </div>
+
+
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+

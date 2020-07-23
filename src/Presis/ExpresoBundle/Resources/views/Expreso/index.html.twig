@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+    </style>
+{% endblock %}
+
+    {%  block contenido %}
+        {% if is_granted('ROLE_BACK_OFFICE') %}
+            <input type="hidden" id="rol" name="rol" value="backoffice" />
+        {% endif %}
+        <div class="container" style="width: 50%; margin-left: auto; margin-right: auto;">
+            <table id="table_expresos" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Localidad</th>
+                    <th>Telefono</th>
+                    <th>Mail</th>
+                    <th>Encargado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+            </table>
+            {% if is_granted('ROLE_BACK_OFFICE')==false and is_granted('ROLE_ADMINISTRACION')==false %}
+                <div class="col-md-8">
+                    <a class="btn btn-primary" href="{{ path('expreso_new') }}">Agregar Expreso</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(document).ready( function () {
+            $('#table_expresos').DataTable({
+                "dom": 'T<"clear">lfrtip',
+                "responsive": true,
+                "tableTools": {
+                    "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+                },
+                "ajax":
+                {
+                    "url": Routing.generate("expreso_asajax"),
+                    "type": "POST"
+                },
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+                },
+                "columnDefs": [ {
+                    "width": "5%",
+                    "targets": 8,
+                    "data": "id",
+                    "render": function ( data, type, full, meta ) {
+                        if (!$("#rol").val() == 'backoffice') {
+                            return "<a href=" + Routing.generate('expreso_edit', {id: data}) + "><i class='fa fa-pencil-square-o fa-2x' title='Editar detalles'></i></a>" +
+                                    "<a href=" + Routing.generate('expreso_delete', {id: data}) + "><i class='fa fa-times fa-2x' title='Eliminar Expreso'></i></a>";
+                        }else{
+                            return "";
+                        }
+                    }
+                } ],
+                "columns": [
+
+                    {"data":"id","defaultContent":"N/A"},
+                    {"data":"codigo","defaultContent":"N/A"},
+                    {"data":"nombre","defaultContent":"N/A"},
+                    {"data":"direccion","defaultContent":"N/A"},
+                    {"data":"localidad","defaultContent":"N/A"},
+                    {"data":"telefono","defaultContent":"N/A"},
+                    {"data":"mail","defaultContent":"N/A"},
+                    {"data":"encargado","defaultContent":"N/A"},
+
+                ]
+
+            });
+        } );
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(form) }}
+        <legend>Agregar nuevo precio</legend>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.rango,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(form.servicio,{'style': 'horizontal', 'label_col':2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.cordonEntrega,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(form.cordonRetiro,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                {{ form_row(form.lista,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+                {{ form_row(form.precio,{'style': 'horizontal', 'label_col': 2, 'widget_col': 4}) }}
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="button1id"></label>
+            <div class="col-md-8">
+                {{ form_widget(form.submit) }}
+                <a href="{{ path('precio') }}" class="btn btn-primary">Volver a Precios</a>
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#presis_serviciobundle_precio_rango').keyup(function (){
+            this.value = (this.value + '').replace(/[^0-9]/g, '');
+        });
+    });
+</script>
+{% endblock %}

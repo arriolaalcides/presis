@@ -1,0 +1,7 @@
+parameters:
+#    presis_retiro.example.class: Presis\RetiroBundle\Example
+
+services:
+#    presis_retiro.example:
+#        class: %presis_retiro.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

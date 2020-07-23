@@ -1,0 +1,2 @@
+1;129;129;OD;101;2017-12-29;1234;1566;0;GALANDER;Bulnes65;1176;CABA;1;0;0;1;0;comentarios;AMBA - Express;;;
+1;129;129;OR;101;2017-12-29;1234;291;0;MOVISTAR;Florida532;1005;Capital Federal;1;0;0;1;0;comentarios;AMBA - Express;Lugo Alfredo;alfredo.lugo@telefonica.com;

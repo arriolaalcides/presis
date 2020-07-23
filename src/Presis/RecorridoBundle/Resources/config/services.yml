@@ -1,0 +1,4 @@
+services:
+#    recorrido.example:
+#        class: Presis\RecorridoBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

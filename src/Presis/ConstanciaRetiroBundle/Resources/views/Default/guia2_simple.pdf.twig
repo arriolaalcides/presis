@@ -1,0 +1,123 @@
+<!DOCTYPE pdf SYSTEM "%resources%/dtd/doctype.dtd">
+<pdf>
+    <dynamic-page font-type="DejaVuSans" margin="15px">
+        <div width="100%" height="90px" border.color="black" padding-bottom="10px">
+            <div float="left" width="40%" height="45px">
+                <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="250px" height="68px" />
+            </div>
+            <div float="left" width="30%" height="45px" text-align="center">
+                <div padding-top="10px" font-size="16px">
+                    <b>SOLICITUD DE RETIRO</b>
+                </div>
+                <div width="100%" padding-top="10px">
+                    <div border.color="black" width="50px" height="50px" margin-right="auto" margin-left="auto" text-align="center">
+                        <h1>X</h1>
+                    </div>
+                </div>
+                <div font-size="10px" padding-top="10px">
+                    <b>Documento no valido como factura</b>
+                </div>
+            </div>
+            <div float="left" width="30%" height="45px" text-align="right">
+                <div padding-top="10px" font-size="12px" margin-right="15px">
+                    <b>Fecha: {{ retiro.fecha | date('d/m/Y') }}</b>
+                </div>
+                <div padding-top="10px" font-size="12px">
+                    <barcode type="code39" code="{{ retiro.id }}" float="right" bar-thin-width="4px" bar-thick-width="10px" />
+                </div>
+            </div>
+        </div>
+        <div width="100%" border.color="black" height="25px" padding-top="5px" font-size="12px">
+            <div width="50%" float="left">
+                <div padding-left="10px">
+                    <b>Distribuidor: </b>{{ retiro.distribuidor }}
+                </div>
+            </div>
+            <div width="50%" float="left">
+                <div padding-left="10px">
+                    <b>Horario: </b>{{ retiro.franja }}
+                </div>
+            </div>
+        </div>
+        <div width="100%" border.color="black" font-size="12px">
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Empresa: </b>{{ retiro.cliente }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Dirección: </b>{{ retiro.calle ~ " " ~ retiro.altura ~ " " ~ retiro.piso ~ " " ~ retiro.dpto }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Localidad: </b>{{ retiro.localidad }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Provincia: </b>{{ retiro.provincia }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>C.P: </b>{{ retiro.cp }}
+            </div>
+            <div padding-top="5px" padding-left="10px" margin-bottom="10px">
+                <b>Observaciones: </b>{{ retiro.observaciones }}
+            </div>
+        </div>
+        <div margin-top="15px"></div>
+        <div width="100%" border.color="black" font-size="12px">
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Datos del retiro</b>
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Horario: </b>{{ retiro.franja }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Contacto: </b>{{ retiro.contacto }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Tel.: </b>{{ retiro.telefono }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Email: </b>{{ retiro.mail }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Bultos: </b>{{ retiro.bultos }}
+            </div>
+            <div height="25px" padding-top="5px" padding-left="10px">
+                <b>Peso: </b>{{ retiro.peso }}
+            </div>
+        </div>
+        <div margin-top="15px"></div>
+        <div id="colIzquierda" width="50%" border.color="black" float="left" text-align="center">
+            <div extends="colIzquierda" width="100%" border.color="black" float="left" text-align="center">
+                <b>Autorización y Firma del Remitente</b>
+            </div>
+            <div width="100%" float="left" text-align="left" font-size="8px" height="120px">
+                Firma:
+            </div>
+            <div padding-top="5px" border.color="black" width="100%" float="left" text-align="left" font-size="8px" height="30px">
+                Aclaración:
+            </div>
+        </div>
+        <div id="colDerecha" width="50%" border.color="black" float="left" text-align="center">
+            <div extends="colDerecha" width="100%" border.color="black" float="left" text-align="center">
+                <b>Datos y firma de quien recibe / retira</b>
+            </div>
+            <div width="100%" float="left" text-align="left" font-size="8px" height="120px">
+                <div border.color="black" width="60%" float="left" text-align="left" font-size="8px" height="120px">
+                    Firma:
+                </div>
+                <div width="40%" float="left" text-align="left" font-size="8px" height="120px">
+                    <div width="100%" float="left" text-align="left" font-size="8px" height="60px">
+                        Doc. de Identidad:
+                    </div>
+                    <div border.color="black" width="100%" float="left" text-align="left" font-size="8px" height="60px">
+                        Fecha:
+                    </div>
+                </div>
+            </div>
+            <div padding-top="5px" border.color="black" width="60%" float="left" text-align="left" font-size="8px" height="30px">
+                Aclaración:
+            </div>
+            <div padding-top="5px" border.color="black" width="40%" float="left" text-align="left" font-size="8px" height="30px">
+                Hora:
+            </div>
+        </div>
+    </dynamic-page>
+</pdf>

@@ -1,0 +1,386 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+        .glyphicon-ok {
+            color: green;
+        }
+        /* Red X. */
+        .glyphicon-remove {
+            color: red;
+        }
+        tbody{
+            font-family: Raleway;
+            font-size: 14px;
+        }
+        td.details-control {
+            background-image: url('/voucher/web/bundles/presisretiro/images/details_open.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+        tr.shown td.details-control {
+            background-image: url('/voucher/web/bundles/presisretiro/images/details_close.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+        .center{
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{%  block contenido %}
+
+    <div class="container container-round">
+       <form class="form-inline">
+           <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="min">Retiro Desde:</label>
+                        <input type="text" class="form-control input-sm" id="min" name="min">
+                        <label for="max">Retiro Hasta:</label>
+                        <input type="text" class="form-control input-sm" id="max" name="max">
+                        <input class="btn btn-primary btn-sm" type="button" id="print" value="Imprimir Selección">
+                        <input class="btn btn-primary btn-sm" type="button" id="printp" value="Imprimir Pendientes">
+                        <input class="btn btn-primary btn-sm" type="button" id="pguias" value="Generar Consolidado de Guias">
+                        <input class="btn btn-primary btn-sm" type="button" id="peti" value="Imprimir Etiqueta">
+                    </div>
+                </div>
+           </div>
+      </fom>
+   </div>
+   <br />
+   <!--<div id="table">
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+            <td>Fecha Retiro Desde:</td>
+            <td><input type="text" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Fecha Retiro Hasta:</td>
+            <td><input type="text" id="max" name="max"></td>
+        </tr>
+        <tr>
+            <td><input class="btn btn-success" type="button" id="print" value="Imprimir Selección"></td>
+            <td><input class="btn btn-danger" type="button" id="printp" value="Imprimir Pendientes"></td>
+        </tr>
+
+        </tbody></table>
+       <p>
+
+       </p>-->
+       <table id="table_retiro" class="table table-striped table-bordered table-hover" cellpadding="0" cellspacing="0" width="100%">
+           <thead>
+            <tr>
+
+                <th>Fecha</th><!--1-->
+                <th>Tracking</th><!--2-->
+                <th>Empresa</th><!--3-->
+                <th>Servicio</th><!--4-->
+                <th>Precio</th><!--5-->
+                <th>Peso(Kg)</th><!--6-->
+                <th>Pend.</th><!--7-->
+                <th>Acciones</th><!--8-->
+                <th>Marcar</th><!--9-->
+
+
+            </tr>
+        </thead>
+    </table>
+   </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    var table;
+    $.fn.dataTableExt.afnFiltering.push(
+            function( oSettings, aData, iDataIndex ) {
+                var iFini = document.getElementById('min').value;
+                var iFfin = document.getElementById('max').value;
+                var iStartDateCol =0;
+                var iEndDateCol = 0;
+
+                iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+                iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+
+                var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+                var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+
+                if ( iFini === "" && iFfin === "" )
+                {
+                    return true;
+                }
+                else if ( iFini <= datofini && iFfin >= datoffin)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+    );
+
+    /*=========================================================*/
+    function trim(str) {
+        str = str.replace(/^\s+/, '');
+        for (var i = str.length - 1; i >= 0; i--) {
+            if (/\S/.test(str.charAt(i))) {
+                str = str.substring(0, i + 1);
+                break;
+            }
+        }
+        return str;
+    }
+
+    function dateHeight(dateStr){
+        if (trim(dateStr) != '') {
+            var frDate = trim(dateStr).split(' ');
+            var frTime = frDate[1].split(':');
+            var frDateParts = frDate[0].split('/');
+            var day = frDateParts[0] * 60 * 24;
+            var month = frDateParts[1] * 60 * 24 * 31;
+            var year = frDateParts[2] * 60 * 24 * 366;
+            var hour = frTime[0] * 60;
+            var minutes = frTime[1];
+            var x = day+month+year+hour+minutes;
+        } else {
+            var x = 99999999999999999; //GoHorse!
+        }
+        return x;
+    }
+
+    /*=========================================================*/
+
+    $(document).ready( function () {
+
+        jQuery.fn.dataTableExt.oSort['date-euro-asc'] = function(a, b) {
+            var x = dateHeight(a);
+            var y = dateHeight(b);
+            var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            return z;
+        };
+
+        jQuery.fn.dataTableExt.oSort['date-euro-desc'] = function(a, b) {
+            var x = dateHeight(a);
+            var y = dateHeight(b);
+            var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+            return z;
+        };
+        /*jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+         "date-euro-pre": function ( a ) {
+         var x;
+
+         if ( $.trim(a) !== '' ) {
+         var frDatea = $.trim(a).split(' ');
+         var frTimea = frDatea[1].split(':');
+         var frDatea2 = frDatea[0].split('/');
+         x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
+         }
+         else {
+         x = Infinity;
+         }
+
+         return x;
+         },
+
+         "date-euro-asc": function ( a, b ) {
+         return a - b;
+         },
+
+         "date-euro-desc": function ( a, b ) {
+         return b - a;
+         }
+         } );*/
+
+        // Event listener to the two range filtering inputs to redraw on input
+
+        table=$('#table_retiro').DataTable({
+            dom: 'T<"clear">lfrtip',
+            "order": [[ 0, "desc" ]],
+            "ajax":Routing.generate("retiro_ajax"),
+            "tableTools": {
+                "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+            },
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+            },
+            "columnDefs": [ {
+                "targets": 7,
+                "data": "id",
+                "render": function ( data, type, full, meta ) {
+                    var ids2=[];
+                    ids2.push(data);
+                    return "<a href="+Routing.generate('retiro_showvoucher',{ids:ids2} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a><a href=http://trackers.onlinegeotrack.com.ar/ml_simple2/index.php?trackingNumber="+data+" target='_blank'><i class='fa fa-eye fa-2x' title='Ver seguimiento'></i> </a>";
+                }
+
+            },
+                {
+                    "render": function (data, type, row) {
+                        return (data === false) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                    },
+                    //"targets": 12
+                    "targets": 6
+
+                },
+                {
+                    "targets": 8,
+                    "data": "id",
+                    "render": function ( data, type, full, meta ) {
+                        var ids2=[];
+                        ids2.push(data)
+                        return '<input class=\"checky\" type=\"checkbox\" value="' + data + '">';
+                    }
+                } ],
+
+            "columns": [
+                { "data": "fechHora", "type":"date-euro"},
+                { "data": "id" },
+                { "data": "empresa","defaultContent":"N/A" },
+                {"data":"descripcion","defaultContent":"N/A"},
+                {"data":"precio"},
+                {"data":"peso"},
+                {"data":"pendiente","sClass": "center"},
+
+
+                /* {"data" :"fechHora",
+                 "type":"date-euro",targets: 0
+                 },
+                 {"data":"id"},
+                 {"data":"empresa",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"descripcion",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"precio"},
+                 {"data":"peso"},
+                 {"data":"apenom"},
+                 {"data":"calle",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"altura",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"piso",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"dpto",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"cp",
+                 "defaultContent":"N/A"
+                 },
+                 {"data":"impreso",
+                 "defaultContent":"N/A"
+                 },*/
+            ]
+
+        });
+
+       /* $('#table_retiro tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );*/
+
+        $('#min').keyup( function() { table.draw(); } );
+        $('#max').keyup( function() { table.draw(); } );
+        $(function() {
+            $( "#min" ).datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
+                dateFormat: "dd-mm-yy",
+                onClose: function( selectedDate ) {
+                    $( "#max" ).datepicker( "option", "minDate", selectedDate );
+                    table.draw();
+                }
+            });
+
+            $( "#max" ).datepicker({
+                defaultDate: "+1w",
+                changeMonth: true,
+                numberOfMonths: 1,
+                dateFormat: "dd-mm-yy   ",
+                onClose: function( selectedDate ) {
+                    $( "#min" ).datepicker( "option", "maxDate", selectedDate );
+                    table.draw();
+                }
+
+            });
+        });
+    } );
+
+
+
+
+    $('#table_retiro').on( 'click', '.checky', function () {
+
+        $(this).parent().parent().toggleClass('success');
+
+    } );
+
+    $('#print').click( function () {
+        var ids=[];
+        var cant=table.rows('.success').data().length;
+        table.rows('.success').indexes().each( function (idx) {
+            var d = table.row( idx ).data();
+            ids.push(d.id);
+
+        } );
+        window.open( Routing.generate("retiro_showvoucher",{'ids':ids}))
+    } );
+    $('#printp').click( function () {
+
+        window.open( Routing.generate("retiro_showpendientes"))
+    } );
+    $('#pguias').click( function () {
+        var ids=[];
+        var cant=table.rows('.success').data().length;
+        table.rows('.success').indexes().each( function (idx) {
+            var d = table.row( idx ).data();
+            ids.push(d.id);
+
+        } );
+        window.open( Routing.generate("retiro_generarguias",{'ids':ids}))
+    } );
+    $('#peti').click( function () {
+        var ids=[];
+        var cant=table.rows('.success').data().length;
+        table.rows('.success').indexes().each( function (idx) {
+            var d = table.row( idx ).data();
+            ids.push(d.id);
+
+        } );
+        window.open( Routing.generate("retiro_showeti",{'ids':ids}))
+    } );
+
+    function format ( d ) {
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                '<td>Destinatario:&nbsp;</td>'+
+                '<td colspan="6">'+d.apenom+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Domicilio: </td>'+
+                '<td colspan="6">'+d.calle+'&nbsp;'+d.altura+'&nbsp;'+d.piso+'&nbsp;'+d.dpto+' '+d.cp+'</td>'+
+                '</tr>'+
+                '</table>';
+    }
+    </script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+    body { font-size: 140%; }
+    </style>
+{% endblock %}
+{% block banner %}
+{% endblock %}
+    {%  block contenido %}
+
+    <table id="table_categoria" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Peso (Kg)</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+    </table>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(document).ready( function () {
+            $('#table_categoria').DataTable({
+                "dom": 'T<"clear">lfrtip',
+                "responsive": true,
+                "tableTools": {
+                    "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+                },
+                "ajax":Routing.generate("categoria_ajax"),
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+                },
+                "columnDefs": [ {
+                    "width": "5%", "targets": 2,
+                    "data": "id",
+                    "render": function ( data, type, full, meta ) {
+                        return "<a href="+Routing.generate('categoria_edit',{id:data} )+"><i class='fa fa-pencil-square-o fa-2x' title='Editar registro'></i> </a><a href="+Routing.generate('categoria_show',{id:data} )+"><i class='fa fa-eye fa-2x' title='Ver detalles'></i></a>";
+                    }
+                } ],
+                "columns": [
+
+                    {"data":"nombre"},
+                    {"data":"peso"},
+
+                        ]
+
+            });
+        } );
+
+    </script>
+
+{% endblock %}

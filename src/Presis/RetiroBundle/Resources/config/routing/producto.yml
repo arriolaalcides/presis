@@ -1,0 +1,30 @@
+producto:
+    path:     /
+    defaults: { _controller: "PresisRetiroBundle:Producto:index" }
+
+producto_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisRetiroBundle:Producto:show" }
+
+producto_new:
+    path:     /new
+    defaults: { _controller: "PresisRetiroBundle:Producto:new" }
+
+producto_create:
+    path:     /create
+    defaults: { _controller: "PresisRetiroBundle:Producto:create" }
+    requirements: { _method: post }
+
+producto_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisRetiroBundle:Producto:edit" }
+
+producto_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisRetiroBundle:Producto:update" }
+    requirements: { _method: post|put }
+
+producto_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisRetiroBundle:Producto:delete" }
+    requirements: { _method: post|delete }

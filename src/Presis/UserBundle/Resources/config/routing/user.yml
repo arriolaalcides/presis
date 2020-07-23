@@ -1,0 +1,38 @@
+user:
+    path:     /
+    defaults: { _controller: "PresisUserBundle:User:index" }
+
+user_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisUserBundle:User:show" }
+    options:
+      expose: true
+user_new:
+    path:     /new
+    defaults: { _controller: "PresisUserBundle:User:new" }
+
+user_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisUserBundle:User:ajax" }
+    options:
+      expose: true
+user_create:
+    path:     /create
+    defaults: { _controller: "PresisUserBundle:User:create" }
+    requirements: { _method: post }
+
+user_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisUserBundle:User:edit" }
+    options:
+      expose: true
+
+user_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisUserBundle:User:update" }
+    requirements: { _method: post|put }
+
+user_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisUserBundle:User:delete" }
+    requirements: { _method: post|delete }

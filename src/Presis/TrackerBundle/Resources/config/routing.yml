@@ -1,0 +1,7 @@
+tracker_tracker:
+    resource: "@TrackerBundle/Resources/config/routing/tracker.yml"
+    prefix:   /tracker
+
+tracker_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TrackerBundle:Default:index }

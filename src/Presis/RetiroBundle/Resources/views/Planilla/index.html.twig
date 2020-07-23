@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+    <!--<img src="{{ asset('bundles/presisgeneral/images/titretiros1680.jpg') }}" class="img-responsive" width="100%"/>-->
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+    </style>
+{% endblock %}
+
+    {%  block contenido %}
+        <div class="container" style="width: 50%; margin-left: auto; margin-right: auto;">
+            <table id="table_guias" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Empresa</th>
+                    <th>Id</th>
+
+                    <th>Fecha</th>
+                    <th>Numero</th>
+                    <th>Distribuidor</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(document).ready( function () {
+            $('#table_guias').DataTable({
+                "dom": 'T<"clear">lfrtip',
+                "responsive": true,
+                "tableTools": {
+                    "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+                },
+                "ajax":Routing.generate("planilla_ajax"),
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+                },
+
+                "columns": [
+
+                    {"data":"empresa"},
+                    {"data":"id"},
+                    {"data":"fecha"},
+                    {"data":"numero"},
+                    {"data":"distribuidor"},
+
+
+                ]
+
+            });
+        } );
+
+    </script>
+
+{% endblock %}

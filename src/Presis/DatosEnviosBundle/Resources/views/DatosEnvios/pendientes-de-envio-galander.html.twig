@@ -1,0 +1,374 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <legend>Preparacion de bolsines GALANDER</legend>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-2">
+                    <label class="control-label " for="sucursal">Sucursal</label>
+                    <select id="sucursal" name="sucursal" class="form-control input-sm">
+                        {% for su in sucursales %}
+                            <option value="{{ su.codSuc }}">{{ su.codSuc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label class="control-label" for="servicioMaslo">Servicio</label>
+                    <select id="servicioMaslo" name="servicioMaslo" class="form-control input-sm">
+                        {% for d in entities %}
+                            <option value="{{ d.id }}">{{ d.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label class="control-label" for="servicioMovi">Serv. Mov.</label>
+                    <select id="servicioMovi" name="servicioMovi" class="form-control input-sm">
+                        {% for movi in servMovi %}
+                            <option value="{{ movi.descripcion }}">{{ movi.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-lg-1">
+                    <br/>
+                    <button type="button" id="search" class="btn btn-primary btn-sm">BUSCAR</button>
+                </div>
+                <div class="col-lg-2">
+                    <br/>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-10">
+                        Total de bultos: <b class="lead" id="total-bultos">0</b>
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <label class="control-label" for="precinto">Precinto</label>
+                    <input type="text" id="precinto" name="precinto" class="form-control input-sm" maxlength="12">
+                </div>
+                <div class="col-lg-1">
+                    <br/>
+                    <button type="button" id="abrir-planilla" class="btn btn-primary btn-sm" disabled>GENERAR BOLSIN</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <table id="retiros" style="font-size: 10px;"
+                   data-toggle="table"
+                   data-show-export="true"
+                    data-toolbar="#toolbar"
+                    data-height="650"
+                    data-select-item-name ="btSelectItem"
+                    data-checkbox-header ="true"
+                    data-side-pagination="server"
+                    data-pagination="true"
+                    data-page-list="[10, 25, 50, 100, All]"
+               data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-field="fOrigen" data-sortable="true" data-filter-control="select">Fecha</th>
+                    <th data-field="id" data-sortable="true" data-formatter="formatLink" data-filter-control="input">Nro. Guia</th>
+                    <th data-field="clientenombre" data-sortable="true" data-filter-control="select">Empresa</th>
+                    <th data-field="nombreApellidoMovistar" data-sortable="true" data-filter-control="select">Cliente</th>
+                    <th data-field="imei" data-sortable="true" data-filter-control="input">Imei</th>
+                    <th data-field="fabricante" data-sortable="true" data-filter-control="select">Fabricante</th>
+                    <th data-field="modelo" data-sortable="true" data-filter-control="select">Modelo</th>
+                    <th data-field="servicioMaslo" data-sortable="true" data-filter-control="select">Servicio</th>
+                    <th data-field="servicioMovistar" data-sortable="true" data-filter-control="select">Serv.Mov.</th>
+                    <th data-field="estadoMovistar" data-sortable="true" data-filter-control="select">Estado</th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!--########################## MODAL DE PENDIENTES ############################-->
+        <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Tracker</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="trackeo"
+                               data-toggle="table"
+                               data-height="250">
+                            <thead>
+                            <tr>
+                                <th data-field="tracker">TRACKER</th>
+                                <th data-field="estado">ESTADO</th>
+                                <th data-field="detalles">DETALLES</th>
+                                <th data-field="timestamp_modificacion">FECHA</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--########################## MODAL DE PENDIENTES ############################-->
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            var $table = $('#retiros');
+            var $pagina = 0;
+            var $limite = 10;
+
+            $(function () {
+                buildTable($table, 20, 20);
+                $('#fixedNumber').change(function () {
+                    buildTable($table, 20, 20);
+                });
+            });
+
+            function buildTable($el, cells, rows) {
+                $el.bootstrapTable('destroy').bootstrapTable({
+                    toolbar: '.toolbar'
+                });
+            }
+            function acciones(value, row){
+                var data = "Descarga%20las%20guias%20para%20retiro%20desde%20el%20siguiente%20enlace.";
+                var botones = "<a href="+Routing.generate('retiro_showguia', {id: row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i></a>";
+                {% if is_granted('ROLE_ADMIN')  %}
+                botones = "<a href="+Routing.generate('datosenvios_edit',{id: row.id} )+" target='_blank'><i class='fa fa-search fa-2x'></i></a>" +
+                        "<a href="+Routing.generate('retiro_showguia',{id: row.id, canal:'retiro'} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>" +
+                        "<a href='mailto:?Subject=Nueva%20solicitud%20de%20retiro&body="+data+"'><i class='fa fa-envelope fa-2x'></i></a>"
+                {% endif %}
+                return botones;
+            }
+
+            function formatLink(val,row){
+                val = "<a href='#' class='link'>"+val+"</a>";
+                return val;
+            }
+
+            var $_GET = {};
+
+            document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                function decode(s) {
+                    return decodeURIComponent(s.split("+").join(" "));
+                }
+                $_GET[decode(arguments[1])] = decode(arguments[2]);
+            });
+
+
+            $(document).ready(function () {
+
+                var totalBultos = function () {
+                    var seleccionados = $table.bootstrapTable('getSelections');
+                    var total = 0;
+                    $('#abrir-planilla').attr("disabled", (seleccionados.length == 0));
+                    $.map(seleccionados, function (item) {
+                        total += item.bultos;
+                    });
+                    $('#total-bultos').html(total);
+                };
+
+                $table.bootstrapTable()
+                        .on('check.bs.table', totalBultos)
+                        .on('uncheck.bs.table', totalBultos)
+                        .on('check-all.bs.table', totalBultos)
+                        .on('uncheck-all.bs.table', totalBultos)
+                        .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+
+                        cargarGrilla();
+                    });
+                    
+                    
+                $("#search").click(function(){
+                   cargarGrilla();
+                }),
+
+                $('#retiros').on('click','.sendMail', function(event){
+                    event.preventDefault();
+                    var $tracking_id = $(this).attr('id');
+                    $.ajax({
+                        url: Routing.generate("retiro_email_check"),
+                        type: 'POST',
+                        data: {id: $tracking_id }
+                    });
+                });
+
+                $('#retiros').on('click','.link', function(event){
+                    event.preventDefault();
+                    $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                    $.ajax({
+                        dataType: "json",
+                        url: Routing.generate("datosenvios_find_tracker"),
+                        type: 'GET',
+                        data: {
+                            "id": function (d) {
+                                return getIdSelection();
+                            }
+                        },
+                        success: function (data) {
+                            var $tableTracker = $('#trackeo');
+                            $tableTracker.bootstrapTable()
+                            $tableTracker.bootstrapTable('load', data);
+                            $("#modalTable").modal('show');
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                        }
+                    });
+                    $.unblockUI();
+                });
+
+                function getIdSelection() {
+                    return $.map($table.bootstrapTable('getSelections'), function (row) {
+                        return row.id;
+                    });
+                }
+
+                $('#abrir-planilla').click( function () {
+                    var ids=[];
+                    var sumar = 0;
+                    var sumaAmba = 0;
+                    var guiasInt = '';
+                    var fecha = $("#fecha").val();
+                    var data = $table.bootstrapTable('getSelections');
+                    var precinto = $("#precinto").val();
+                    if($.trim(precinto)==""){
+                        alert("Por favor complete el nro. de precinto");
+                        return false;
+                    }
+                    $.map(data, function (item) {
+                        if(item.sub_zona_origen=='INT'){
+                            sumar +=1;
+                            guiasInt +=item.id+'-'
+                        }else{
+                            sumaAmba +=1;
+                        }
+                        ids.push(item.id);
+                    });
+                    $.blockUI({message: "<h3>Actualizando datos...</h3>"})
+                    $.ajax({
+                        type: "GET",
+                        url: Routing.generate('datosenvios_confirmretiro'),
+                        data: {ids: ids, fecha: fecha, precinto: precinto, trayecto: 'aMovistar' },
+                        success: function(data)
+                        {
+                            if(sumar!=0 && sumaAmba==0) {
+                                bootbox.dialog({
+                                    closeButton: false,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se han confirmado <b>" + sumar + "</b> solicitudes de retiro para el interior.<br />Nros: " + guiasInt,
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Cerrar',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                actualizar();
+                                            }
+                                        },
+                                    }
+                                });
+                            }else if(sumar!=0 && sumaAmba!=0){
+                                bootbox.dialog({
+                                    closeButton: false,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se han confirmado <b>" + sumar + "</b> solicitudes de retiro para el interior.<br />Nros: " + guiasInt,
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Cerrar',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                bootbox.dialog({
+                                                    closeButton: true,
+                                                    title: "Solicitudes confirmadas",
+                                                    message: "Se ha generado el manifiesto nro."+data+", desea imprimirlo?",
+                                                    buttons: {
+                                                        confirm: {
+                                                            label: 'Imprimir',
+                                                            className: 'btn-success',
+                                                            callback: function () {
+                                                                $.unblockUI();
+                                                                window.open( Routing.generate('retiro_showconstancia2', {id: data} ));
+                                                            }
+                                                        },
+                                                    }
+                                                });
+                                                // SI window.open( Routing.generate('retiro_showconstancia', {ids: ids} ));
+                                                $.unblockUI();
+                                                actualizar();
+                                            }
+                                        },
+                                    }
+                                });
+                                $.unblockUI();
+                            }else{
+                                bootbox.dialog({
+                                    closeButton: true,
+                                    title: "Solicitudes confirmadas",
+                                    message: "Se ha generado el manifiesto nro."+data+", desea imprimirlo?",
+                                    buttons: {
+                                        confirm: {
+                                            label: 'Imprimir',
+                                            className: 'btn-success',
+                                            callback: function () {
+                                                $.unblockUI();
+                                                window.open( Routing.generate('retiro_showconstancia2', {id: data} ));
+                                            }
+                                        },
+                                    }
+                                });
+                                $.unblockUI();
+                                cargarGrilla();
+                            }
+                        },
+
+                        error: function(XMLHttpRequest, textStatus, errorThrown)
+                        {
+                            alert('Error : ' + errorThrown);
+                        }
+                    });
+                });
+
+            });
+
+            var cargarGrilla = function(){
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_confirmar_bolsin_galander'),
+                    data: obtenerDatos(),
+                    success: function(data)
+                    {
+                        
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+                        $table.bootstrapTable('refresh', {silent: true});
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        $.unblockUI();
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            }
+
+            var obtenerDatos = function(){
+                return {servicioMaslo:$("#servicioMaslo").val(), servicioMovi: $("#servicioMovi").val(), sucursal: $("#sucursal").val(), pagina: $pagina, limite: $limite};
+            }
+
+        </script>
+    {% endblock %}

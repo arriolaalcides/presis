@@ -1,0 +1,11 @@
+constancia_retiro_retirosfijos:
+    resource: "@ConstanciaRetiroBundle/Resources/config/routing/retirosfijos.yml"
+    prefix:   /retirosfijos
+
+constancia_retiro_constanciaretiro:
+    resource: "@ConstanciaRetiroBundle/Resources/config/routing/constanciaretiro.yml"
+    prefix:   /constanciaretiro
+
+constancia_retiro_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ConstanciaRetiroBundle:Default:index }

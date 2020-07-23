@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(delete_form) }}
+        <fieldset>
+            <legend>Eliminar cordon</legend>
+            {{ form_control_static('Id',entity.id) }}
+
+            {{ form_control_static('Hora desde',entity.horaDesde|date('H:i')) }}
+            {{ form_control_static('Hora hasta',entity.horaHasta|date('H:i')) }}
+            {{ form_control_static('Servicio',entity.servicio)}}
+            {{ form_control_static('Cord&oacute;n entrega',entity.cordonEntrega)}}
+            {{ form_control_static('Cord&oacute;n Retiro',entity.cordonRetiro)}}
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(delete_form.submit) }}
+                    <a href="{{ path('habilitaciones') }}" class="btn btn-primary">Volver a Habilitaciones</a>
+
+                </div>
+            </div>
+
+        </fieldset>
+
+        {{ form_end(delete_form) }}
+
+
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('form').submit(function(e) {
+            var currentForm = this;
+            e.preventDefault();
+            bootbox.confirm("¿Est&aacute; seguro que desea eliminar el registro?", function(result) {
+                if (result) {
+                    currentForm.submit();
+                }
+            });
+        });
+    </script>
+{% endblock %}

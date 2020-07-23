@@ -1,0 +1,73 @@
+sucursal:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:index" }
+
+sucursal_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:show" }
+    options:
+        expose: true
+sucursal_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:new" }
+
+sucursal_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:create" }
+    requirements: { _method: post }
+
+sucursal_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:edit" }
+    options:
+        expose: true
+sucursal_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:update" }
+    requirements: { _method: post|put }
+
+sucursal_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:delete" }
+    requirements: { _method: post|delete }
+sucursal_ajax:
+  path:     /ajax
+  defaults: {_controller: "PresisGeneralBundle:Sucursal:ajax" }
+  options:
+        expose: true
+
+sucursal_showJson:
+  path:     /showJson
+  defaults: { _controller: "PresisGeneralBundle:Sucursal:showJson" }
+  options:
+     expose: true
+
+sucursal_showJson1:
+  path:     /{id}/showJson1
+  defaults: { _controller: "PresisGeneralBundle:Sucursal:showJson1" }
+  options:
+     expose: true
+
+sucursal_selector:
+    path:     /select_sucursal
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:select" }
+    options:
+      expose: true
+
+sucursales_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:ajax4select" }
+    options:
+      expose: true
+
+sucursal_find:
+    path:     /find
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:findSucursal" }
+    options:
+        expose: true
+
+sucursal_galander_find:
+    path:     /find-suc-galander
+    defaults: { _controller: "PresisGeneralBundle:Sucursal:findSucursalGalander" }
+    options:
+        expose: true

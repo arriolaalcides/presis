@@ -1,0 +1,117 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{%  block contenido %}
+    <div class="container">
+        <table id="recorridos-table" style="width:100%; height: 450px;"
+               data-options="
+                toolbar: '#tb',
+                url: '{{ path('recorrido_asajax') }}',
+                remoteSort:true,
+                footer:'#ft',
+                pagination: true"
+               title="Planillas de recorrido" sortName="fecha" sortOrder="desc"
+               singleSelect="false" fitColumns="true">
+            <thead>
+            <tr>
+                <th data-options="field:'ck',checkbox:true"></th>
+                <th data-options="field:'id', sortable:true, width:100">Id</th>
+                <th data-options="field:'fecha', sortable:true, width:100" formatter="fecha">Fecha</th>
+                <th data-options="field:'cerrada', sortable:true, width:100" formatter="cerrada">Cerrada</th>
+                <th data-options="field:'es_entrega', sortable:true, width:100" formatter="esEntrega">Es Entrega</th>
+                <th data-options="field:'bultos', sortable:true, width:100">Bultos</th>
+                <th data-options="field:'cantidad_retiros', sortable:true, width:100">Guías</th>
+                <th data-options="field:'expreso', sortable:true, width:100">Expreso</th>
+                <th data-options="field:'distribuidor', sortable:true, width:100">Distribuidor</th>
+                <th data-options="field:'colectora', sortable:true, width:100">Colectora</th>
+                <th data-options="field:'guia_expreso', sortable:true, width:100">Guía del expreso</th>
+                <th data-options="field:'acciones', sortable:false, width:100" formatter="acciones">Acciones</th>
+            </tr>
+            </thead>
+        </table>
+
+        <div id="tb" style="padding:2px 5px;">
+            Fecha: <input class="date-picker" style="width:110px" id="desde" name="desde" value="{{ "now"|date_modify("-1 week")|date("d/m/Y") }}">
+            hasta: <input class="date-picker" style="width:110px" id="hasta" name="hasta" value="{{ "now"|date("d/m/Y") }}">
+            Expreso:
+            <input id="id-expreso" name="id-expreso" class="easyui-combobox"
+                   data-options="
+                    url:'{{ path('expreso_ajax4select') }}',
+                    method:'get',
+                    valueField:'id',
+                    textField:'nombre',
+                    panelHeight:'auto' ">
+            Distribuidor:
+            <input id="id-distribuidor" name="id-distribuidor" class="easyui-combobox"
+                   data-options="
+                    url:'{{ path('distribuidor_ajax4select') }}',
+                    method:'get',
+                    valueField:'id',
+                    textField:'nombre',
+                    panelHeight:'auto' "
+                    {% if distribuidor %}
+                        disabled
+                    {% endif %}
+            >
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="search" onclick="doSearch()">Buscar</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" id="seleccionadas" onclick="getSelected()">Imprimir</a>
+        </div>
+
+        {% if is_granted('ROLE_CLIENTE') or is_granted('ROLE_VENDEDOR') or is_granted('ROLE_ADMIN') %}
+        <div class="row" align="center">
+            <a class="btn btn-primary" href="{{ path('recorrido_new') }}">Nueva Planilla de recorrido</a>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        function getSelected(){
+            var ids = [];
+            var rows = $('#recorridos-table').datagrid('getSelections');
+            for(var i=0; i<rows.length; i++){
+                ids.push(rows[i].id);
+            }
+            Routing.generate('retiro_showvoucher',{ids:ids} );
+        }
+
+        function doSearch(){
+            $('#recorridos-table').datagrid('load',{
+                desde: $('#desde').val(),
+                hasta: $('#hasta').val(),
+                id_expreso: $("#id-expreso").combobox('getValue'),
+                id_distribuidor: $("#id-distribuidor").combobox('getValue'),
+            });
+        }
+
+        $(document).ready(function () {
+            var dg = $('#recorridos-table');
+            dg.datagrid();
+        });
+
+        function cerrada(value,row){
+            var $icon = (row.cerrada)?"fa-check-square-o":"fa-square-o";
+            return "<i class='" + $icon + " fa fa-2x' style='width: 100%;text-align:center'></i>";
+        }
+
+        function esEntrega(value,row){
+            var $icon = (row.es_entrega)?"fa-check-square-o":"fa-square-o";
+            return "<i class='" + $icon + " fa fa-2x' style='width: 100%;text-align:center'></i>";
+        }
+
+        function acciones(value,row){
+            var botones = "<a href="+Routing.generate('recorrido_show',{id:row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i> </a>";
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CLIENTE') or is_granted('ROLE_VENDEDOR') %}
+            botones = "<a href="+Routing.generate('recorrido_edit',{id:row.id} )+" target='_blank'><i class='fa fa-pencil-square-o fa-2x'></i> </a>" +
+                    botones;
+            {% endif %}
+            return botones;
+        }
+
+        function fecha(value, row) {
+            return value.split(" ", 1);
+        }
+    </script>
+{% endblock %}

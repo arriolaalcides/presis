@@ -1,0 +1,39 @@
+precio:
+    path:     /
+    defaults: { _controller: "PresisServicioBundle:Precio:index" }
+
+precio_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisServicioBundle:Precio:show" }
+    options:
+      expose: true
+
+precio_new:
+    path:     /new
+    defaults: { _controller: "PresisServicioBundle:Precio:new" }
+
+precio_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisServicioBundle:Precio:ajax" }
+    options:
+      expose: true
+precio_create:
+    path:     /create
+    defaults: { _controller: "PresisServicioBundle:Precio:create" }
+    requirements: { _method: post }
+
+precio_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisServicioBundle:Precio:edit" }
+    options:
+      expose: true
+
+precio_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisServicioBundle:Precio:update" }
+    requirements: { _method: post|put }
+
+precio_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisServicioBundle:Precio:delete" }
+    requirements: { _method: post|delete }

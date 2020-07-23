@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(form) }}
+
+            {{ include('@Distribuidor/Distribuidor/distribuidor-fields.part.html.twig') }}
+
+        {{ form_end(form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+<script>
+
+    $(document).ready(function(){
+        $("#presis_distribuidorbundle_distribuidor_sucursal").select2();
+    });
+
+</script>
+{% endblock %}

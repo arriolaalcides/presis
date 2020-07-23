@@ -1,0 +1,69 @@
+<pdf>
+    {% for i in 1..retiro.datosenvios.bultos %}
+        <dynamic-page font-type="DejaVuSans" page-size="302:150" margin="5px">
+            <div width="100%">
+                <div width="60%" float="left" height="80px">
+                    <div font-size="12px" text-align="center"><b>{{ retiro.id }}</b></div>
+                    <barcode type="code39" code="{{ retiro.id }}" float="left" bar-thin-width="3px" bar-thick-width="7px"/>
+                </div>
+                <div width="40%" float="left" height="50px">
+                    {% if empresa=='fasttrack' %}
+                        <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="125px" height="34px" />
+                        <br /><br />
+                        <b>R.N.P.S.P. N°813</b>
+                    {% endif %}
+                    {% if empresa=='maslogistica' %}
+                        <img src="{{ pdf_image('PresisRetiroBundle:maslogistica.png') }}" width="110px" height="53px" />
+                    {% endif %}
+                </div>
+                <div width="100%">
+                    <div width="50%" font-size="8px" float="left"><b>REMITO:</b> {{ retiro.remito }}</div>
+                    <div width="50%" font-size="8px" float="left"><b>BULTOS:</b> {{ i }} / {{ retiro.datosenvios.bultos }}</div>
+                </div>
+                <div width="50%" float="left" height="70px">
+                    {% set haySender = retiro.sender ? true : false %}
+                    {% set direccion = haySender ?
+                    retiro.sender.calle ~ ' ' ~
+                    retiro.sender.altura ~ ' ' ~
+                    retiro.sender.piso ~ ' ' ~
+                    retiro.sender.dpto
+                    : ''
+                    %}
+                    <div width="100%" height="15px" font-size="8px">Remitente: {{ retiro.sender.empresa }}</div>
+                    <div width="100%" height="15px" font-size="8px">Dirección: {{ direccion }}</div>
+                    <div width="100%" height="15px" font-size="8px">Localidad: {{ haySender ? retiro.sender.localidad }}</div>
+                    <div width="100%" height="15px" font-size="8px">Provincia: {{ haySender ? retiro.sender.provincia }}</div>
+                    <div width="100%" height="15px" font-size="8px">CP: {{ haySender ? retiro.sender.cp }}</div>
+                    <div width="100%" height="15px" font-size="8px">Tel: {{ haySender ? retiro.sender.celular }}</div>
+                </div>
+                <div width="50%" float="left" height="70px">
+                    {% set hayComprador = retiro.comprador ? true : false %}
+                    {% set direccion = hayComprador ?
+                    retiro.comprador.calle ~ ' ' ~
+                    retiro.comprador.altura ~ ' ' ~
+                    retiro.comprador.piso ~ ' ' ~
+                    retiro.comprador.dpto
+                    : ''
+                    %}
+                    <div width="100%" height="15px" font-size="8px">Comprador: {{ retiro.comprador.empresa }}</div>
+                    <div width="100%" height="15px" font-size="8px">Dirección: {{ direccion }}</div>
+                    <div width="100%" height="15px" font-size="8px">Localidad: {{ hayComprador ? retiro.comprador.localidad }}</div>
+                    <div width="100%" height="15px" font-size="8px">Provincia: {{ hayComprador ? retiro.comprador.provincia }}</div>
+                    <div width="100%" height="15px" font-size="8px">CP: {{ hayComprador ? retiro.comprador.cp }}</div>
+                    <div width="100%" height="15px" font-size="8px">Tel: {{ hayComprador ? retiro.comprador.celular }}</div>
+                    <!--<div width="100%" height="25px">CSR: {{ retiro.datosenvios.csr == 1 ? "Sí" : "No" }}</div>-->
+                </div>
+                <!--<div width="20%" float="left" height="80px" border.color="black">
+                    {% if empresa=='fasttrack' %}
+                        <img src="{{ pdf_image('PresisRetiroBundle:logoFastTrack.jpg') }}" width="125px" height="34px" />
+                        <br /><br />
+                        <b>R.N.P.S.P. N°813</b>
+                    {% endif %}
+                    {% if empresa=='maslogistica' %}
+                        <img src="{{ pdf_image('PresisRetiroBundle:maslogistica.png') }}" width="110px" height="53px" />
+                    {% endif %}
+                </div>-->
+            </div>
+        </dynamic-page>
+    {% endfor %}
+</pdf>

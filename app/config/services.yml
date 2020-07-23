@@ -1,0 +1,5 @@
+services:
+    twig.extension.sortbyfield:
+        class: Snilius\Twig\SortByFieldExtension
+        tags:
+            - { name: twig.extension }

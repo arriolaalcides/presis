@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Editar Fabricante</legend>
+            
+            <div class="row">
+                <div class="form-group">
+                    
+                </div>
+            </div>
+            <br />
+            {{ form_row(edit_form.descricion) }}
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    <a href="{{ path('fabricante') }}" class="btn btn-primary">Volver a Fabricantes</a>
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

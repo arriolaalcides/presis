@@ -1,0 +1,37 @@
+vendedor:
+    path:     /
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:index" }
+
+vendedor_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:show" }
+    options:
+      expose: true
+vendedor_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:new" }
+vendedor_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:ajax" }
+    options:
+      expose: true
+
+vendedor_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:create" }
+    requirements: { _method: post }
+
+vendedor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:edit" }
+    options:
+      expose: true
+vendedor_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:update" }
+    requirements: { _method: post|put }
+
+vendedor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:Vendedor:delete" }
+    requirements: { _method: post|delete }

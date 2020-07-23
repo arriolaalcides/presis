@@ -1,0 +1,85 @@
+rendicion:
+    path:     /
+    defaults: { _controller: "RendicionBundle:Rendicion:index" }
+    options:
+        expose: true
+
+rendicion_show:
+    path:     /{id}/show
+    defaults: { _controller: "RendicionBundle:Rendicion:show", _format: "pdf" }
+    options:
+        expose: true
+
+rendicion_new:
+    path:     /new
+    defaults: { _controller: "RendicionBundle:Rendicion:new" }
+    options:
+        expose: true
+
+rendicion_create:
+    path:     /create
+    defaults: { _controller: "RendicionBundle:Rendicion:create" }
+    methods:  POST
+
+rendicion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "RendicionBundle:Rendicion:edit" }
+    options:
+        expose: true
+
+rendicion_update:
+    path:     /{id}/update
+    defaults: { _controller: "RendicionBundle:Rendicion:update" }
+    methods:  [POST, PUT]
+
+rendicion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "RendicionBundle:Rendicion:delete" }
+    methods:  [POST, DELETE]
+
+rendicion_asajax:
+    path:     /asajax
+    defaults: { _controller: "RendicionBundle:Rendicion:asAjax" }
+    options:
+        expose: true
+
+rendicion_retirosasajax:
+    path:     /retirosasajax
+    defaults: { _controller: "RendicionBundle:Rendicion:retirosAsAjax" }
+    options:
+        expose: true
+
+rendicion_delretiro:
+    path:     /{id_rendicion_retiro}/{id_rendicion}/delretiro
+    defaults: { _controller: "RendicionBundle:Rendicion:retiroDelete" }
+    methods:  [GET]
+    options:
+        expose: true
+
+rendicion_addretiro:
+    path:     /{id_retiro}/{id_rendicion}/addretiro
+    defaults: { _controller: "RendicionBundle:Rendicion:addRetiro" }
+    methods:  [GET]
+    options:
+        expose: true
+
+rendicion_getretiros_remito:
+    path:     /{id_retiro_remito}/{id_rendicion}/getretirosremito
+    defaults: { _controller: "RendicionBundle:Rendicion:getRetirosRemito" }
+    methods:  [GET]
+    options:
+        expose: true
+
+rendicion_cerrarplanilla:
+    path:     /{id_rendicion}/cerrarplanilla
+    defaults: { _controller: "RendicionBundle:Rendicion:cerrarPlanilla" }
+    methods:  [GET]
+    options:
+        expose: true
+
+rendicion_cargar:
+    path:     /{id}/cargar
+    defaults: { _controller: "RendicionBundle:Rendicion:cargarPlanilla" }
+    methods:  [GET]
+    options:
+        expose: true

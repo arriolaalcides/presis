@@ -1,0 +1,104 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+    <img src="{{ asset('bundles/presisgeneral/images/titretiros1680.jpg') }}" class="img-responsive" width="100%"/>
+{% endblock %}
+{% block body -%}
+    <h1>Retiro</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Fechhora</th>
+                <td>{{ entity.fechHora|date('d/m/Y H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Precio</th>
+                <td>{{ entity.precio }}</td>
+            </tr>
+            <tr>
+                <th>Fragil</th>
+                <td>{{ entity.fragil }}</td>
+            </tr>
+            <tr>
+            <th>-----Comprador----</th>
+            </tr>
+
+
+                <tr>
+                    <th>Calle</th>
+                    <td>{{ entity.comprador.calle }}</td>
+                </tr>
+                <tr>
+                    <th>Apenom</th>
+                    <td>{{ entity.comprador.apenom }}</td>
+                </tr>
+                <tr>
+                    <th>Altura</th>
+                    <td>{{ entity.comprador.altura }}</td>
+                </tr>
+                <tr>
+                    <th>Piso</th>
+                    <td>{{ entity.comprador.piso }}</td>
+                </tr>
+                <tr>
+                    <th>Dpto</th>
+                    <td>{{ entity.comprador.dpto }}</td>
+                </tr>
+                <tr>
+                    <th>Otherinfo</th>
+                    <td>{{ entity.comprador.otherInfo }}</td>
+                </tr>
+                <tr>
+                    <th>Cp</th>
+                    <td>{{ entity.comprador.cp }}</td>
+                </tr>
+            <th>-----Vendedor----</th>
+            <tr>
+                <th>Empresa</th>
+                <td>{{ entity.sender.empresa }}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ entity.sender.calle }}</td>
+            </tr>
+            <tr>
+                <th>Altura</th>
+                <td>{{ entity.sender.altura }}</td>
+            </tr>
+            <tr>
+                <th>Piso</th>
+                <td>{{ entity.sender.piso }}</td>
+            </tr>
+            <tr>
+                <th>Dpto</th>
+                <td>{{ entity.sender.dpto }}</td>
+            </tr>
+            <tr>
+                <th>Otherinfo</th>
+                <td>{{ entity.sender.otherInfo }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ entity.sender.cp }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('retiro') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('retiro_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

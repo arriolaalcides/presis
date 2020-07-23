@@ -1,0 +1,44 @@
+expreso:
+    path:     /
+    defaults: { _controller: "ExpresoBundle:Expreso:index" }
+
+expreso_new:
+    path:     /new
+    defaults: { _controller: "ExpresoBundle:Expreso:new" }
+    options:
+        expose: true
+
+expreso_create:
+    path:     /create
+    defaults: { _controller: "ExpresoBundle:Expreso:create" }
+    methods:  POST
+
+expreso_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ExpresoBundle:Expreso:edit" }
+    options:
+        expose: true
+
+expreso_update:
+    path:     /{id}/update
+    defaults: { _controller: "ExpresoBundle:Expreso:update" }
+    methods:  [POST, PUT]
+
+expreso_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ExpresoBundle:Expreso:delete" }
+    methods:  [GET]
+    options:
+        expose: true
+
+expreso_asajax:
+    path:     /asajax
+    defaults: { _controller: "ExpresoBundle:Expreso:asajax" }
+    options:
+        expose: true
+
+expreso_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "ExpresoBundle:Expreso:ajax4select" }
+    options:
+      expose: true

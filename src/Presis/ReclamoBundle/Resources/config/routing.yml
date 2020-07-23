@@ -1,0 +1,11 @@
+reclamo_tiporeclamo:
+    resource: "@ReclamoBundle/Resources/config/routing/tiporeclamo.yml"
+    prefix:   /tiporeclamo
+
+reclamo_reclamo:
+    resource: "@ReclamoBundle/Resources/config/routing/reclamo.yml"
+    prefix:   /reclamo
+
+reclamo_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ReclamoBundle:Default:index }

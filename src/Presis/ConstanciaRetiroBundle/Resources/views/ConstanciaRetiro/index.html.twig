@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid">
+        <table id="retiros" style="font-size: 10px;"
+               data-toggle="table"
+               data-show-export="true"
+               data-filter-control="true"
+               data-filter-show-clear="true"
+               data-click-to-select="true"
+               data-toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th data-field="timestamp">Fecha Ingreso</th>
+                <th data-field="fecha">Fecha Retiro</th>
+                <th data-field="id" >Id</th>
+                <th data-field="cliente.empresa">Empresa</th>
+                <th data-field="domicilio_retiro">Direccion</th>
+                <th data-field="localidad">Localidad</th>
+                <th data-field="provincia">Provincia</th>
+                <th data-field="cp" >CP</th>
+                <th data-field="bultos" >Bultos</th>
+                <th data-field="peso" >KG</th>
+                <th data-field="usuario">Usuario</th>
+                <th data-field="franja">Franja</th>
+                <th data-field="estado">Estado</th>
+                <th data-field="distribuidor">Distribuidor</th>
+                <th data-field="fecha_hora">Fecha Asignado</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        var $table = $('#retiros');
+
+        $table.bootstrapTable();
+
+        $(document).ready(function(){
+
+            $.blockUI({message: "<h3>Buscando datos...</h3>"});
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('constanciaretiro_pendientes_ajax'),
+                success: function(data)
+                {
+                    var data = JSON.parse(data);
+
+                    $table.bootstrapTable('load', data);
+
+                    $.unblockUI();
+                },
+
+                error: function(XMLHttpRequest, textStatus, errorThrown)
+                {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+
+        });
+
+    </script>
+{% endblock %}

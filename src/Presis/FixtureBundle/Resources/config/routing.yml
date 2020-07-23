@@ -1,0 +1,3 @@
+presis_fixture_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PresisFixtureBundle:Default:index }

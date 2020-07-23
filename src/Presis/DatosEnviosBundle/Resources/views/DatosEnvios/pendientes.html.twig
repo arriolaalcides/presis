@@ -1,0 +1,272 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <legend>Asignación de guías pendientes de retiro</legend>
+        <div class="row">
+            <div class="col-lg-3">
+                <label class="control-label col-lg-4" for="distribuidor">Asignar</label>
+                <div class="col-lg-8">
+                    <select id="distribuidor" name="distribuidor" class="form-control input-sm">
+                        {% for item in entities  %}
+                            <option value="{{ item.id }}">{{ item.codigo ~ ' - ' ~ item.apellido ~ ', ' ~ item.nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <input type="text" id="fecha" value="{{ "now"|date('d/m/Y') }}" class="form-control date-picker input-sm">
+            </div>
+            <div class="col-lg-3">
+                <button type="button" id="abrir-planilla" class="btn btn-primary btn-sm" disabled>Enviar a Recorrido</button>
+                <button type="button" id="imprimir" class="btn btn-primary btn-sm">Imprimir Seleccion</button>
+            </div>
+            <div class="col-lg-4">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                    Total de bultos: <b class="lead" id="total-bultos">0</b>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div id="toolbar">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <table id="retiros" style="font-size: 10px;"
+                   data-toggle="table"
+                   data-show-export="true"
+                   data-filter-control="true"
+                   data-click-to-select="true"
+                   data-toolbar="#toolbar">
+                <thead>
+                <tr>
+                    <!--<th data-field="id" data-sortable="true" data-formatter="formatLink">Nro. Guia</th>
+                    <th data-field="clientenombre" data-sortable="true" data-filter-control="select">Cliente</th>
+                    <th data-field="comprador" data-sortable="true" data-filter-control="select">Comprador</th>
+                    <th data-field="datos_envios.peso" data-sortable="true">Peso</th>
+                    <th data-field="datos_envios.bultos"data-sortable="true" >Bultos</th>
+                    <th data-field="comprador_direccion" data-sortable="true" data-filter-control="select">Dirección</th>
+                    <th data-field="comprador_localidad_guia" data-sortable="true" data-filter-control="select">Localidad</th>
+                    <th data-field="comprador_cp_guia" data-sortable="true" data-filter-control="input">CP</th>
+                    <th data-field="comprador_provincia_guia" data-sortable="true" data-filter-control="select">Provincia</th>
+                    <th data-field="zona" data-sortable="true" data-filter-control="select">Zona</th>
+                    <th data-field="estado_nombre" data-sortable="true" data-filter-control="select">Estado</th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th>-->
+                    <th data-field="impreso" data-sortable="true" data-filter-control="select" data-formatter="impresa">Impresa</th>
+                    <th data-field="fecha" data-sortable="true" data-filter-control="input">Fecha</th>
+                    <th data-field="id" data-sortable="true" data-formatter="formatLink" data-filter-control="input">Nro. Guia</th>
+                    <th data-field="empresa" data-sortable="true" data-filter-control="select">Empresa</th>
+                    <th data-field="senderEmpresa" data-sortable="true" data-filter-control="select">Cliente</th>
+                    <th data-field="senderDireccion" data-sortable="true" data-filter-control="select">Calle</th>
+                    <th data-field="localidad" data-sortable="true" data-filter-control="select">Localidad</th>
+                    <th data-field="provincia" data-sortable="true" data-filter-control="select">Provincia</th>
+                    <th data-field="cp" data-sortable="true" data-filter-control="select">CP</th>
+                    <th data-field="bultos"data-sortable="true" >Bultos</th>
+                    <th data-field="peso" data-sortable="true">Peso</th>
+                    <!--<th data-field="estadoDescripcion" data-sortable="true" data-filter-control="select">Estado</th>
+                    <th data-field="subzona" data-sortable="true" data-filter-control="select">Sub Zona</th>-->
+                    <th data-field="zonaOrigen" data-sortable="true" data-filter-control="select">Zona Origen</th>
+                    <th data-field="createguia" data-sortable="true" data-filter-control="select">Usuario</th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th>
+                    <!--<th data-field="impresa" data-sortable="true" data-filter-control="select">Impresa</th>
+                    <th data-field="fOrigen" data-sortable="true" data-filter-control="select">Fecha</th>
+                    <th data-field="id" data-sortable="true" data-formatter="formatLink" data-filter-control="input">Nro. Guia</th>
+                    <th data-field="clientenombre" data-sortable="true" data-filter-control="select">Empresa</th>
+                    <th data-field="remitente" data-sortable="true" data-filter-control="select">Cliente</th>
+                    <th data-field="remitente_direccion" data-sortable="true" data-filter-control="select">Calle</th>
+                    <th data-field="remitente_localidad" data-sortable="true" data-filter-control="select">Localidad</th>
+                    <th data-field="remitente_provincia" data-sortable="true" data-filter-control="select">Provincia</th>
+                    <th data-field="cp_remitente" data-sortable="true" data-filter-control="select">CP</th>
+                    <th data-field="datos_envios.bultos"data-sortable="true" >Bultos</th>
+                    <th data-field="datos_envios.peso" data-sortable="true">Peso</th>
+                    <th data-field="estado_nombre" data-sortable="true" data-filter-control="select">Estado</th>
+                    <th data-field="subzona" data-sortable="true" data-filter-control="select">Sub Zona</th>
+                    <th data-formatter="acciones">Acciones</th>
+                    <th data-field="state" data-checkbox="true" data-tableexport-display="none"></th>-->
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!--########################## MODAL DE PENDIENTES ############################-->
+        <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Tracker</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="trackeo"
+                               data-toggle="table"
+                               data-height="250">
+                            <thead>
+                            <tr>
+                                <th data-field="tracker">TRACKER</th>
+                                <th data-field="estado">ESTADO</th>
+                                <th data-field="detalles">DETALLES</th>
+                                <th data-field="timestamp_modificacion">FECHA</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--########################## MODAL DE PENDIENTES ############################-->
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            function acciones(value, row){
+                var data = "Descarga%20las%20guias%20para%20retiro%20desde%20el%20siguiente%20enlace.";
+                var botones = "<a href="+Routing.generate('retiro_showguia', {id: row.id} )+" target='_blank'><i class='fa fa-file-pdf-o fa-2x'></i></a>";
+                {% if is_granted('ROLE_ADMIN')  %}
+                botones = "<a href="+Routing.generate('datosenvios_edit',{id: row.id} )+" target='_blank'><i class='fa fa-search fa-2x'></i></a>" +
+                        "<a href="+Routing.generate('retiro_showguia',{id: row.id, canal:'retiro'} )+" target='_blank'><i class='fa fa-print fa-2x'></i></a>" +
+                        "<a href='mailto:?Subject=Nueva%20solicitud%20de%20retiro&body="+data+"'><i class='fa fa-envelope fa-2x'></i></a>"
+                {% endif %}
+                return botones;
+            }
+
+            function formatLink(val,row){
+                val = "<a href='#' class='link'>"+val+"</a>";
+                return val;
+            }
+
+            function impresa(value, row){
+                var impreso = "";
+                if(row.impresa==false){
+                    impreso = "NO";
+                }else{
+                    impreso = "SI";
+                }
+                return impreso;
+            }
+
+            $(document).ready(function () {
+                var totalBultos = function () {
+                    var seleccionados = $table.bootstrapTable('getSelections');
+                    var total = 0;
+                    $('#abrir-planilla').attr("disabled", (seleccionados.length == 0));
+                    $.map(seleccionados, function (item) {
+                        total += item.bultos;
+                    });
+                    $('#total-bultos').html(total);
+                };
+
+                var $table = $('#retiros');
+                $table.bootstrapTable()
+                        .on('check.bs.table', totalBultos)
+                        .on('uncheck.bs.table', totalBultos)
+                        .on('check-all.bs.table', totalBultos)
+                        .on('uncheck-all.bs.table', totalBultos);
+
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_pendientes_de_retiro'),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+
+                $('#retiros').on('click','.sendMail', function(event){
+                    event.preventDefault();
+                    var $tracking_id = $(this).attr('id');
+                    //$.blockUI({message: "<h3>Buscando datos...</h3>"});
+                    $.ajax({
+                        url: Routing.generate("retiro_email_check"),
+                        type: 'POST',
+                        data: {id: $tracking_id }
+                    });
+                });
+
+                $('#retiros').on('click','.link', function(event){
+                    event.preventDefault();
+                    $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                    $.ajax({
+                        dataType: "json",
+                        url: Routing.generate("datosenvios_find_tracker"),
+                        type: 'GET',
+                        data: {
+                            "id": function (d) {
+                                return getIdSelection();
+                            }
+                        },
+                        success: function (data) {
+                            var $tableTracker = $('#trackeo');
+                            $tableTracker.bootstrapTable()
+                            $tableTracker.bootstrapTable('load', data);
+                          /* $("#body").empty();
+                            $.each(data, function(key, datos)
+                            {
+                                $("#myTable").append('<tr><td>'+datos.tracker+'</td><td>'+datos.estado+'</td><td>'+datos.detalles+'</td><td>'+datos.timestamp_modificacion+'</td></tr>');
+                            });*/
+                            $("#modalTable").modal('show');
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                        }
+                    });
+                    $.unblockUI();
+                });
+
+                function getIdSelection() {
+                    return $.map($table.bootstrapTable('getSelections'), function (row) {
+                        return row.id;
+                    });
+                }
+
+                $('#abrir-planilla').click( function () {
+                    var $ids=[];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        $ids.push(item.id);
+                    });
+                    var $distrib = $("#distribuidor").val();
+                    var $fecha = $("#fecha").val();
+                    window.open( Routing.generate('recorrido_addretiros', {distribuidor: $distrib, fecha: $fecha, ids: $ids} ),'_self');
+                });
+
+                $('#imprimir').click( function () {
+                    var ids=[];
+                    var data = $table.bootstrapTable('getSelections');
+                    $.map(data, function (item) {
+                        ids.push(item.id);
+                    });
+                    window.open( Routing.generate('retiro_showguias', {ids: ids} ))
+                });
+
+            });
+
+        </script>
+    {% endblock %}

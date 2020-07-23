@@ -1,0 +1,20 @@
+presis_servicio_cpcordon:
+    resource: "@PresisServicioBundle/Resources/config/routing/cpcordon.yml"
+    prefix:   /cpcordon
+
+PresisServicioBundle_cordon:
+        resource: "@PresisServicioBundle/Resources/config/routing/cordon.yml"
+        prefix:   /cordon
+PresisServicioBundle_habilitaciones:
+        resource: "@PresisServicioBundle/Resources/config/routing/habilitaciones.yml"
+        prefix:   /habilitaciones
+PresisServicioBundle_lista:
+        resource: "@PresisServicioBundle/Resources/config/routing/lista.yml"
+        prefix:   /lista
+
+PresisServicioBundle_precio:
+        resource: "@PresisServicioBundle/Resources/config/routing/precio.yml"
+        prefix:   /precio
+PresisServicioBundle_servicio:
+        resource: "@PresisServicioBundle/Resources/config/routing/servicio.yml"
+        prefix:   /servicio

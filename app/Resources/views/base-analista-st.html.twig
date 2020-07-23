@@ -1,0 +1,85 @@
+<!-- Collect the nav links, forms, and other content for toggling -->
+{% if empresa=='maslogistica' %}
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">OPERACIONES <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('datosenvios_new') }}">GENERAR GUIAS</a></li>
+                    <li><a href="{{ path('datosenvios_search_gestion_cel') }}">CONSULTAR GUIAS</a></li>
+                    <li><a href="{{ path('datosenvios_informar_movistar') }}">RECEPCION Y ENTREGA DE EQUIPOS</a></li>
+                    <li><a href="{{ path('constancia_manifiestos') }}">MANIFIESTOS GENERADOS</a></li>
+                    <li><a href="{{ path('datosenvios_auditoria') }}">MODIFICAR GUIAS</a></li>
+                    <li><a href="{{ path('firmas_manifiestos') }}">FIRMAS MANIFIESTOS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">SEGUIMIENTO<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('tracker_movistar') }}">TRACKING</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">PERFIL<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('user') }}">MIS DATOS</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <!--<li><a href="{{ path('fos_user_security_logout') }}" class="menu-webpack"><strong>Logout</strong></a></li>-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ path('fos_user_security_logout') }}">LOGOUT</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+{% else %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">OPERACIONES <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('datosenvios_new') }}">GENERAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_show') }}">CONSULTAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_confirmar') }}">CONFIRMAR GUIAS</a></li>
+                <li><a href="{{ path('importar') }}">IMPORTAR GUIAS</a></li>
+                <li><a href="{{ path('tracker') }}">TRACKER</a></li>
+                <li><a href="{{ path('distribuidor') }}">DISTRIBUIDOR</a></li>
+                <li><a href="{{ path('expreso') }}">EXPRESOS</a></li>
+                <li><a href="{{ path('estado') }}">ESTADOS</a></li>
+                <li><a href="{{ path('datosenvios_auditoria') }}">AUDITORIA</a></li>
+                <li><a href="{{ path('constancia_manifiestos') }}">MANIFIESTOS GENERADOS</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">LISTADOS<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('cpcordon') }}">LISTADO CP</a></li>
+                <li><a href="{{ path('sucursal') }}">LISTADO SUCURSALES</a></li>
+                <li><a href="{{ path('cliente') }}">LISTADO CLIENTES</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <!--<li><a href="{{ path('fos_user_security_logout') }}" class="menu-webpack"><strong>Logout</strong></a></li>-->
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                {% if empresa=='maslogistica' %}
+                    {#
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_maslogistica/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                    #}
+                {% endif %}
+                {% if empresa=='caktus' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_caktus/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                {% if empresa=='fasttrack' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_ft/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_security_logout') }}">LOGOUT</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><!-- /.navbar-collapse -->
+{% endif %}

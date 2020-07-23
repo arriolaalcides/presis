@@ -1,0 +1,109 @@
+security:
+  providers:
+    fos_userbundle:
+      id: fos_user.user_provider.username
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+    FOS\UserBundle\Model\UserInterface: sha512
+  role_hierarchy:
+    ROLE_ADMIN:       ROLE_USER
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      pattern: ^/
+      form_login:
+        provider: fos_userbundle
+        csrf_provider: form.csrf_provider
+        default_target_path: /menu
+      logout:
+        path:   /logout
+        target: /login
+      anonymous:    true
+  #access_denied_url: ^/login
+
+  access_control:
+    - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/register, role: [ROLE_ADMIN] }
+    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/servicio/index, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/servicio/(.+)/edit, role: [ROLE_ADMIN] }
+    - { path: ^/servicio/(.+)/show, role: [ROLE_ADMIN] }
+    - { path: ^/habilitaciones/index, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/habilitaciones/(.+)/edit, role: [ROLE_ADMIN] }
+    - { path: ^/habilitaciones/(.+)/show, role: [ROLE_ADMIN] }
+    - { path: ^/vendedor/index, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/vendedor/(.+)/edit, role: [ROLE_ADMIN] }
+    - { path: ^/vendedor/(.+)/show, role: [ROLE_ADMIN] }
+    - { path: ^/datosenvios/pendientes-bolsin-galander, role: [ROLE_CLIENTE,ROLE_BACK_OFFICE,ROLE_GALANDER] }
+    - { path: ^/datosenvios/show, role: [ROLE_ANALISTA_GERENCIA_ST,ROLE_CLIENTE,ROLE_BACK_OFFICE,ROLE_ANALISTA_ST,ROLE_ADMIN] }
+    - { path: ^/datosenvios/exportar, role: [ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_GALANDER] }
+    - { path: ^/datosenvios/informar-reparados, role: [ROLE_GALANDER] }
+    - { path: ^/datosenvios/informar-movistar, role: [ROLE_CLIENTE,ROLE_BACK_OFFICE,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST] }
+    - { path: ^/datosenvios/pendientes-bolsin, role: [ROLE_CLIENTE,ROLE_BACK_OFFICE] }
+    - { path: ^/datosenvios/auditoria, role: [ROLE_ANALISTA_GERENCIA_ST,ROLE_ANALISTA_ST,ROLE_CLIENTE,ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/datosenvios/pendientes, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL] }
+    - { path: ^/datosenvios/new, role: [ROLE_ANALISTA_GERENCIA_ST,ROLE_ANALISTA_ST,ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/constanciaretiro/constancias-pendientes, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_CLIENTE] }
+    - { path: ^/importar, role: [ROLE_ADMIN,ROLE_CLIENTE,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/user/new, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/user/index, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/user/(.+)/edit, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_GALANDER] }
+    - { path: ^/user/(.+)/show, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_GALANDER] }
+    - { path: ^/rubro/, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/categoria/, role: ROLE_ADMIN }
+    - { path: ^/cpcordon/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/cpcordon/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/cpcordon/(.+)/edit, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/cpcordon/(.+)/show, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/cordon/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/cordon/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_ADMINISTRACION] }
+    - { path: ^/cordon/(.+)/edit, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/cordon/(.+)/show, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/franjaentrega/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/franjaentrega/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_ADMINISTRACION] }
+    - { path: ^/franjaentrega/(.+)/show, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/franjaentrega/(.+)/edit, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/precio/new, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/precio/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/lista/new, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/lista/upload, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/lista/aumento, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/lista/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/sucursal/new, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/sucursal/new, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/cliente/new, role: [ROLE_ADMIN,ROLE_VENDEDOR] }
+    - { path: ^/cliente/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_BACK_OFFICE,ROLE_SUPERVISOR_OPERATIVO,ROLE_ADMINISTRACION] }
+    - { path: ^/cliente/(.+)/edit, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/cliente/(.+)/show, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/cliente/find, role: [ROLE_ADMIN] }
+    - { path: ^/distribuidor/index, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_ADMINISTRACION] }
+    - { path: ^/distribuidor/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_SUCURSAL,ROLE_OPERATIVO] }
+    - { path: ^/distribuidor/(.+)/edit, role: [ROLE_ADMIN,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_SUPERVISOR_OPERATIVO,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/distribuidor/(.+)/delete, role: [ROLE_ADMIN,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/tracker/, role: [ROLE_CLIENTE, ROLE_UNIR,ROLE_GALANDER,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_DISTRIBUIDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/tracker/tracker-movistar-new, role: [ROLE_CLIENTE, ROLE_UNIR,ROLE_GALANDER,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_DISTRIBUIDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/estado/index, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_BACK_OFFICE] }
+    - { path: ^/estado/(.+)/show, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/estado/(.+)/edit, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO] }
+    - { path: ^/expreso/, role: [ROLE_SUCURSAL,ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/recorrido/index, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/recorrido/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_DISTRIBUIDOR] }
+    - { path: ^/rendicion/, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/rendicion/new, role: [ROLE_ADMIN,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL] }
+    - { path: ^/bultoexcedente/, role: [ROLE_ADMIN,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/menu/, role: [ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/destinatarios/, role: [ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/remitentes/, role: [ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    # ESTOS NO LOS PUSE AUN
+    - { path: ^/retiro/, role: [ROLE_UNIR,ROLE_GALANDER,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_CLIENTE,ROLE_ADMIN,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_VENDEDOR,ROLE_ADMINISTRACION] }
+    - { path: ^/file/, role: [ROLE_CLIENTE] }
+    - { path: ^/constanciaretiro/, role: [ROLE_UNIR,ROLE_GALANDER,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+    - { path: ^/firmas/, role: [ROLE_UNIR,ROLE_GALANDER,ROLE_ANALISTA_ST,ROLE_ANALISTA_GERENCIA_ST,ROLE_ADMIN,ROLE_CLIENTE,ROLE_VENDEDOR,ROLE_DISTRIBUIDOR,ROLE_SUPERVISOR_OPERATIVO,ROLE_OPERATIVO,ROLE_SUCURSAL,ROLE_BACK_OFFICE,ROLE_ADMINISTRACION] }
+
+
+
+

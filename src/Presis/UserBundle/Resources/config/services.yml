@@ -1,0 +1,11 @@
+parameters:
+#    presis_user.example.class: Presis\UserBundle\Example
+
+services:
+#    presis_user.example:
+#        class: %presis_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+ presis_user.registration.form.type:
+        class: Presis\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: presis_user_registration }

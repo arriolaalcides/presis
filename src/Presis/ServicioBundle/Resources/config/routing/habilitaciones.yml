@@ -1,0 +1,38 @@
+habilitaciones:
+    path:     /
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:index" }
+
+habilitaciones_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:show" }
+    options:
+      expose: true
+
+habilitaciones_new:
+    path:     /new
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:new" }
+habilitaciones_ajax:
+     path:     /ajax
+     defaults: { _controller: "PresisServicioBundle:Habilitaciones:ajax" }
+     options:
+      expose: true
+
+habilitaciones_create:
+    path:     /create
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:create" }
+    requirements: { _method: post }
+
+habilitaciones_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:edit" }
+    options:
+      expose: true
+habilitaciones_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:update" }
+    requirements: { _method: post|put }
+
+habilitaciones_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisServicioBundle:Habilitaciones:delete" }
+    requirements: { _method: post|delete }

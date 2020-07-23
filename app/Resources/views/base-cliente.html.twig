@@ -1,0 +1,49 @@
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">OPERACIONES <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ path('datosenvios_new') }}">GENERAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_show') }}">CONSULTAR GUIAS</a></li>
+                <li><a href="{{ path('datosenvios_pendientes_bolsin') }}">ARMAR BOLSIN</a></li>
+                <li><a href="{{ path('datosenvios_informar_reparados') }}">INFORMAR REPARADOS</a></li>
+                <li><a href="{{ path('datosenvios_pendientes_bolsin_galander') }}">ARMAR BOLSIN GALANDER</a></li>
+                <li><a href="{{ path('exportar_datos') }}">EXPORTAR DATOS</a></li>
+                {% if empresa=='maslogistica' %}
+                    <li><a href="{{ path('datosenvios_auditoria') }}">MODIFICAR GUIAS</a></li>
+                {% endif %}
+                <li><a href="{{ path('datosenvios_confirmar') }}">CONFIRMAR GUIAS</a></li>
+                <li><a href="{{ path('importar') }}">IMPORTAR GUIAS</a></li>
+                <li><a href="{{ path('user') }}">ABM USUARIOS</a></li>
+                <li><a href="{{ path('constanciaretiro_new') }}">SOLICITAR RETIRO</a></li>
+                <li><a href="{{ path('constanciaretiro_listado') }}">LISTADO DE RETIROS</a></li>
+                <li><a href="{{ path('constancia_manifiestos') }}">MANIFIESTOS GENERADOS</a></li>
+                <li><a href="{{ path('destinatarios') }}">ABM DESTINATARIOS</a></li>
+                <li><a href="{{ path('remitente') }}">ABM REMITENTES</a></li>
+               {% if  app.user.username  == 'galander'  %}
+                  <li><a href="{{ path('tracker_movistar_new') }}">NUEVO SEGUIMIENTO HITO</a></li>
+                  <li><a href="{{ path('tracker_movistar_editar') }}">GESTIONAR GUIAS SEGUIMIENTO HITOS</a></li>
+                {% endif %}
+                
+            </ul>
+        </li>
+        <li class="dropdown">
+            <!--<li><a href="{{ path('fos_user_security_logout') }}" class="menu-webpack"><strong>Logout</strong></a></li>-->
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-webpack" data-toggle="dropdown" role="button" aria-expanded="false">{{ app.user.username }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                {% if empresa=='maslogistica' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_maslogistica/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                {% if empresa=='caktus' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_caktus/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                {% if empresa=='fasttrack' %}
+                    <li><a href="http://trackers.onlinegeotrack.com.ar/tracker_ft/corpo-simple/index.php" target="_blank">TRACKING</a></li>
+                {% endif %}
+                <li><a href="{{ path('fos_user_security_logout') }}">LOGOUT</a></li>
+            </ul>
+        </li>
+    </ul>
+</div><!-- /.navbar-collapse -->

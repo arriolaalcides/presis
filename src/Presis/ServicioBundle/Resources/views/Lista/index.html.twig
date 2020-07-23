@@ -1,0 +1,95 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body { font-size: 140%; }
+        .glyphicon-ok {
+            color: green;
+        }
+        /* Red X. */
+        .glyphicon-remove {
+            color: red;
+        }
+    </style>
+{% endblock %}
+{% block banner %}
+{% endblock %}
+    {%  block contenido %}
+
+        <table id="table_lista" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>Descripci&oacute;n</th>
+                <th>General</th>
+                <th>Cliente</th>
+                <th>Vendedor</th>
+
+                <th>Acciones</th>
+
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>Descripci&oacute;n</th>
+                <th>General</th>
+                <th>Cliente</th>
+                <th>Vendedor</th>
+                <th>Acciones</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(document).ready( function () {
+            $('#table_lista').DataTable({
+                "dom": 'T<"clear">lfrtip',
+                "responsive": true,
+                "tableTools": {
+                    "sSwfPath": "{{ asset('bundles/presisgeneral/css/copy_csv_xls_pdf.swf') }}"
+                },
+                "ajax":Routing.generate("lista_ajax"),
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/a5734b29083/i18n/Spanish.json"
+                },
+                "columnDefs": [ {
+                    "targets": 4,
+                    "data": "id",
+                    "render": function ( data, type, full, meta ) {
+                        return "<a href="+Routing.generate('lista_edit',{id:data} )+"><i class='fa fa-pencil-square-o fa-2x' title='Editar registro'></i> </a><a href="+Routing.generate('lista_show',{id:data} )+"><i class='fa fa-eye fa-2x' title='Ver detalles'></i></a>";
+                    }},
+                    {
+                        "render": function (data, type, row) {
+                            return (data === true) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
+                        },
+                        "targets": 1
+
+                    } ],
+                "columns": [
+
+                    {"data":"descripcion"},
+                    {
+                        "data":"isGeneral"
+
+                    },
+
+                    {
+                        "data":"empresa",
+                        "defaultContent": "N/A"
+                    },
+                    {"data":"vendedor",
+                        "defaultContent":"N/A"
+                    },
+
+                ]
+
+            });
+        } );
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+destinatarios:
+    path:     /
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:index" }
+
+destinatarios_listar:
+    path:     /listar-destinatarios
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:listarDestinatarios" }
+    options:
+        expose: true
+
+destinatarios_eliminar:
+    path:     /{id_destinatario}/eliminar
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:eliminar" }
+    methods:  [GET]
+    options:
+      expose: true
+
+destinatarios_show:
+    path:     /{id}/show
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:show" }
+    options:
+        expose: true
+
+destinatarios_getComboDestinatario:
+    path:     /{id}/getComboDestinatario
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:getComboDestinatario" }
+    options:
+        expose: true
+
+destinatarios_find:
+    path:     /{id}/find
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:find" }
+    options:
+        expose: true
+    
+destinatarios_new:
+    path:     /new
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:new" }
+    options:
+        expose: true
+
+destinatarios_create:
+    path:     /create
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:create" }
+    methods:  POST
+
+destinatarios_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:edit" }
+    options:
+        expose: true
+
+destinatarios_update:
+    path:     /{id}/update
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:update" }
+    methods:  [POST, PUT]
+
+destinatarios_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "DestinatariosBundle:Destinatarios:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,7 @@
+parameters:
+#    presis_general.example.class: Presis\GeneralBundle\Example
+
+services:
+#    presis_general.example:
+#        class: %presis_general.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

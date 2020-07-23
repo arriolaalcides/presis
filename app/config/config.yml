@@ -1,0 +1,159 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id:  ~
+        cookie_lifetime: 7200
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            1
+    strict_variables: "%kernel.debug%"
+    globals:
+      empresa: "maslogistica"
+      url: "http://trackers.onlinegeotrack.com.ar/desarrollo/excel/"
+      tracker: "http://trackers.onlinegeotrack.com.ar/tracker_maslogistica/corpo-simple/index.php"
+
+# Assetic Configuration
+
+fos_user:
+  db_driver: orm
+  user_class: Presis\UserBundle\Entity\User
+  firewall_name: main
+  registration:
+    form:
+      type: presis_user_registration
+    confirmation:
+      enabled: false
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        # path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+
+fos_rest:
+    view:
+        view_response_listener: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: php
+        formats:
+            json: true
+            xml: false
+            rss: false
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+    param_fetcher_listener: true
+    allowed_methods_listener: true
+
+
+sensio_framework_extra:
+    view:
+        annotations: false
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ ]
+    #java: /usr/bin/java
+    filters:
+        less:
+                node: /usr/bin/node
+                node_paths: [/usr/lib/node_modules]
+                apply_to: "\.less$"
+        cssrewrite: ~
+services:
+    fos_user.doctrine_registry:
+        alias: doctrine
+    smtc.main.form.collection_type_extension:
+        class: Presis\RetiroBundle\Form\Extension\CollectionTypeExtension
+        tags:
+            - { name: form.type_extension, alias: collection }
+
+    validator.unique.your_validator_name:
+        class: Presis\ServicioBundle\Validator\Constraint\CheckGeneralListValidator
+        arguments:
+                entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: validator.constraint_validator, alias: general_checker }
+    validator.unique.retiro_validator:
+        class: Presis\RetiroBundle\Validator\Constraint\CheckGeneralListValidator
+        arguments:
+                entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: validator.constraint_validator, alias: retiro_checker }
+braincrafted_bootstrap:
+    less_filter: less
+    auto_configure:
+            assetic: true
+            twig: true
+            knp_menu: true
+    icon_prefix: fa
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: d/m/Y H:i:s
+            default_timezone: "ART"
+nelmio_api_doc:
+  sandbox:
+    body_format:
+              formats: [json ]             # array of enabled body formats,
+                                                  # remove all elements to disable the selectbox
+              default_format: json
+    request_format:
+              formats:                            # default is `json` and `xml`,
+                json: application/json          # override to add custom formats or disable
+                                            # decides how to request the response format
+                default_format: json    # default is `json`,
+                                    # default content format to request (see formats)
+genemu_form:
+    select2:
+        enabled: true
+        configs:
+            placeholder: Select an option
+            width: off
+            allowClear: false
+            minimumInputLength: 0
+            
+#datetime_functions:
+ #   DATE_FORMAT: Presis\DistribuidorBundle\DQL\DateFormatFunction

@@ -1,0 +1,138 @@
+<pdf>
+    <dynamic-page font-type="DejaVuSans" margin="5px">
+        <div width="100%" height="100%" border.color="black">
+            <div width="100%" border.color="black">
+                <div width="50%" float="left" padding-top="10px">
+                        <div padding-left="10px">
+                            <img src="{{ pdf_image('PresisRetiroBundle:maslogistica.png') }}" width="250px" height="66px" />
+                        </div>
+                </div>
+                <div width="50%" float="left" padding-top="10px">
+                    <div width="100%" text-align="right" padding-right="25px">Fecha {{ retiro[0].fechHora|date("d/m/Y") }}</div>
+                    <div width="100%" text-align="right" padding-right="5px">
+                        <barcode type="code39" code="{{ manifiesto }}" bar-thin-width="4px" bar-thick-width="10px" float="right" margin-top="10px" />
+                    </div>
+                </div>
+            </div>
+            {# SI EL TRAYECTO ES GALANDER QUIERE DECIR QUE VA A GALANDER POR LO TANTO PONGO COMPRADOR Y SENDER #}
+            {% if retiro[0].trayecto=="aGalander" %}
+                <div width="100%" border.color="black">
+                    <div width="50%" padding-top="5px" padding-bottom="5px" float="left" border.color="black">
+                        <p margin-left="10px"><b>Origen: </b>{{ retiro[0].empresa }}</p>
+                        <p margin-left="10px"><b>Dirección: </b>{{ retiro[0].calle ~ ' ' ~ retiro[0].altura ~ ' ' ~ retiro[0].piso ~ ' ' ~ retiro[0].dpto }}</p>
+                        <p margin-left="10px"><b>Localidad: </b>{{ retiro[0].localidad }} - <b>Provincia: </b>{{ retiro[0].provincia }}</p>
+                        <p margin-left="10px"><b>Servicio Mov.: </b>{{ retiro[0].tiposervicio }} - <b>Servicio: </b>{{ retiro[0].descripcion }}</p>
+                        <p margin-left="10px"><b>Precinto: </b>{{ retiro[0].precinto }}</p>
+                    </div>
+                    <div width="50%" padding-top="5px" padding-bottom="5px" float="left" border.color="black">
+                        <p margin-left="10px"><b>Destino: </b>{{ retiro[0].compEmpresa }} - ({{ retiro[0].apenom }})</p>
+                        <p margin-left="10px"><b>Dirección: </b>{{ retiro[0].compCalle ~ ' ' ~ retiro[0].compAltura ~ ' ' ~ retiro[0].compPiso ~ ' ' ~ retiro[0].compDpto }}</p>
+                        <p margin-left="10px"><b>Localidad: </b>{{ retiro[0].compLocalidad }} - <b>Provincia: </b>{{ retiro[0].compProvincia }}</p>
+                        <p margin-left="10px"><b>Servicio Mov.: </b>{{ retiro[0].tiposervicio }} - <b>Servicio: </b>{{ retiro[0].descripcion }}</p>
+                        <p margin-left="10px"><b>Precinto: </b>{{ retiro[0].precinto }} </p>
+                    </div>
+                </div>
+            {% endif %}
+            {# SI EL TRAYECTO ES MOVISTAR QUIERE DECIR QUE REGRESA DE GALANDER POR LO TANTO INVIERTO EL ORIGEN Y DESTINO DE SENDER Y COMPRADOR #}
+            {% if retiro[0].trayecto=="aMovistar" %}
+                <div width="100%" border.color="black">
+                    <div width="50%" padding-top="5px" padding-bottom="5px" float="left" border.color="black">
+                        <p margin-left="10px"><b>Origen: </b>{{ retiro[0].compEmpresa }} - ({{ retiro[0].apenom }})</p>
+                        <p margin-left="10px"><b>Dirección: </b>{{ retiro[0].compCalle ~ ' ' ~ retiro[0].compAltura ~ ' ' ~ retiro[0].compPiso ~ ' ' ~ retiro[0].compDpto }}</p>
+                        <p margin-left="10px"><b>Localidad: </b>{{ retiro[0].compLocalidad }} - <b>Provincia: </b>{{ retiro[0].compProvincia }}</p>
+                        <p margin-left="10px"><b>Servicio Mov.: </b>{{ retiro[0].tiposervicio }} - <b>Servicio: </b>{{ retiro[0].descripcion }}</p>
+                        <p margin-left="10px"><b>Precinto: </b>{{ retiro[0].precinto }} </p>
+                    </div>
+                    <div width="50%" padding-top="5px" padding-bottom="5px" float="left" border.color="black">
+                        <p margin-left="10px"><b>Destino: </b>{{ retiro[0].empresa }}</p>
+                        <p margin-left="10px"><b>Dirección: </b>{{ retiro[0].calle ~ ' ' ~ retiro[0].altura ~ ' ' ~ retiro[0].piso ~ ' ' ~ retiro[0].dpto }}</p>
+                        <p margin-left="10px"><b>Localidad: </b>{{ retiro[0].localidad }} - <b>Provincia: </b>{{ retiro[0].provincia }}</p>
+                        <p margin-left="10px"><b>Servicio Mov.: </b>{{ retiro[0].tiposervicio }} - <b>Servicio: </b>{{ retiro[0].descripcion }}</p>
+                        <p margin-left="10px"><b>Precinto: </b>{{ retiro[0].precinto }} </p>
+                    </div>
+                </div>
+            {% endif %}
+            {% set totalGuias = 0 %}
+            {% set totalVd = 0 %}
+            {% set totalPeso = 0 %}
+            <div width="100%" height="15px" border.color="black" padding-top="5px" font-size="10px">
+                <div width="10%" float="left" text-align="center"><b>GUIA</b></div>
+                <div width="15%" float="left" text-align="center"><b>IMEI</b></div>
+                <div width="10%" float="left" text-align="center"><b>APELLIDO</b></div>
+                <div width="15%" float="left" text-align="center"><b>FABRICANTE</b></div>
+                <div width="15%" float="left" text-align="center"><b>MODELO</b></div>
+                <div width="10%" float="left" text-align="center"><b>NUEVO IMEI</b></div>
+                <div width="10%" float="left" text-align="center"><b>ESTADO</b></div>
+                <div width="10%" float="left" text-align="center"><b>V.DECLARO</b></div>
+                <div width="5%" float="left" text-align="center"><b>PESO</b></div>
+            </div>
+            {% for i in retiro %}
+                <div padding-top="5px" padding-bottom="5px" width="100%" breakable="false" font-size="10px">
+                    <div width="10%" float="left" text-align="center">{{ i.id }}</div>
+                    <div width="15%" float="left" text-align="center">{{ i.nroserie }}</div>
+                    <div width="10%" float="left" text-align="center">{{ i.nomyape }}</div>
+                    <div width="15%" float="left" text-align="center">{{ i.fabricantedescripcion }}</div>
+                    <div width="15%" float="left" text-align="center">{{ i.modelodescripcion }}</div>
+                    <div width="10%" float="left" text-align="center">{{ i.nroimei }}</div>
+                    <div width="10%" float="left" text-align="center">{{ i.estadointervencion }}</div>
+                    <div width="10%" float="left" text-align="center">{{ i.valordeclaradocel }}</div>
+                    <div width="5%" float="left" text-align="center">{{ i.peso }}</div>
+                </div>
+                {% set totalVd = totalVd + i.valordeclaradocel %}
+                {% set totalPeso = totalPeso + i.peso %}
+                {% set totalGuias = totalGuias + 1 %}
+            {% endfor %}
+            <div width="100%" margin-top="10px" border.color="black" padding-top="2px" padding-bottom="2px">
+                <div width="33%" float="left" text-align="center">
+                    <b>Total Guias: </b>{{ totalGuias }}
+                </div>
+                <div width="33%" float="left" text-align="center">
+                    <b>Total V.D.: </b>{{ totalVd }}
+                </div>
+                <div width="34%" float="left" text-align="center">
+                    <b>Total Peso: </b>{{ totalPeso }} kg
+                </div>
+            </div>
+            <div margin-top="50px"></div>
+            <div width="50%" border.color="black" float="left" text-align="center">
+                <div width="100%" border.color="black" float="left" text-align="center">
+                    <b>Autorización y Firma del Remitente</b>
+                </div>
+                <div width="100%" float="left" text-align="left" font-size="8px" height="40px">
+                    Yo/Nosotros acepto/aceptamos las condiciones de despacho abajo
+                    detalladas
+                </div>
+                <div width="100%" float="left" text-align="left" font-size="8px" height="80px">
+                    Firma:
+                </div>
+                <div padding-top="5px" border.color="black" width="100%" float="left" text-align="left" font-size="8px" height="30px">
+                    Aclaración:
+                </div>
+            </div>
+            <div width="50%" border.color="black" float="left" text-align="center">
+                <div width="100%" border.color="black" float="left" text-align="center">
+                    <b>Datos y firma de quien recibe / retira</b>
+                </div>
+                <div width="100%" float="left" text-align="left" font-size="8px" height="120px">
+                    <div border.color="black" width="60%" float="left" text-align="left" font-size="8px" height="120px">
+                        Firma:
+                    </div>
+                    <div width="40%" float="left" text-align="left" font-size="8px" height="120px">
+                        <div width="100%" float="left" text-align="left" font-size="8px" height="60px">
+                            Doc. de Identidad:
+                        </div>
+                        <div border.color="black" width="100%" float="left" text-align="left" font-size="8px" height="60px">
+                            Fecha:
+                        </div>
+                    </div>
+                </div>
+                <div padding-top="5px" border.color="black" width="60%" float="left" text-align="left" font-size="8px" height="30px">
+                    Aclaración:
+                </div>
+                <div padding-top="5px" border.color="black" width="40%" float="left" text-align="left" font-size="8px" height="30px">
+                    Hora:
+                </div>
+            </div>
+        </div>
+    </dynamic-page>
+</pdf>

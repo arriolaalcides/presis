@@ -1,0 +1,113 @@
+recorrido:
+    path:     /
+    defaults: { _controller: "RecorridoBundle:Recorrido:index" }
+    options:
+        expose: true
+
+recorrido_show:
+    path:     /{id}/show
+    defaults: { _controller: "RecorridoBundle:Recorrido:show", _format: "pdf" }
+    options:
+        expose: true
+
+recorrido_new:
+    path:     /new
+    defaults: { _controller: "RecorridoBundle:Recorrido:new" }
+
+recorrido_create:
+    path:     /create
+    defaults: { _controller: "RecorridoBundle:Recorrido:create" }
+    methods:  POST
+    options:
+        expose: true
+
+recorrido_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "RecorridoBundle:Recorrido:edit" }
+    options:
+        expose: true
+
+recorrido_update:
+    path:     /{id}/update
+    defaults: { _controller: "RecorridoBundle:Recorrido:update" }
+    methods:  [POST, PUT]
+    options:
+        expose: true
+
+recorrido_asajax:
+    path:     /asajax
+    defaults: { _controller: "RecorridoBundle:Recorrido:asAjax" }
+    options:
+        expose: true
+
+recorrido_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "RecorridoBundle:Recorrido:delete" }
+    methods:  [POST, DELETE]
+
+recorrido_retirosasajax:
+    path:     /retirosasajax
+    defaults: { _controller: "RecorridoBundle:Recorrido:retirosAsAjax" }
+    options:
+        expose: true
+
+recorrido_delretiro:
+    path:     /{id_recorrido_retiro}/{id_recorrido}/delretiro
+    defaults: { _controller: "RecorridoBundle:Recorrido:retiroDelete" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_addretiro:
+    path:     /{id_retiro}/{id_recorrido}/{id_sucursal}/addretiro
+    defaults: { _controller: "RecorridoBundle:Recorrido:addRetiro" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_addretiros:
+    path:     /addretiros
+    defaults: { _controller: "RecorridoBundle:Recorrido:addRetiros"}
+    options:
+      expose: true
+
+recorrido_getretiros_remito:
+    path:     /{id_retiro_atributo}/{id_recorrido}/getretirosremito
+    defaults: { _controller: "RecorridoBundle:Recorrido:getRetirosRemito" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_getretiros_guia_agente:
+    path:     /{id_retiro_atributo}/{id_recorrido}/getretirosguiaagente
+    defaults: { _controller: "RecorridoBundle:Recorrido:getRetirosGuiaAgente" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_planillar_retiro:
+    path:     /{id_retiro}/{cod_distribuidor}/planillarretiro
+    defaults: { _controller: "RecorridoBundle:Recorrido:planillarRetiro" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_importar_planillados:
+    path:     /importarplanillados
+    defaults: { _controller: "RecorridoBundle:Recorrido:importarPlanillados" }
+    options:
+        expose: true
+
+recorrido_cerrarplanilla:
+    path:     /{id_recorrido}/cerrarplanilla
+    defaults: { _controller: "RecorridoBundle:Recorrido:cerrarPlanilla" }
+    methods:  [GET]
+    options:
+        expose: true
+
+recorrido_cargar:
+    path:     /{id}/cargar
+    defaults: { _controller: "RecorridoBundle:Recorrido:cargarPlanilla" }
+    methods:  [GET]
+    options:
+        expose: true

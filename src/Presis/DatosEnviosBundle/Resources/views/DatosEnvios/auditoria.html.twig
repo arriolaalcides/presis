@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+{% block contenido %}
+    <center>
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="guia">INGRESE NRO. DE GUIA</label>
+                <input type="text" class="form-control" id="guia">
+            </div>
+            <button type="submit" class="btn btn-default" id="edit">EDITAR GUIA</button>
+        </form>
+    </center>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $("#edit").click(function(){
+                window.open(Routing.generate('datosenvios_edit', {id: $("#guia").val()}));
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

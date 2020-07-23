@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container container-round">
+
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Motivo de Anulacion</legend>
+            
+            <div class="row">
+                <div class="form-group">       
+                </div>
+            </div>
+            <br />
+            {{ form_row(edit_form.motivo) }}
+            <div class="hidden">
+            
+            {{ form_row(edit_form.fecha) }}
+            {{ form_row(edit_form.cliente) }}
+            {{ form_row(edit_form.usuario) }}
+            {{ form_row(edit_form.sucursal) }}
+            {{ form_row(edit_form.estado) }}
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="button1id"></label>
+                <div class="col-md-8">
+                    {{ form_widget(edit_form.submit) }}
+                    
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

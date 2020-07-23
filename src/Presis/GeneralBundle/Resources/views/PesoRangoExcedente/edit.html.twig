@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{% block contenido %}
+    <div class="container-fluid container-round">
+        {{ form_start(edit_form) }}
+        <fieldset>
+            <legend>Editar rango de peso excedente</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Atención: </strong> el campo tipo de servicio solo debe completarlo en caso de cargar un excedente de interior.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.cliente,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.servicio,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.rangoHasta,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.costoRangoExcedente,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.cordonEntrega,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.cordonRetiro,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_row(edit_form.tipoServicio,{'style': 'horizontal', 'label_col': 3, 'widget_col': 6})}}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button1id"></label>
+                    <div class="col-md-8">
+                        {{ form_widget(edit_form.submit) }}
+                        <a class="btn btn-primary" href="{{ path('pesorangoexcedente') }}">Volver a la lista</a>
+
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        {{ form_end(edit_form) }}
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    </div>
+{% endblock %}

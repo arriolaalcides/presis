@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {% for retiro in entity.retiros %}
+        <li>{{ retiro.id}}</li>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends '::base.html.twig' %}
+{% block banner %}
+{% endblock %}
+{%  block contenido %}
+    <h1>Lista de manifiestos recibidos</h1>
+    <div class="container-fluid">
+        <div id="toolbar">
+            <div class="col-lg-2">
+                <select class="form-control">
+                    <option value="">Export Basic</option>
+                    <option value="all">Export All</option>
+                    <option value="selected">Export Selected</option>
+                </select>
+            </div>
+            <div class="col-lg-2">
+                <button type="button" class="btn btn-success btn-sm" id="find">BUSCAR INFORMADAS</button>
+            </div>
+        </div>
+
+        <table id="retiros" class="ret"
+               data-toggle="table"
+               data-show-export="true"
+               data-click-to-select="true"
+               data-toolbar="#toolbar"
+               data-height="400"
+               data-side-pagination="server"
+               data-pagination="true"
+               data-page-list="[5, 10, 20, 50, 100, 200]"
+               data-show-columns="true"
+               data-detail-view="true"
+               data-detail-formatter="detailFormatter"
+               data-sort-name="name"
+               data-sort-order="desc">
+            <thead>
+            <tr>
+                <th data-field="id" >Id</th><!--1-->
+                <th data-field="nro_manifiesto" data-sortable="true">Manifiesto</th>
+                <th data-field="img" data-formatter="hayFirma">Firma</th>
+                <th data-field="estado">Estado</th>
+                <th data-field="recibio" >Recibio</th>
+                <th data-field="documento"  >Documento</th>
+                <th data-field="obs" >Obs</th>
+                <th data-field="fecha_cel" >Fecha Cel.</th>
+                <th data-field="fecha_base">Fecha Base</th>
+                <th data-field="distribuidor_id">Dist. Id</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+
+
+    <script type="text/javascript">
+
+        var $table = $("#retiros");
+
+        var $pagina = 0;
+        var $limite = 10;
+
+        $(function () {
+            buildTable($table, 20, 20);
+            $('#fixedNumber').change(function () {
+                buildTable($table, 20, 20);
+            });
+        });
+
+        function buildTable($el, cells, rows) {
+            $el.bootstrapTable('destroy').bootstrapTable({
+                toolbar: '.toolbar'
+            });
+        }
+
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('destroy').bootstrapTable({
+                    exportDataType: $(this).val()
+                });
+            });
+        })
+
+        function hayFirma(val,row){
+            var firma = "";
+            if(row.img!=''){
+                firma = '<a href="http://maslogistica.epresis.com/movistar/apiMasLogistica/'+row.img+'" width="75" height="75" target="_blanck"><img src="http://maslogistica.epresis.com/movistar/apiMasLogistica/'+row.img+'" width="75" height="75" /></a>';
+            }else{
+                firma = 'NO';
+            }
+            return firma;
+        }
+
+
+            $table.on('expand-row.bs.table', function (e, index, row, $detail) {
+                $detail.html('Buscando imagenes...');
+                var datos = [];
+                $.getJSON(Routing.generate('fotos_asajax',{tracking:row.tracking}), function (res) {
+                    //alert(res[0].tracking);
+                    for($i=0; $i<res.length; $i++){
+                        datos.push('<img src="http://maslogistica.epresis.com/movistar/apiMasLogistica/'+res[$i].img+'" />');
+                    }
+                    $detail.html(datos);
+                    //$detail.html(res.replace(/\n/g, '<br>'));
+                });
+            });
+
+        $(document).ready(function () {
+
+            $("#distribuidor").select2();
+            $("#estado").select2();
+
+            var $table = $('#retiros');
+            $table.bootstrapTable()
+                    .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+                        buscarGuias();
+                    });
+
+            var buscarGuias = function(){
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('firmas_manifiestos_asajax'),
+                    data: obtenerParametrosBusqueda(),
+                    success: function(data, dataType)
+                    {
+                        var data = JSON.parse(data);
+                        $table.bootstrapTable('load', data);
+
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            };
+            $("#find").click(buscarGuias);
+
+
+            $("#retiros").on('click', '.verImagen',function(){
+                verImgFirma($(this).attr('id'));
+            });
+        });
+
+        var obtenerParametrosBusqueda = function() {
+            var $desde = $("#desde").val();
+            var $hasta = $("#hasta").val();
+            var $distribuidor = $("#distribuidor").val();
+            var $tracking = $("#tracking").val();
+            var $estado = $("#estado").val();
+
+            if($.trim($desde)!='' && $.trim($hasta)==''){
+                $("#hasta").val($desde);
+                $hasta = $desde;
+            }
+
+            return {desde: $desde, hasta: $hasta, distribuidor: $distribuidor, tracking: $tracking, estado: $estado, pagina: $pagina, limite: $limite};
+        };
+
+        var verImgFirma = function(tracking){
+            window.open(Routing.generate('firmas_img_firma',{tracking:tracking}),"_blank");
+        }
+
+    </script>
+{% endblock %}

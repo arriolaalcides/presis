@@ -1,0 +1,124 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>RetirosFijos</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Franja</th>
+                <td>{{ entity.franja }}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ entity.calle }}</td>
+            </tr>
+            <tr>
+                <th>Altura</th>
+                <td>{{ entity.altura }}</td>
+            </tr>
+            <tr>
+                <th>Piso</th>
+                <td>{{ entity.piso }}</td>
+            </tr>
+            <tr>
+                <th>Dpto</th>
+                <td>{{ entity.dpto }}</td>
+            </tr>
+            <tr>
+                <th>Localidad</th>
+                <td>{{ entity.localidad }}</td>
+            </tr>
+            <tr>
+                <th>Provincia</th>
+                <td>{{ entity.provincia }}</td>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <td>{{ entity.usuario }}</td>
+            </tr>
+            <tr>
+                <th>Timestamp</th>
+                <td>{{ entity.timestamp|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ entity.cp }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ entity.estado }}</td>
+            </tr>
+            <tr>
+                <th>Distribuidor</th>
+                <td>{{ entity.distribuidor }}</td>
+            </tr>
+            <tr>
+                <th>Asigno</th>
+                <td>{{ entity.asigno }}</td>
+            </tr>
+            <tr>
+                <th>Impreso</th>
+                <td>{{ entity.impreso }}</td>
+            </tr>
+            <tr>
+                <th>Contacto</th>
+                <td>{{ entity.contacto }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ entity.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ entity.mail }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ entity.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Bultos</th>
+                <td>{{ entity.bultos }}</td>
+            </tr>
+            <tr>
+                <th>Peso</th>
+                <td>{{ entity.peso }}</td>
+            </tr>
+            <tr>
+                <th>Sucursal</th>
+                <td>{{ entity.sucursal }}</td>
+            </tr>
+            <tr>
+                <th>Dias</th>
+                <ul>
+                    {% for item in entity.dias %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </ul>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('retirosfijos') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('retirosfijos_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

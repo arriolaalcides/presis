@@ -1,0 +1,21 @@
+presis_retiro_planilla:
+    resource: "@PresisRetiroBundle/Resources/config/routing/planilla.yml"
+    prefix:   /planilla
+
+presis_retiro_franjaentrega:
+    resource: "@PresisRetiroBundle/Resources/config/routing/franjaentrega.yml"
+    prefix:   /franjaentrega
+
+presis_retiro_producto:
+    resource: "@PresisRetiroBundle/Resources/config/routing/producto.yml"
+    prefix:   /producto
+
+presis_retiro_retiro:
+    resource: "@PresisRetiroBundle/Resources/config/routing/retiro.yml"
+    prefix:   /retiro
+PresisRetiroBundle_comprador:
+        resource: "@PresisRetiroBundle/Resources/config/routing/comprador.yml"
+        prefix:   /comprador
+PresisRetiroBundle_sender:
+        resource: "@PresisRetiroBundle/Resources/config/routing/sender.yml"
+        prefix:   /sender

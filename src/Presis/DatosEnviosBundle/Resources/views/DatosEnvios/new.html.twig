@@ -1,0 +1,1187 @@
+{% extends '::base.html.twig' %}
+{% set msg_contrareembolso = 'Configurado en "Cobro por contrareembolso" del cliente' %}
+{% set msg_peso = 'Valor tomado de la lista de precios. Un posible excedente se calcula según Peso excedente' %}
+{% set msg_volumen = 'Peso real o volumétrico, dependiendo del campo "Peso/Volumen" del cliente' %}
+{% set msg_bultos = 'El precio de cada bulto se encuentra en la lista de precios. El precio excedente se calcula según Bultos excedentes' %}
+{% set msg_flete = 'Depende del "Tipo de cobro" configurado en el cliente' %}
+{% set msg_seguro = 'Porcentaje sobre el Valor declarado, un mínimo o un máximo. Configurado en "Cobro de Seguro" del cliente' %}
+{% set msg_pesovolumen = 'Peso volumetrico real, (alto x largo x ancho)/coeficiente' %}
+{% block contenido %}
+    {{ form_start(form) }}
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Carga general</h3>
+                <input type="hidden" id="empresaA" name="empresaA" value="{{ empresa }}" readonly />
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse1">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.fecha, {'label_col':1,'widget_col': 1, attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.cliente, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    {% if empresa=='caktus' or empresa=='epsa' %}
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.ceco, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    {% endif %}
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.servicio, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_row(form.remito, {'label_col':1,'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.guiaAgente, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                    <div class="col-lg-2">
+                        {{ form_row(form.datosenvios.sucursalCabecera, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Carga origen</h3>
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse2">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form_row(form.datosenvios.remitente, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.sender.codigo, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.saveRemitente, {'label_col':2, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.sender.empresa, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.sender.remitente, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.calle, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.altura, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.piso, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.dpto, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.celular, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.localidad, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.provincia, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.sender.cp, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.sender.email, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(form.sender.otherInfo, {'label_col':2, 'widget_col': 9, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Carga destino</h3>
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse3">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form_row(form.datosenvios.destinatario, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.comprador.codigo, {'label_col':1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.saveDestinatario, {'label_col':2, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form_row(form.comprador.empresa, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.comprador.apenom, {'label_col':2, 'widget_col': 4, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        {% if empresa!='fasttrack' %}
+                            <div class="col-lg-3">
+                                {{ form_row(form.comprador.cuit, {'label_col':2, 'widget_col': 4, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                            </div>
+                            <div class="col-lg-2">
+                                {{ form_row(form.comprador.kms, {'label_col':2, 'widget_col': 4, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            {{ form_row(form.comprador.calle, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.comprador.altura, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.comprador.piso, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            {{ form_row(form.comprador.dpto, {'label_col':1, 'widget_col': 1, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {{ form_row(form.comprador.localidad, {'label_col':1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.comprador.provincia, {'label_col':1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form.comprador.cp, {'label_col':1, 'widget_col': 3, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.comprador.celular, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.comprador.email, {'label_col':1, 'widget_col': 5, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(form.comprador.otherInfo, {'label_col':2, 'widget_col': 9, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Campos calculados</h3>
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse4">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.custodia, {'value' : '0',  attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.seguro, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                                    <i data-content="{{ msg_seguro }}"class="fa fa-info" data-toggle="popover"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.seguroManual, {'label_col':6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.costoPorContrareembolso, {attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                                            <i data-content="{{ msg_contrareembolso }}" class="fa fa-info" data-toggle="popover"></i>
+                                        </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.contrareembolsoManual, {'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.flete, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                                    <i data-content="{{ msg_flete }}"class="fa fa-info" data-toggle="popover"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.montoGuiaWeb, { attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoDespachoAExpreso, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoPorMonitoreoActivo, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoPorRemitoConforme, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.src, { 'label_col': 1, 'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoAdicional1, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.detalleCostoAdicional1, { attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoAdicional2, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.detalleCostoAdicional2, { attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.costoAdicional3, { attr:{onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_row(form.datosenvios.detalleCostoAdicional3, { attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(form.datosenvios.totalFlete, { attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{ form_row(form.datosenvios.fechaPactada, { attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Datos generales</h3>
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse5">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse5" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.bultos, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                            <i data-content="{{ msg_bultos }}"class="fa fa-info" data-toggle="popover"></i>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.peso, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                            <i data-content="{{ msg_peso }}"class="fa fa-info" data-toggle="popover"></i>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.volumen, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                                    <i data-content="{{ msg_volumen }}"class="fa fa-info" data-toggle="popover"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            {{ form_row(form.datosenvios.alto, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-sm-1">
+                            {{ form_row(form.datosenvios.largo, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-sm-1">
+                            {{ form_row(form.datosenvios.ancho, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="input-group">
+                                {{ form_row(form.datosenvios.pesoVolumetrico, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                                <span class="input-group-addon input-group-addon-icon">
+                                    <i data-content="{{ msg_pesovolumen }}"class="fa fa-info" data-toggle="popover"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.contrareembolso, {attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                            <input type="hidden" id="efectivoContrareembolso" name="conEfectivo" value="0" />
+                            <input type="hidden" id="chequeContrareembolso" name="conCheque" value="0" />
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.docSpx, {'label_col': 1, 'widget_col': 8, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.formaPago, {'label_col': 4, 'widget_col': 8, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.nroCta, {'label_col':1, 'widget_col': 8, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.valorDeclarado, {'value' : '0', attr:{class: 'input-sm', onkeypress:'return tabular(event,this)', onBlur:'calcularTotal()'} }) }}
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.csr, {'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form_row(form.datosenvios.debeRetirarse, {'label_col': 6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <legend>Tipo de Servicio</legend>
+                            {{ form_row(form.datosenvios.ts, {'style': 'horizontal', 'label_col':6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        <div class="col-lg-3">
+                            <legend>Tipo Operacion</legend>
+                            {{ form_row(form.datosenvios.tipoOp, {'style': 'horizontal', 'label_col':6, 'widget_col': 6, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                        {% if empresa!='fasttrack' %}
+                        <div class="col-lg-3">
+                            <legend>Cobrado</legend>
+                            {{ form_row(form.datosenvios.cobrado, {'label_col': 1, 'widget_col': 2, attr:{class: 'input-sm', onkeypress:'return tabular(event,this)'} }) }}
+                        </div>
+                            <div class="col-lg-3">
+                                <legend>Forma de Pago</legend>
+                                {{ form_row(form.datosenvios.pagoEn, {'style': 'horizontal', 'label_col':1, 'widget_col': 11, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-12">
+                        <legend>Observaciones</legend>
+                        {{ form_row(form.datosenvios.observaciones, {'style': 'horizontal', 'label_col':1, 'widget_col': 12, onkeypress:'return tabular(event,this)'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#aca poner mi form #}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Carga Gestion Cel</h3>
+                <button class="btn btn-default pull-right" data-toggle="collapse" href="#collapse3">CERRAR</button>
+                <div class="clearfix"></div>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.usuario,{ 'label_col': 3, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.ani,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.gestioncel.nroserie,{ 'label_col': 5, 'widget_col': 4})}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.gestioncel.claimassurant,{ 'label_col': 5, 'widget_col': 4})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{ form_row(form.gestioncel.nomyape,{ 'label_col': 3, 'widget_col': 3})}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_row(form.gestioncel.nrosst,{ 'label_col': 2, 'widget_col': 4})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.aceptacargos,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.nivelderep,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.rotura,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.tipocliente,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.tiposervicio,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.fechaactivacion,{ 'label_col': 2, 'widget_col': 2,attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'}})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.fechafabricacion,{ 'label_col': 2, 'widget_col': 2,attr:{class: 'input-sm date-picker', onkeypress:'return tabular(event,this)'}})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            {{ form_row(form.gestioncel.fabricante,{ 'label_col': 2, 'widget_col': 3})}}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ form_row(form.gestioncel.modelo,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_row(form.gestioncel.origendelequipo,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form_row(form.gestioncel.sva,{ 'label_col': 2, 'widget_col': 2})}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        {{ form_row(form.gestioncel.falla, {'label_col':1,'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        {{ form_row(form.gestioncel.completitud, {'label_col':1,'widget_col': 2, attr:{onkeypress:'return tabular(event,this)'} }) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <br /><br /><br /><br />
+                            <div class="col-lg-12" style="border: 1px solid #000000; padding: 20px;">
+                                <div class="col-sm-6">
+                                    {{ form_row(form.gestioncel.muleto,{ 'label_col': 2, 'widget_col': 2})}}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form_row(form.gestioncel.imeimuleto,{ 'label_col': 2, 'widget_col': 2})}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {#aca poner mi form #}
+        <div class="col-lg-4 col-lg-offset-5">
+            {{ form_widget(form.submit) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var $flete = $("#presis_retirobundle_retiro_datosenvios_flete");
+        var $valorDeclarado = $( "input[id*='datosenvios_valorDeclarado']" );
+        var $src = $("#presis_retirobundle_retiro_datosenvios_src");
+        var $costoRemitoConforme = $("#presis_retirobundle_retiro_datosenvios_costoPorRemitoConforme");
+        var $srcCliente;
+        //26-03 IDENTIFICA SI SE DEBE COBRAR O NO EL SEGURO SOLO MAS LOGISTICA
+        var $zonaDestino;
+        var $aforo = 0;
+        var $volumetricoReal;
+
+        $(document).ready(function () {
+
+            //____________________________________________________________________
+
+
+            var aceptacargosEstado = $( "#presis_retirobundle_retiro_gestioncel_aceptacargos option:selected" ).text();
+            CheckAceptaCambios(aceptacargosEstado);
+
+            var muletoEstado = $( "#presis_retirobundle_retiro_gestioncel_muleto option:selected" ).text();
+            CheckMuleto(muletoEstado);
+
+            /*var placaSwapEstado = $( "#presis_retirobundle_retiro_gestioncel_placaswap option:selected" ).text();
+            CheckPlacaSwap(placaSwapEstado);*/
+
+            $("#presis_retirobundle_retiro_gestioncel_aceptacargos").change(function(){
+                var aceptacargosEstado = $( "#presis_retirobundle_retiro_gestioncel_aceptacargos option:selected" ).text();
+                CheckAceptaCambios(aceptacargosEstado);
+            });
+
+            $("#presis_retirobundle_retiro_gestioncel_muleto").change(function(){
+                var muletoEstado = $( "#presis_retirobundle_retiro_gestioncel_muleto option:selected" ).text();
+                CheckMuleto(muletoEstado);
+
+            });
+
+            /*$("#presis_retirobundle_retiro_gestioncel_placaswap").change(function(){
+                var placaSwapEstado = $( "#presis_retirobundle_retiro_gestioncel_placaswap option:selected" ).text();
+                CheckPlacaSwap(placaSwapEstado);
+            });*/
+
+
+            //____________________________________________________________________
+
+            $("#presis_retirobundle_retiro_datosenvios_remitente").select2();
+            $("#presis_retirobundle_retiro_datosenvios_destinatario").select2();
+            $("#presis_retirobundle_retiro_datosenvios_cliente").select2();
+
+            var $cliente = $("select[id*='datosenvios_cliente']");
+            var $alto = 0;
+            var $largo = 0;
+            var $ancho = 0;
+            var $porcentajeSeguro = 0;
+            var $seguroMinimo = 0;
+            var $seguroPorDefecto = 0;
+            var $contrareembolsoEfectivo = 0;
+            var $contrareembolsoCheque = 0;
+            var $is_porcentaje='';
+            var $tipo_facturacion='peso';
+            var $tipo_cobro='peso';
+
+            var $bultos = $( "input[id*='datosenvios_bultos']" );
+            var $cpRemitente = $("input[id*='sender_cp']");
+            var $cpDestinatario = $("input[id*='comprador_cp']");
+            var $peso = $("input[id*='datosenvios_peso']");
+            var $alto = $("input[id*='datosenvios_alto']");
+            var $largo = $("input[id*='datosenvios_largo']");
+            var $ancho = $("input[id*='datosenvios_ancho']");
+            $alto.val(0);
+            $largo.val(0);
+            $ancho.val(0);
+            var $pesoVolumetrico = $("input[id*='datosenvios_volumen']");
+            $volumetricoReal = $("input[id*='datosenvios_pesoVolumetrico']");
+            $volumetricoReal.val(0);
+            var $contrareembolso = $('#presis_retirobundle_retiro_datosenvios_contrareembolso');
+            $contrareembolso.val(0);
+            var $chkContrareembolsoManual = $('#presis_retirobundle_retiro_datosenvios_contrareembolsoManual');
+            var $costoContrareembolso = $('#presis_retirobundle_retiro_datosenvios_costoPorContrareembolso');
+            var $costoSeguro = $('#presis_retirobundle_retiro_datosenvios_seguro');
+            var $chkSeguroManual = $('#presis_retirobundle_retiro_datosenvios_seguroManual');
+            var $kms = $('#presis_retirobundle_retiro_comprador_kms');
+
+            /*$("#presis_retirobundle_retiro_submit").click(function(event){
+                calcularCostoFlete();
+                calcularPesoVolumetrico();
+                $('form[name="presis_retirobundle_retiro"]').submit();
+            });*/
+
+
+            $('#presis_retirobundle_retiro_datosenvios_bultos').numeric();
+
+            $('#presis_retirobundle_retiro_datosenvios_bultos').keyup(function (){
+                this.value = (this.value + '').replace(/[^0-9]/g, '');
+            });
+
+            /*=====================================================================================================*/
+            $("#presis_retirobundle_retiro_datosenvios_cliente").change(function() {
+                var data = {
+                    cliente_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("cecos_select") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_retirobundle_retiro_datosenvios_ceco');
+                        $city_selector.html('<option>Cecos</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.id + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });
+            /*=====================================================================================================*/
+            /*=====================================================================================================*/
+            /*$("#presis_retirobundle_retiro_gestioncel_fabricante").change(function() {
+                var data = {
+                    fabricante_id: $(this).val()
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path("modelos_select") }}',
+                    data: data,
+                    success: function(data) {
+                        var $city_selector = $('#presis_retirobundle_retiro_gestioncel_modelo');
+                        $city_selector.html('<option>Cecos</option>');
+                        $.each($.parseJSON(data), function (key,value) {
+                            $city_selector.append('<option value="' + value.descripcion + '">' + value.descripcion + '</option>');
+                        });
+                    }
+                });
+            });*/
+            /*=====================================================================================================*/
+
+
+            $("input[name*='debeRetirarse']").change(function() {
+                if(!$(this).is(':checked')) {
+                    BootstrapDialog.show({message: "Al destildar esta opción el pedido no será para retirar"});
+                }
+            });
+
+            //$('#presis_retirobundle_retiro_submit').attr("disabled", true);
+
+            $chkContrareembolsoManual.click(function(){
+                $costoContrareembolso.prop('readonly', !this.checked);
+                if(this.checked) {
+                    $costoContrareembolso.focus();
+                    $costoContrareembolso.select();
+                } else {
+                    calcularContrareembolso();
+                }
+            });
+
+            $chkSeguroManual.click(function(){
+                $costoSeguro.prop('readonly', !this.checked);
+                if(this.checked) {
+                    $costoSeguro.focus();
+                    $costoSeguro.select();
+                } else {
+                    calcularSeguro();
+                }
+            });
+
+            $src.click(function(){
+                $costoRemitoConforme.prop('readonly', !this.checked);
+                if(this.checked) {
+                    $costoRemitoConforme.focus();
+                    $costoRemitoConforme.select();
+                } else {
+                    $costoRemitoConforme.val(forceFloat($srcCliente).toFixed(2));
+                    calcularTotal();
+                }
+            });
+
+            var calcularCostoFlete = function () {
+                var $ruta;
+                var $parametros;
+                switch ($tipo_cobro) {
+                    case 'distancia':
+                        if(!($bultos.val() > 0)) {
+                            $flete.val('0.00');
+                            return;
+                        }
+                        $ruta = 'datosenvios_getFleteRangoPeso';
+                        $parametros = {
+                            id_cliente: $cliente.val(),
+                            bultos: $bultos.val(),
+                            peso: $pesoVolumetrico.val(),
+                            servicio: $("select[id*='datosenvios_servicio']").val(),
+                            cpRemitente: $cpRemitente.val(),
+                            cpDestinatario: $cpDestinatario.val(),
+                            kms: $("#presis_retirobundle_retiro_comprador_kms").val(),
+                        };
+                        break;
+                    case 'bulto':
+                        if(!($bultos.val() > 0)) {
+                            $flete.val('0.00');
+                            return;
+                        }
+                        $ruta = 'datosenvios_getfletebultos';
+                        $parametros = {
+                            id_cliente: $cliente.val(),
+                            bultos: $bultos.val(),
+                            servicio: $("select[id*='datosenvios_servicio']").val(),
+                            cpRemitente: $cpRemitente.val(),
+                            cpDestinatario: $cpDestinatario.val(),
+                        };
+                        break;
+                    case 'valordeclarado':
+                        $ruta = 'datosenvios_getfletevalordeclarado';
+                        $parametros = {
+                            valor_declarado: forceFloat($valorDeclarado.val()),
+                            id_cliente: $cliente.val(),
+                        };
+                        break;
+                    default:
+                        if(
+                                ($peso.val()  +
+                                $alto.val()  +
+                                $largo.val() +
+                                $ancho.val()) == 0
+                        ) {
+                            $flete.val('0.00');
+                            return;
+                        }
+                        $ruta = 'datosenvios_getfletepeso';
+                        $parametros = {
+                            id_cliente: $cliente.val(),
+                            peso: $pesoVolumetrico.val(),
+                            servicio: $("select[id*='datosenvios_servicio']").val(),
+                            cpRemitente: $cpRemitente.val(),
+                            cpDestinatario: $cpDestinatario.val(),
+                        };
+                }
+                $.blockUI({message: "<h3>Recalculando...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate($ruta),
+                    data: $parametros,
+                    success: function (data) {
+                        data = forceFloat(data);
+                        $flete.val(data.toFixed(2));
+                        calcularTotal();
+                        $.unblockUI();
+                    }
+                });
+            };
+
+            var calcularSeguro = function () {
+                if(!$chkSeguroManual.is(':checked')) {
+                    var $vd = $valorDeclarado.val();
+                    $.ajax({
+                        type: "POST",
+                        url: Routing.generate('datosenvios_getseguro'),
+                        data: {
+                            valor_declarado: $vd,
+                            id_cliente: $cliente.val()
+                        },
+                        success: function (data) {
+                            if($("#empresaA").val()!='fasttrack'){
+                                if($zonaDestino!='INT'){
+                                    $costoSeguro.val("0");
+                                }else{
+                                    $costoSeguro.val(data);
+                                }
+                            }else{
+                                $costoSeguro.val(data);
+                            }
+                            calcularTotal();
+                        }
+                    });
+                }
+            };
+
+            var calcularContrareembolso = function () {
+                if(!$chkContrareembolsoManual.is(':checked')) {
+                    var $valor = 0;
+                    var $valorContraReembolso = Number($contrareembolso.val());
+                    if($valorContraReembolso) {
+                        if($is_porcentaje=='SI'){
+                            $suma = parseFloat($contrareembolsoEfectivo)+parseFloat($contrareembolsoCheque);
+                            $valor = ($valorContraReembolso*$suma)/100;
+                        }else{
+                            $valor = parseFloat($contrareembolsoEfectivo)+parseFloat($contrareembolsoCheque);
+                        }
+                    }
+
+                    $costoContrareembolso.val(forceFloat($valor).toFixed(2));
+                    calcularTotal();
+                }
+            };
+
+            var calcularFleteYSeguro = function () {
+                calcularCostoFlete();
+                calcularSeguro();
+            };
+
+            $valorDeclarado.change(calcularFleteYSeguro);
+            $bultos.change(calcularCostoFlete);
+            $("select[id*='datosenvios_servicio']").change(calcularCostoFlete);
+            $cpRemitente.change(function () {
+                habilitarSubmit();
+                calcularCostoFlete();
+                selectServicioAdecuado();
+            });
+            $cpDestinatario.change(function () {
+                calcularCostoFlete();
+                selectServicioAdecuado();
+                habilitarSubmit();
+            });
+            $contrareembolso.change(calcularContrareembolso);
+
+            function habilitarSubmit() {
+                if($cpRemitente.val() && $cpDestinatario.val()) {
+                    $.ajax({
+                        type: "POST",
+                        url: Routing.generate("datosenvios_verificar_cp"),
+                        data: {cp: $cpRemitente.val()},
+                        success: function () {
+                            $.ajax({
+                                type: "POST",
+                                url: Routing.generate("datosenvios_verificar_cp"),
+                                data: {cp: $cpDestinatario.val()},
+                                success: function (data) {
+                                    $zonaDestino = data;
+                                    if($("#empresaA").val()!='fasttrack'){
+                                        if($.trim(data)!='INT'){
+                                            $('#presis_retirobundle_retiro_datosenvios_seguro').val('0');
+                                        }
+                                    }
+                                    //$('#presis_retirobundle_retiro_submit').attr("disabled", false);
+                                },
+                                error: function (error) {
+                                    //$('#presis_retirobundle_retiro_submit').attr("disabled", true);
+                                    showPopover($cpDestinatario, error.responseText);
+                                    $cpDestinatario.focus();
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            //$('#presis_retirobundle_retiro_submit').attr("disabled", true);
+                            showPopover($cpRemitente, error.responseText);
+                            $cpRemitente.focus();
+                        }
+                    });
+                }
+            }
+
+            $cliente.change(function () {
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                if($(this).val()==''){
+                    $.unblockUI();
+                    return false;
+                }
+                //buscarRemitentes($(this).val());
+                //buscarDestinatarios($(this).val());
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('cliente_find', {id: $(this).val()}),
+                    data: "",
+                    success: function (data) {
+                        $("#presis_retirobundle_retiro_datosenvios_formaPago").val(data['formaPago']);
+                        $("#presis_retirobundle_retiro_datosenvios_nroCta").val(data['nroCta']);
+                        $aforo = data['aforo'];
+                        $porcentajeSeguro = data['porcentajeSeguro'];
+                        $seguroMinimo = data['seguroMinimo'];
+                        $seguroPorDefecto = data['seguroPorDefecto'];
+                        $contrareembolsoEfectivo = data['contrareembolsoEfectivo'];
+                        $contrareembolsoCheque = data['contrareembolsoCheque'];
+                        $is_porcentaje = (data['is_porcentaje'])? "SI": "NO";
+                        if(data['tipoFacturacion']) $tipo_facturacion = data['tipoFacturacion'];
+                        if(data['tipoDeCobro']) $tipo_cobro = data['tipoDeCobro'];
+                        if($tipo_cobro === "peso") calcularPesoVolumetrico();
+                        $srcCliente = data['monto_servicio'];
+                        if(!$src.is(':checked')) {
+                            $costoRemitoConforme.val(forceFloat($srcCliente).toFixed(2));
+                        }
+                        $("#presis_retirobundle_retiro_datosenvios_montoGuiaWeb").val(forceFloat(data['monto_guia_web']).toFixed(2));
+                        calcularFleteYSeguro();
+                        calcularContrareembolso();
+                        calcularTotal();
+                        $.unblockUI();
+                        $("#presis_retirobundle_retiro_remito").focus();
+                    }
+                });
+
+                var $form = $(this).closest('form');
+                var data = {};
+                data[$cliente.attr('name')] = $cliente.val();
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    success: function(html) {
+                        $('#presis_retirobundle_retiro_datosenvios_servicio').replaceWith(
+                                $(html).find('#presis_retirobundle_retiro_datosenvios_servicio')
+                        );
+                        $("select[id*='datosenvios_servicio']").change(calcularCostoFlete);
+                    }
+                });
+                selectServicioAdecuado();
+            });
+
+            $("#presis_retirobundle_retiro_datosenvios_remitente").change(function () {
+                if ($("#presis_datosenviosbundle_datosenvios_remitente").val() == '') {
+                    $("#presis_datosenviosbundle_datosenvios_sender_codigo").val('')
+                    $("#presis_datosenviosbundle_datosenvios_sender_empresa").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_remitente").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_calle").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_altura").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_piso").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_dpto").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_localidad").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_provincia").val('');
+                    $("#presis_datosenviosbundle_datosenvios_sender_cp").val('');
+                    $("#presis_retirobundle_retiro_sender_celular").val('');
+                    $("#presis_retirobundle_retiro_sender_email").val('');
+                    return false
+                }
+                $.blockUI({message: '<h2>Buscando datos...</h2>'});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('remitente_find', {id: $(this).val()}),
+                    data: "",
+                    success: function (data) {
+                        $("#presis_retirobundle_retiro_sender_codigo").val(data['codigo'])
+                        $("#presis_retirobundle_retiro_sender_empresa").val(data['empresa']);
+                        $("#presis_retirobundle_retiro_sender_remitente").val(data['remitente']);
+                        $("#presis_retirobundle_retiro_sender_calle").val(data['calle']);
+                        $("#presis_retirobundle_retiro_sender_altura").val(data['altura']);
+                        $("#presis_retirobundle_retiro_sender_piso").val(data['piso']);
+                        $("#presis_retirobundle_retiro_sender_depto").val(data['dpto']);
+                        $("#presis_retirobundle_retiro_sender_localidad").val(data['localidad']);
+                        $("#presis_retirobundle_retiro_sender_provincia").val(data['provincia']);
+                        $("#presis_retirobundle_retiro_sender_cp").val(data['cp']);
+                        $("#presis_retirobundle_retiro_sender_celular").val(data['celular']);
+                        $("#presis_retirobundle_retiro_sender_email").val(data['email']);
+                        habilitarSubmit();
+                        selectServicioAdecuado();
+                        calcularCostoFlete();
+                        calcularPesoVolumetrico();
+                        //$.unblockUI();
+                    }
+                });
+            });
+
+
+            $("#presis_retirobundle_retiro_datosenvios_destinatario").change(function () {
+                if ($("#presis_retirobundle_retiro_datosenvios_destinatario").val() == '') {
+                    $("#presis_retirobundle_retiro_comprador_codigo").val('')
+                    $("#presis_retirobundle_retiro_comprador_empresa").val('');
+                    $("#presis_retirobundle_retiro_comprador_apellidoNombre").val('');
+                    $("#presis_retirobundle_retiro_comprador_calle").val('');
+                    $("#presis_retirobundle_retiro_comprador_altura").val('');
+                    $("#presis_retirobundle_retiro_comprador_piso").val('');
+                    $("#presis_retirobundle_retiro_comprador_dpto").val('');
+                    $("#presis_retirobundle_retiro_comprador_localidad").val('');
+                    $("#presis_retirobundle_retiro_comprador_provincia").val('');
+                    $("#presis_retirobundle_retiro_comprador_cp").val('');
+                    $("#presis_retirobundle_retiro_comprador_celular").val('');
+                    $("#presis_retirobundle_retiro_comprador_email").val('');
+                    $("#presis_retirobundle_retiro_comprador_otherInfo").val('');
+                    $("#presis_retirobundle_retiro_comprador_apenom").val('');
+                    $("#presis_retirobundle_retiro_comprador_kms").val('');
+                    $("#presis_retirobundle_retiro_comprador_cuit").val('');
+                    return false
+                }
+                $.blockUI({message: '<h2>Buscando datos...</h2>'});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('destinatarios_show', {id: $(this).val()}),
+                    data: "",
+                    success: function (data) {
+                        $("#presis_retirobundle_retiro_comprador_codigo").val(data['codigo'])
+                        $("#presis_retirobundle_retiro_comprador_empresa").val(data['empresa']);
+                        $("#presis_retirobundle_retiro_comprador_apellidoNombre").val(data['apellidoNombre']);
+                        $("#presis_retirobundle_retiro_comprador_calle").val(data['calle']);
+                        $("#presis_retirobundle_retiro_comprador_altura").val(data['altura']);
+                        $("#presis_retirobundle_retiro_comprador_piso").val(data['piso']);
+                        $("#presis_retirobundle_retiro_comprador_dpto").val(data['dpto']);
+                        $("#presis_retirobundle_retiro_comprador_localidad").val(data['localidad']);
+                        $("#presis_retirobundle_retiro_comprador_provincia").val(data['provincia']);
+                        $("#presis_retirobundle_retiro_comprador_cp").val(data['cp']);
+                        habilitarSubmit();
+                        $("#presis_retirobundle_retiro_comprador_celular").val(data['celular']);
+                        $("#presis_retirobundle_retiro_comprador_email").val(data['mail']);
+                        $("#presis_retirobundle_retiro_comprador_otherInfo").val(data['otherInfo']);
+                        $("#presis_retirobundle_retiro_comprador_apenom").val(data['apellidoNombre']);
+                        $("#presis_retirobundle_retiro_comprador_kms").val(data['kms']);
+                        $("#presis_retirobundle_retiro_comprador_cuit").val(data['cuit']);
+                        selectServicioAdecuado();
+                        calcularCostoFlete();
+                        calcularPesoVolumetrico();
+                        //$.unblockUI();
+                    }
+                });
+            });
+
+            $kms.change(function(){
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            $bultos.change(function(){
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            $peso.change(function () {
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            $alto.change(function () {
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            $ancho.change(function () {
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            $largo.change(function () {
+                calcularPesoVolumetrico();
+                calcularVolumetricoReal();
+            });
+
+            var calcularPesoVolumetrico = function () {
+                $.blockUI({message: "<h3>Recalculando...</h3>"});
+                $.ajax({
+                    method: "POST",
+                    url: Routing.generate('datosenvios_calcular_peso'),
+                    data: {
+                        id_cliente: $cliente.val(),
+                        bultos: $bultos.val(),
+                        peso: $peso.val(),
+                        alto: $alto.val(),
+                        largo: $largo.val(),
+                        ancho: $ancho.val()
+                    }
+                }).done(function( data ) {
+                    data = parseFloat(data);
+                    $pesoVolumetrico.val(data.toFixed(2));
+                    calcularCostoFlete();
+                    $.unblockUI();
+                });
+            };
+
+            var selectServicioAdecuado = function () {
+                $id_cliente = $cliente.val();
+                $sender_cp = $cpRemitente.val();
+                $comprador_cp = $cpDestinatario.val();
+
+                if($id_cliente && $sender_cp && $comprador_cp) {
+                    $.ajax({
+                        method: "POST",
+                        url: Routing.generate('datosenvios_servicio_adecuado'),
+                        data: {
+                            id_cliente: $id_cliente,
+                            sender_cp: $sender_cp,
+                            comprador_cp: $comprador_cp
+                        }
+                    }).done(function (data) {
+                        $("select[id*='datosenvios_servicio']").val(data);
+                    });
+                }
+            };
+        });
+
+        /*function buscarRemitentes($cliente_id){
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('remitente_getComboRemitente', {id: $cliente_id}),
+                data: "",
+                dataType: 'json',
+                success: function (data) {
+                    //presis_retirobundle_retiro_datosenvios_remitente
+                    $("#presis_retirobundle_retiro_datosenvios_remitente").empty();
+                        $.each(data, function(id,value){
+                            $("#presis_retirobundle_retiro_datosenvios_remitente").append('<option value="'+value.id+'">'+value.empresa+'</option>');
+                        });
+                }
+            });
+        }
+        function buscarDestinatarios($cliente_id){
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('destinatarios_getComboDestinatario', {id: $cliente_id}),
+                data: "",
+                dataType: 'json',
+                success: function (data) {
+                    //presis_retirobundle_retiro_datosenvios_remitente
+                    $("#presis_retirobundle_retiro_datosenvios_destinatario").empty();
+                    $.each(data, function(id,value){
+                        $("#presis_retirobundle_retiro_datosenvios_destinatario").append('<option value="'+value.id+'">'+value.empresa+'</option>');
+                    });
+                }
+            });
+        }*/
+
+        function calcularVolumetricoReal(){
+            var $bultosA = $("input[id*='datosenvios_bultos']").val();
+            var $altoA = $("input[id*='datosenvios_alto']").val();
+            var $largoA = $("input[id*='datosenvios_largo']").val();
+            var $anchoA = $("input[id*='datosenvios_ancho']").val();
+            $total = ((forceFloat($altoA)*forceFloat($largoA)*forceFloat($anchoA))/forceFloat($aforo))*forceFloat($bultosA);
+            $volumetricoReal.val($total);
+        }
+
+        function calcularTotal() {
+            $seguro = $("#presis_retirobundle_retiro_datosenvios_seguro").val();
+            $conceptoContrareembolso = $("#presis_retirobundle_retiro_datosenvios_costoPorContrareembolso").val();
+            $custodia = $("#presis_retirobundle_retiro_datosenvios_custodia").val();
+            $montoGuiaWeb = $("#presis_retirobundle_retiro_datosenvios_montoGuiaWeb").val();
+            $despachoAExpreso = $("#presis_retirobundle_retiro_datosenvios_costoDespachoAExpreso").val();
+            $remitoConforme = $("#presis_retirobundle_retiro_datosenvios_costoPorRemitoConforme").val();
+            $costoMonitoreoActivo = $("#presis_retirobundle_retiro_datosenvios_costoPorMonitoreoActivo").val();
+            $adicional1 = $("#presis_retirobundle_retiro_datosenvios_costoAdicional1").val();
+            $adicional2 = $("#presis_retirobundle_retiro_datosenvios_costoAdicional2").val();
+            $adicional3 = $("#presis_retirobundle_retiro_datosenvios_costoAdicional3").val();
+            $total = forceFloat($seguro) +
+                     forceFloat($conceptoContrareembolso) +
+                     forceFloat($custodia) +
+                     forceFloat($flete.val()) +
+                     forceFloat($montoGuiaWeb) +
+                     forceFloat($despachoAExpreso) +
+                     forceFloat($remitoConforme) +
+                     forceFloat($costoMonitoreoActivo) +
+                     forceFloat($adicional1) +
+                     forceFloat($adicional2) +
+                     forceFloat($adicional3)
+            ;
+            $("#presis_retirobundle_retiro_datosenvios_totalFlete").val($total.toFixed(2));
+        }
+
+        //agrego algnas funciones inicio
+
+        function CheckAceptaCambios(estado){
+            if(estado == "SI"){
+                $("#presis_retirobundle_retiro_gestioncel_nivelderep").removeAttr('disabled');
+                $('#presis_retirobundle_retiro_gestioncel_nivelderep option[value="NIVEL 4"]').attr("selected", true);
+            }else{
+                $("#presis_retirobundle_retiro_gestioncel_nivelderep").attr('disabled','disabled');
+            }
+        }
+
+        function CheckMuleto(estado){
+            if(estado == "SI"){
+                $("#presis_retirobundle_retiro_gestioncel_imeimuleto").removeAttr('disabled');
+            }else{
+                $("#presis_retirobundle_retiro_gestioncel_imeimuleto").attr('disabled','disabled');
+            }
+        }
+
+        function CheckPlacaSwap(estado){
+            if(estado == "SI"){
+                $("#presis_retirobundle_retiro_gestioncel_nroimei").removeAttr('disabled');
+            }else{
+                $("#presis_retirobundle_retiro_gestioncel_nroimei").attr('disabled','disabled');
+            }
+        }
+        //agrego algunas funciones fin
+    </script>
+{% endblock %}

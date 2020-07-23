@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    {% for distribuidor in entity.distribuidor %}
+        <li>{{ distribuidor.id}}</li>
+    {% endfor %}
+{% endblock %}

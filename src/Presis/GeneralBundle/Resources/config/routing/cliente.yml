@@ -1,0 +1,49 @@
+cliente:
+    path:     /index
+    defaults: { _controller: "PresisGeneralBundle:Cliente:index" }
+
+cliente_show:
+    path:     /{id}/show
+    defaults: { _controller: "PresisGeneralBundle:Cliente:show" }
+    options:
+      expose: true
+cliente_find:
+    path:     /{id}/find
+    defaults: { _controller: "PresisGeneralBundle:Cliente:find" }
+    options:
+      expose: true      
+cliente_new:
+    path:     /new
+    defaults: { _controller: "PresisGeneralBundle:Cliente:new" }
+cliente_ajax:
+    path:     /ajax
+    defaults: { _controller: "PresisGeneralBundle:Cliente:ajax" }
+    options:
+      expose: true
+cliente_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "PresisGeneralBundle:Cliente:ajax4select" }
+    options:
+      expose: true
+cliente_create:
+    path:     /create
+    defaults: { _controller: "PresisGeneralBundle:Cliente:create" }
+    requirements: { _method: post }
+
+cliente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "PresisGeneralBundle:Cliente:edit" }
+    options:
+      expose: true
+cliente_update:
+    path:     /{id}/update
+    defaults: { _controller: "PresisGeneralBundle:Cliente:update" }
+    requirements: { _method: post|put }
+
+cliente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "PresisGeneralBundle:Cliente:delete" }
+    requirements: { _method: post|delete }
+cliente_search:
+    path:     /search
+    defaults: { _controller: "PresisGeneralBundle:Cliente:search" }

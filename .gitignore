@@ -1,0 +1,12 @@
+/vendor/*
+/app/cache/*
+/.idea/*
+/app/logs/*
+*~
+/nbproject/*
+/app/config/parameters.yml
+*.db
+/web/uploads/documents/*
+/web/bundles/*
+/javi/*
+/node_modules/

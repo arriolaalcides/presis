@@ -1,0 +1,36 @@
+cecos:
+    path:     /
+    defaults: { _controller: "CecosBundle:Cecos:index" }
+
+cecos_show:
+    path:     /{id}/show
+    defaults: { _controller: "CecosBundle:Cecos:show" }
+
+cecos_new:
+    path:     /new
+    defaults: { _controller: "CecosBundle:Cecos:new" }
+
+cecos_create:
+    path:     /create
+    defaults: { _controller: "CecosBundle:Cecos:create" }
+    methods:  POST
+
+cecos_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "CecosBundle:Cecos:edit" }
+
+cecos_update:
+    path:     /{id}/update
+    defaults: { _controller: "CecosBundle:Cecos:update" }
+    methods:  [POST, PUT]
+
+cecos_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "CecosBundle:Cecos:delete" }
+    methods:  [POST, DELETE]
+
+cecos_select:
+    path:     /select_cecos
+    defaults: { _controller: "CecosBundle:Cecos:select" }
+    options:
+      expose: true

@@ -1,0 +1,228 @@
+{% extends '::base.html.twig' %}
+    {% block contenido %}
+        <form id="form">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title pull-left">Carga Gestion Galander</h3>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label class="control-label" for="imei">Nro Guia</label>
+                                <input type="text" id="tracking" name="tracking" required="required" maxlength="15" class="form-control input-sm" required />
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="control-label" for="imei">Número de IMEI(15 caracteres)(*)</label>
+                                <input type="text" id="imei" name="imei" maxlength="15" class="form-control input-sm" required />
+                            </div>
+                            <div class="col-sm-2">
+                                {{ form_row(form.estadointervencion,{ 'label_col': 2, 'widget_col': 2})}}
+                            </div>
+                            <div class="col-sm-3">
+                                {{ form_row(form.certificadoreparador,{ 'label_col': 2, 'widget_col': 2})}}
+                            </div>
+                            <div class="col-sm-2">
+                                {{ form_row(form.placaswap,{ 'label_col': 2, 'widget_col': 2})}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                {{ form_row(form.nroimei,{ 'label_col': 2, 'widget_col': 3, 'attr':{'disabled':'disabled'} })}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-lg-offset-5">
+                                <button id="actualizar" name="actualizar" class="btn btn-success btn-block btn-primary">FINALIZAR GESTION</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <div class="container-fluid">
+            <table id="retiros" style="font-size: 10px;"
+                   data-toggle="table"
+                   data-show-export="true"
+                    data-toolbar="#toolbar"
+                    data-height="650"
+                    data-select-item-name ="btSelectItem"
+                    data-checkbox-header ="true"
+                    data-side-pagination="server"
+                    data-pagination="true"
+                    data-page-list="[10, 25, 50, 100, All]"
+               data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-field="fOrigen" data-sortable="true" data-filter-control="select">Fecha</th>
+                    <th data-field="id" data-sortable="true" data-filter-control="input">Nro. Guia</th>
+                    <th data-field="clientenombre" data-sortable="true" data-filter-control="select">Empresa</th>
+                    <th data-field="nombreApellidoMovistar" data-sortable="true" data-filter-control="select">Cliente</th>
+                    <th data-field="imei" data-sortable="true" data-filter-control="input">Imei</th>
+                    <th data-field="fabricante" data-sortable="true" data-filter-control="select">Fabricante</th>
+                    <th data-field="modelo" data-sortable="true" data-filter-control="select">Modelo</th>
+                    <th data-field="servicioMaslo" data-sortable="true" data-filter-control="select">Servicio</th>
+                    <th data-field="servicioMovistar" data-sortable="true" data-filter-control="select">Serv.Mov.</th>
+                    <th data-field="estadoMovistar" data-sortable="true" data-filter-control="select">Estado</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+    {% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script type="text/javascript" src="{{ asset('js/readonly.js') }}"></script>
+        <script src="{{ asset('bundles/presisgeneral/js/bootstrap-table-filter-control.js') }}"></script>
+
+        <script type="text/javascript">
+
+            var $table = $('#retiros');
+            var $pagina = 0;
+            var $limite = 10;
+
+            $(function () {
+                buildTable($table, 20, 20);
+                $('#fixedNumber').change(function () {
+                    buildTable($table, 20, 20);
+                });
+            });
+
+            function buildTable($el, cells, rows) {
+                $el.bootstrapTable('destroy').bootstrapTable({
+                    toolbar: '.toolbar'
+                });
+            }
+
+            $(document).ready(function(){
+                $table.bootstrapTable()
+                        .on('page-change.bs.table', function (event, page, limit) {
+                        $pagina = page - 1;
+                        $limite = limit;
+
+                        cargarGrilla();
+                    });
+                cargarGrilla();
+
+                //____________________________________________________________________
+
+                var placaSwapEstado = $( "#presis_gestioncelbundle_gestioncel_placaswap option:selected" ).text();
+                CheckPlacaSwap(placaSwapEstado);
+
+                $("#presis_gestioncelbundle_gestioncel_placaswap").change(function(){
+                    var placaSwapEstado = $( "#presis_gestioncelbundle_gestioncel_placaswap option:selected" ).text();
+                    CheckPlacaSwap(placaSwapEstado);
+                });
+
+                //____________________________________________________________________
+
+                $("#actualizar").click(function(event){
+                    if ($("#tracking").val() != '' && $("#imei").val() != '' ){
+                        //alert("se cumplio");
+                    event.preventDefault();
+                    $.blockUI({message: "<h2>Actualizando datos...</h2>"});
+                    $.ajax({
+                        url: Routing.generate("gestioncel_update"),
+                        type: 'POST',
+                        data: $("#form").serialize(),
+                        success: function (data) {
+                            
+                            if(data==1){
+                                BootstrapDialog.show({
+                                    title: 'Error',
+                                    message: 'Nro. de Guia inexistente'
+                                });
+                            }
+                            if(data==2){
+                                BootstrapDialog.show({
+                                    title: 'Error',
+                                    message: 'Nro. de Guia no coincide con numero de imei'
+                                });
+                            }
+                            if(data!=4 && data!=2 && data!=1 && data!=5){
+                                BootstrapDialog.show({
+                                    title: 'Atención',
+                                    message: 'Datos actualizados con exito'
+                                });
+                            }
+                            if(data==4){
+                                BootstrapDialog.show({
+                                    title: 'Error',
+                                    message: 'La guia no se encuentra con estado INGRESO AL HUB'
+                                });
+                            }
+                            if(data==5){
+                                BootstrapDialog.show({
+                                    title: 'Atencion',
+                                    message: 'Guia modificada a EQUIPO PARA AUDITORIA/CONCILIACION '
+                                });
+                            }
+                            
+                            $("#imei").val('');
+                            $("#tracking").val('');
+                            $("#presis_gestioncelbundle_gestioncel_certificadoreparador").val('');
+                            $("#presis_gestioncelbundle_gestioncel_nroimei").val('');
+                            
+                            
+                            $.unblockUI();
+                            /*$table.bootstrapTable('refresh', {
+                                url: Routing.generate('datosenvios_pendientes_de_informar_galander')
+                            });*/
+                            cargarGrilla();
+                        },
+                        error: function (error) {
+                            BootstrapDialog.show({
+                                title: 'Error',
+                                message: error.responseText
+                            });
+                        }
+                    });
+                    }
+                });
+
+                
+            });//FIN DEL DOCUMENTO
+
+            //agrego algnas funciones inicio
+            function CheckPlacaSwap(estado){
+                if(estado == "SI"){
+                    $("#presis_gestioncelbundle_gestioncel_nroimei").removeAttr('disabled');
+                }else{
+                    $("#presis_gestioncelbundle_gestioncel_nroimei").attr('disabled','disabled');
+                }
+            }
+            //agrego algunas funciones fin
+
+            var cargarGrilla = function(){
+                $.blockUI({message: "<h3>Buscando datos...</h3>"});
+                $.ajax({
+                    type: "POST",
+                    url: Routing.generate('datosenvios_pendientes_de_informar_galander'),
+                    data: obtenerDatos(),
+                    success: function(data)
+                    {
+                        var data = JSON.parse(data);
+
+                        $table.bootstrapTable('load', data);
+                        $table.bootstrapTable('refresh', {silent: true});
+                        $.unblockUI();
+                    },
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        $.unblockUI();
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            }
+
+            var obtenerDatos = function(){
+                return {servicioMaslo:$("#servicioMaslo").val(), servicioMovi: $("#servicioMovi").val(), sucursal: $("#sucursal").val(), pagina: $pagina, limite: $limite};
+            }
+
+        </script>
+    {% endblock %}

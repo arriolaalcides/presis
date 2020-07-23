@@ -1,0 +1,156 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Expreso</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigo</th>
+                <td>{{ entity.codigo }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ entity.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Localidad</th>
+                <td>{{ entity.localidad }}</td>
+            </tr>
+            <tr>
+                <th>Provincia</th>
+                <td>{{ entity.provincia }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ entity.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Telefono2</th>
+                <td>{{ entity.telefono2 }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ entity.cp }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ entity.mail }}</td>
+            </tr>
+            <tr>
+                <th>Web</th>
+                <td>{{ entity.web }}</td>
+            </tr>
+            <tr>
+                <th>Cuit</th>
+                <td>{{ entity.cuit }}</td>
+            </tr>
+            <tr>
+                <th>Encargado</th>
+                <td>{{ entity.encargado }}</td>
+            </tr>
+            <tr>
+                <th>Horario</th>
+                <td>{{ entity.horario }}</td>
+            </tr>
+            <tr>
+                <th>Codigos</th>
+                <td>{{ entity.codigos }}</td>
+            </tr>
+            <tr>
+                <th>Alta</th>
+                <td>{{ entity.alta|date('d/m/Y H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ entity.estado }}</td>
+            </tr>
+            <tr>
+                <th>Medio</th>
+                <td>{{ entity.medio }}</td>
+            </tr>
+            <tr>
+                <th>Descripcionservicio</th>
+                <td>{{ entity.descripcionServicio }}</td>
+            </tr>
+            <tr>
+                <th>Otrosdatos</th>
+                <td>{{ entity.otrosDatos }}</td>
+            </tr>
+            <tr>
+                <th>Fechaalta</th>
+                <td>{{ entity.fechaAlta|date('d/m/Y H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Const</th>
+                <td>{{ entity.const }}</td>
+            </tr>
+            <tr>
+                <th>Zonasatencion</th>
+                <td>{{ entity.zonasAtencion }}</td>
+            </tr>
+            <tr>
+                <th>Contacto</th>
+                <td>{{ entity.contacto }}</td>
+            </tr>
+            <tr>
+                <th>Finishing</th>
+                <td>{{ entity.finishing }}</td>
+            </tr>
+            <tr>
+                <th>Ip</th>
+                <td>{{ entity.ip }}</td>
+            </tr>
+            <tr>
+                <th>Codigoempleado</th>
+                <td>{{ entity.codigoEmpleado }}</td>
+            </tr>
+            <tr>
+                <th>Empleado</th>
+                <td>{{ entity.empleado }}</td>
+            </tr>
+            <tr>
+                <th>Sucursal</th>
+                <td>{{ entity.sucursal }}</td>
+            </tr>
+            <tr>
+                <th>Esexpreso</th>
+                <td>{{ entity.esExpreso }}</td>
+            </tr>
+            <tr>
+                <th>Zona</th>
+                <td>{{ entity.zona }}</td>
+            </tr>
+            <tr>
+                <th>Cuentacorriente</th>
+                <td>{{ entity.cuentaCorriente }}</td>
+            </tr>
+            <tr>
+                <th>Ddn</th>
+                <td>{{ entity.ddn }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('expreso') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('expreso_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

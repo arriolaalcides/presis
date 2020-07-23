@@ -1,0 +1,31 @@
+presis_general_pesorangoexcedente:
+    resource: "@PresisGeneralBundle/Resources/config/routing/pesorangoexcedente.yml"
+    prefix:   /pesorangoexcedente
+
+presis_general_bultoexcedente:
+    resource: "@PresisGeneralBundle/Resources/config/routing/bultoexcedente.yml"
+    prefix:   /bultoexcedente
+
+
+presis_general_categoria:
+    resource: "@PresisGeneralBundle/Resources/config/routing/categoria.yml"
+    prefix:   /categoria
+
+
+presis_general_cliente:
+    resource: "@PresisGeneralBundle/Resources/config/routing/cliente.yml"
+    prefix:   /cliente
+PresisGeneralBundle_sucursal:
+        resource: "@PresisGeneralBundle/Resources/config/routing/sucursal.yml"
+        prefix:   /sucursal
+PresisGeneralBundle_vendedor:
+        resource: "@PresisGeneralBundle/Resources/config/routing/vendedor.yml"
+        prefix:   /vendedor
+PresisGeneralBundle_rubro:
+        resource: "@PresisGeneralBundle/Resources/config/routing/rubro.yml"
+        prefix:   /rubro
+PresisGeneralBundle_file:
+        resource: "@PresisGeneralBundle/Resources/config/routing/file.yml"
+        prefix:   /file
+
+

@@ -1,0 +1,56 @@
+fabricante:
+    path:     /index
+    defaults: { _controller: "MovistarBundle:Fabricante:index" }
+
+fabricante_show:
+    path:     /{id}/show
+    defaults: { _controller: "MovistarBundle:Fabricante:show" }
+    options:
+      expose: true
+
+fabricante_find:
+    path:     /{id}/find
+    defaults: { _controller: "MovistarBundle:Fabricante:find" }
+    options:
+      expose: true      
+      
+fabricante_new:
+    path:     /new
+    defaults: { _controller: "MovistarBundle:Fabricante:new" }
+    
+fabricante_ajax:
+    path:     /ajax
+    defaults: { _controller: "MovistarBundle:Fabricante:ajax" }
+    options:
+      expose: true
+      
+fabricante_ajax4select:
+    path:     /ajax4select
+    defaults: { _controller: "MovistarBundle:Fabricante:ajax4select" }
+    options:
+      expose: true
+      
+fabricante_create:
+    path:     /create
+    defaults: { _controller: "MovistarBundle:Fabricante:create" }
+    requirements: { _method: post }
+
+fabricante_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MovistarBundle:Fabricante:edit" }
+    options:
+      expose: true
+      
+fabricante_update:
+    path:     /{id}/update
+    defaults: { _controller: "MovistarBundle:Fabricante:update" }
+    requirements: { _method: post|put }
+
+fabricante_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MovistarBundle:Fabricante:delete" }
+    requirements: { _method: post|delete }
+
+fabricante_search:
+    path:     /search
+    defaults: { _controller: "MovistarBundle:Fabricante:search" }
