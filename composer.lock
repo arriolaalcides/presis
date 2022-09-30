@@ -1,11 +1,65 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "043f44a2e794595dfd95637ed0d317ad",
+    "content-hash": "b8df340c4f8f42455f7d9e8d75e825f2",
     "packages": [
+        {
+            "name": "beberlei/doctrineextensions",
+            "version": "v1.1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/DoctrineExtensions.git",
+                "reference": "a41f8b541f2e9b31f7cd43c91d6d88d9963f091c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/a41f8b541f2e9b31f7cd43c91d6d88d9963f091c",
+                "reference": "a41f8b541f2e9b31f7cd43c91d6d88d9963f091c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.5",
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "nesbot/carbon": "*",
+                "phpunit/phpunit": "^5.7",
+                "symfony/yaml": "^4.2",
+                "zf1/zend-date": "^1.12",
+                "zf1/zend-registry": "^1.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DoctrineExtensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Steve Lacey",
+                    "email": "steve@stevelacey.net"
+                }
+            ],
+            "description": "A set of extensions to Doctrine 2 that add support for additional query functions available in MySQL and Oracle.",
+            "keywords": [
+                "database",
+                "doctrine",
+                "orm"
+            ],
+            "time": "2019-02-04T15:25:09+00:00"
+        },
         {
             "name": "braincrafted/bootstrap-bundle",
             "version": "v2.1.2",
@@ -780,6 +834,7 @@
                 "cache",
                 "caching"
             ],
+            "abandoned": true,
             "time": "2017-10-12T17:23:29+00:00"
         },
         {
@@ -1097,12 +1152,12 @@
             "version": "v2.5.13",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "93103f44a3e36e7b48165b6e6b736833f33b18ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/93103f44a3e36e7b48165b6e6b736833f33b18ef",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/93103f44a3e36e7b48165b6e6b736833f33b18ef",
                 "reference": "93103f44a3e36e7b48165b6e6b736833f33b18ef",
                 "shasum": ""
             },
@@ -1214,7 +1269,7 @@
                 "font",
                 "icon"
             ],
-            "time": "2017-11-26 17:06:17"
+            "time": "2017-11-26T17:06:17+00:00"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1273,7 +1328,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2017-11-29 11:36:11"
+            "time": "2017-11-29T11:36:11+00:00"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -1495,12 +1550,12 @@
             "version": "v0.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/avalanche123/Imagine.git",
+                "url": "https://github.com/php-imagine/Imagine.git",
                 "reference": "f64ec666baaa800edcbf237db41121a569230709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/f64ec666baaa800edcbf237db41121a569230709",
+                "url": "https://api.github.com/repos/php-imagine/Imagine/zipball/f64ec666baaa800edcbf237db41121a569230709",
                 "reference": "f64ec666baaa800edcbf237db41121a569230709",
                 "shasum": ""
             },
@@ -1811,7 +1866,7 @@
                 "annotations",
                 "dependency injection"
             ],
-            "time": "2017-12-03 20:26:53"
+            "time": "2017-12-03T20:26:53+00:00"
         },
         {
             "name": "jms/metadata",
@@ -2056,16 +2111,14 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-12-04 10:38:52"
+            "time": "2017-12-04T10:38:52+00:00"
         },
         {
             "name": "jquery/jquery",
             "version": "1.11.1",
             "dist": {
                 "type": "file",
-                "url": "http://code.jquery.com/jquery-1.11.1.js",
-                "reference": null,
-                "shasum": null
+                "url": "http://code.jquery.com/jquery-1.11.1.js"
             },
             "type": "library"
         },
@@ -2176,7 +2229,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2240,12 +2293,12 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Assetic": "src/"
-                },
                 "files": [
                     "src/functions.php"
-                ]
+                ],
+                "psr-0": {
+                    "Assetic": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2268,7 +2321,7 @@
             "time": "2016-11-11T18:43:20+00:00"
         },
         {
-            "name": "liuggio/ExcelBundle",
+            "name": "liuggio/excelbundle",
             "version": "v2.0.1",
             "target-dir": "Liuggio/ExcelBundle",
             "source": {
@@ -2461,40 +2514,6 @@
             "time": "2017-06-19T01:22:40+00:00"
         },
         {
-            "name": "neitanod/forceutf8",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/neitanod/forceutf8.git",
-                "reference": "47c883ab2739e7938a8bb0bfd1c29d48c88858de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neitanod/forceutf8/zipball/47c883ab2739e7938a8bb0bfd1c29d48c88858de",
-                "reference": "47c883ab2739e7938a8bb0bfd1c29d48c88858de",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ForceUTF8\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Sebastián Grignoli",
-                    "email": "grignoli@gmail.com"
-                }
-            ],
-            "description": "PHP Class Encoding featuring popular Encoding::toUTF8() function --formerly known as forceUTF8()-- that fixes mixed encoded strings.",
-            "homepage": "https://github.com/neitanod/forceutf8",
-            "time": "2017-05-22T18:50:57+00:00"
-        },
-        {
             "name": "nelmio/api-doc-bundle",
             "version": "2.13.2",
             "target-dir": "Nelmio/ApiDocBundle",
@@ -2682,6 +2701,7 @@
                 "xls",
                 "xlsx"
             ],
+            "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
         },
         {
@@ -2780,7 +2800,7 @@
                 "PHPPdf",
                 "pdf"
             ],
-            "time": "2017-07-02 13:43:23"
+            "time": "2017-07-02T13:43:23+00:00"
         },
         {
             "name": "psliwa/php-pdf",
@@ -3127,12 +3147,12 @@
                 "ladybug_name": "Extra"
             },
             "autoload": {
-                "psr-0": {
-                    "Ladybug\\Plugin\\Extra\\": ""
-                },
                 "files": [
                     "Resources/php/helpers.php"
-                ]
+                ],
+                "psr-0": {
+                    "Ladybug\\Plugin\\Extra\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3379,6 +3399,7 @@
                 "configuration",
                 "distribution"
             ],
+            "abandoned": true,
             "time": "2016-04-25T20:46:43+00:00"
         },
         {
@@ -3493,6 +3514,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
+            "abandoned": "https://github.com/fabpot/local-php-security-checker",
             "time": "2017-03-29T09:29:53+00:00"
         },
         {
@@ -3539,7 +3561,7 @@
                 "symfony",
                 "timepicker"
             ],
-            "time": "2015-02-26 23:32:05"
+            "time": "2015-02-26T23:32:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3593,6 +3615,7 @@
                 "mail",
                 "mailer"
             ],
+            "abandoned": "symfony/mailer",
             "time": "2017-05-01T15:54:03+00:00"
         },
         {
@@ -3663,6 +3686,7 @@
                 "compression",
                 "minification"
             ],
+            "abandoned": "symfony/webpack-encore-pack",
             "time": "2017-07-14T07:26:46+00:00"
         },
         {
@@ -3726,6 +3750,82 @@
             "time": "2017-01-02T19:04:26+00:00"
         },
         {
+            "name": "symfony/polyfill-ctype",
+            "version": "v1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "aed596913b70fae57be53d86faa2e9ef85a2297b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/aed596913b70fae57be53d86faa2e9ef85a2297b",
+                "reference": "aed596913b70fae57be53d86faa2e9ef85a2297b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.19-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-23T09:01:57+00:00"
+        },
+        {
             "name": "symfony/swiftmailer-bundle",
             "version": "v2.3.12",
             "source": {
@@ -3780,6 +3880,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
+            "abandoned": "symfony/mailer",
             "time": "2017-05-22T05:03:21+00:00"
         },
         {
@@ -3863,15 +3964,15 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/Symfony/Component/Intl/Resources/stubs/functions.php"
+                ],
                 "psr-0": {
                     "Symfony\\": "src/"
                 },
                 "classmap": [
                     "src/Symfony/Component/HttpFoundation/Resources/stubs",
                     "src/Symfony/Component/Intl/Resources/stubs"
-                ],
-                "files": [
-                    "src/Symfony/Component/Intl/Resources/stubs/functions.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3991,34 +4092,35 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2017-06-08T18:19:53+00:00"
         },
         {
             "name": "twig/twig",
-            "version": "v1.35.0",
+            "version": "v1.42.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "daa657073e55b0a78cce8fdd22682fddecc6385f"
+                "reference": "87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/daa657073e55b0a78cce8fdd22682fddecc6385f",
-                "reference": "daa657073e55b0a78cce8fdd22682fddecc6385f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e",
+                "reference": "87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.5.0",
+                "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "psr/container": "^1.0",
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.3@dev"
+                "symfony/phpunit-bridge": "^4.4|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.35-dev"
+                    "dev-master": "1.42-dev"
                 }
             },
             "autoload": {
@@ -4041,71 +4143,21 @@
                     "role": "Lead Developer"
                 },
                 {
+                    "name": "Twig Team",
+                    "role": "Contributors"
+                },
+                {
                     "name": "Armin Ronacher",
                     "email": "armin.ronacher@active-4.com",
                     "role": "Project Founder"
-                },
-                {
-                    "name": "Twig Team",
-                    "homepage": "http://twig.sensiolabs.org/contributors",
-                    "role": "Contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",
-            "homepage": "http://twig.sensiolabs.org",
+            "homepage": "https://twig.symfony.com",
             "keywords": [
                 "templating"
             ],
-            "time": "2017-09-27T18:06:46+00:00"
-        },
-        {
-            "name": "tystr/sendgrid-bundle",
-            "version": "v0.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tystr/TystrSendgridBundle.git",
-                "reference": "88d90d4e259db56cbfaf61968ffd0142f93d489b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tystr/TystrSendgridBundle/zipball/88d90d4e259db56cbfaf61968ffd0142f93d489b",
-                "reference": "88d90d4e259db56cbfaf61968ffd0142f93d489b",
-                "shasum": ""
-            },
-            "require": {
-                "phpoption/phpoption": "~1.4",
-                "sendgrid/sendgrid": "*",
-                "symfony/framework-bundle": "~2.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*",
-                "symfony/browser-kit": "~2.2",
-                "symfony/finder": "~2.2",
-                "symfony/monolog-bundle": "~2.2"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Tystr\\Bundle\\SendgridBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tyler Stroud",
-                    "email": "tyler@tylerstroud.com"
-                }
-            ],
-            "description": "A bundle for integrating the sendgrid php library into the Symfony2 framework",
-            "homepage": "https://github.com/tystr/TystrSendgridBundle",
-            "keywords": [
-                "email",
-                "sendgrid"
-            ],
-            "time": "2015-04-01T18:03:35+00:00"
+            "time": "2020-02-11T05:59:23+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -4181,7 +4233,7 @@
             ],
             "authors": [
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com"
                 }
             ],
@@ -4257,6 +4309,7 @@
                 "Authentication",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-authentication",
             "time": "2015-03-12T16:55:53+00:00"
         },
         {
@@ -4311,6 +4364,7 @@
                 "barcode",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-barcode",
             "time": "2015-03-12T16:55:53+00:00"
         },
         {
@@ -4372,6 +4426,7 @@
                 "cache",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-cache",
             "time": "2015-03-03T15:56:14+00:00"
         },
         {
@@ -4418,6 +4473,7 @@
                 "eventmanager",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -4474,6 +4530,7 @@
                 "filter",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-filter",
             "time": "2015-02-10T14:55:30+00:00"
         },
         {
@@ -4541,6 +4598,7 @@
                 "form",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-form",
             "time": "2015-02-10T14:55:30+00:00"
         },
         {
@@ -4593,6 +4651,7 @@
                 "inputfilter",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-inputfilter",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -4647,6 +4706,7 @@
                 "json",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-json",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -4698,6 +4758,7 @@
                 "math",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-math",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -4746,6 +4807,7 @@
                 "memory",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-memory",
             "time": "2016-05-11T14:49:42+00:00"
         },
         {
@@ -4833,6 +4895,7 @@
                 "mvc",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mvc",
             "time": "2015-03-12T16:55:53+00:00"
         },
         {
@@ -4893,6 +4956,7 @@
                 "paginator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-paginator",
             "time": "2015-02-10T14:55:30+00:00"
         },
         {
@@ -4946,6 +5010,7 @@
                 "serializer",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-serializer",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -4996,6 +5061,7 @@
                 "servicemanager",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-servicemanager",
             "time": "2015-01-13T22:22:54+00:00"
         },
         {
@@ -5051,6 +5117,7 @@
                 "stdlib",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2015-02-10T14:55:30+00:00"
         },
         {
@@ -5115,6 +5182,7 @@
                 "validator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2015-03-12T13:58:47+00:00"
         },
         {
@@ -5163,6 +5231,40 @@
     ],
     "packages-dev": [
         {
+            "name": "neitanod/forceutf8",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neitanod/forceutf8.git",
+                "reference": "47c883ab2739e7938a8bb0bfd1c29d48c88858de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neitanod/forceutf8/zipball/47c883ab2739e7938a8bb0bfd1c29d48c88858de",
+                "reference": "47c883ab2739e7938a8bb0bfd1c29d48c88858de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ForceUTF8\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Sebastián Grignoli",
+                    "email": "grignoli@gmail.com"
+                }
+            ],
+            "description": "PHP Class Encoding featuring popular Encoding::toUTF8() function --formerly known as forceUTF8()-- that fixes mixed encoded strings.",
+            "homepage": "https://github.com/neitanod/forceutf8",
+            "time": "2017-05-22T18:50:57+00:00"
+        },
+        {
             "name": "sensio/generator-bundle",
             "version": "v2.5.3",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
@@ -5208,7 +5310,57 @@
                 }
             ],
             "description": "This bundle generates code for you",
+            "abandoned": "symfony/maker-bundle",
             "time": "2015-03-17T06:36:52+00:00"
+        },
+        {
+            "name": "tystr/sendgrid-bundle",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tystr/TystrSendgridBundle.git",
+                "reference": "88d90d4e259db56cbfaf61968ffd0142f93d489b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tystr/TystrSendgridBundle/zipball/88d90d4e259db56cbfaf61968ffd0142f93d489b",
+                "reference": "88d90d4e259db56cbfaf61968ffd0142f93d489b",
+                "shasum": ""
+            },
+            "require": {
+                "phpoption/phpoption": "~1.4",
+                "sendgrid/sendgrid": "*",
+                "symfony/framework-bundle": "~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "symfony/browser-kit": "~2.2",
+                "symfony/finder": "~2.2",
+                "symfony/monolog-bundle": "~2.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Tystr\\Bundle\\SendgridBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tyler Stroud",
+                    "email": "tyler@tylerstroud.com"
+                }
+            ],
+            "description": "A bundle for integrating the sendgrid php library into the Symfony2 framework",
+            "homepage": "https://github.com/tystr/TystrSendgridBundle",
+            "keywords": [
+                "email",
+                "sendgrid"
+            ],
+            "time": "2015-04-01T18:03:35+00:00"
         }
     ],
     "aliases": [],
@@ -5227,5 +5379,6 @@
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
